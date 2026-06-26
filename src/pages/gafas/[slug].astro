@@ -1,0 +1,90 @@
+---
+// src/pages/gafas/[slug].astro
+//Para que Vercel haga ISR real en tu [slug].astro, el código en el servidor se configura así:
+import { getGafaPorId } from '../../services/gafas';
+
+const { slug } = Astro.params;
+const gafa = await getGafaPorId(slug); // Aquí llamamos a la función que obtiene los datos de la gafa por su ID (slug) desde tu servicio o base de datos
+
+if (!gafa) return Astro.redirect('/404');
+
+// ESTO ES EL TRUCO DEL ISR EN VERCEL:
+// swr: guarda en caché de Vercel. maxage: expira en 60 segundos si entra alguien nuevo.
+Astro.response.headers.set(
+  'Cache-Control',
+  's-maxage=60, stale-while-revalidate=31536000'
+);
+--- 
+
+<!-- PROPUESTA DE MAQUETADO PARA LA PÁGINA DE DETALLE DE GAFAS POR GEMINI 
+---
+// 1. SECCIÓN DE LÓGICA (Se ejecuta en el servidor en cada clic)
+
+// Capturamos el slug de la gafa directamente desde la URL (ej: /gafas/gafa-polarizada-01)
+const { slug } = Astro.params;
+
+// En el futuro, aquí harás un fetch a tu base de datos o API usando ese slug:
+// const gafa = await db.buscarGafaPorSlug(slug);
+
+// Por ahora, como estamos en pañales, simulamos los datos de la gafa (Mock Data)
+const gafa = {
+  slug: slug,
+  nombre: "Zoco Avant-Garde",
+  sku: "ZCO-2026-X1",
+  precioB2B: "45.00 €",
+  material: "Acetato italiano",
+  color: "Negro Mate",
+  stockDisponible: 120,
+  descripcion: "Gafas de sol premium diseñadas para el mercado B2B con protección UV400."
+};
+---
+
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ZOCO B2B - {gafa.nombre}</title>
+    <style>
+      /* Tu CSS maquetado a medida */
+      .producto-container {
+        display: flex;
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 1rem;
+      }
+      .badge-stock {
+        background-color: #e6f4ea;
+        color: #137333;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <main class="producto-container">
+      <div class="imagen-placeholder" style="background: #f0f0f0; width: 50%; min-height: 400px;">
+        <p style="text-align: center; margin-top: 45%;">Imagen Gafa Slug: {slug}</p>
+      </div>
+
+      <div class="info-producto">
+        <span>Referencia: {gafa.sku}</span>
+        <h1>{gafa.nombre}</h1>
+        <p class="descripcion">{gafa.descripcion}</p>
+        
+        <ul>
+          <li><strong>Material:</strong> {gafa.material}</li>
+          <li><strong>Color:</strong> {gafa.color}</li>
+        </ul>
+
+        <div class="precio-b2b">
+          <h3>Precio Distribuidor: {gafa.precioB2B}</h3>
+          <p><span class="badge-stock">Stock: {gafa.stockDisponible} uds</span></p>
+        </div>
+      </div>
+    </main>
+
+  </body>
+</html>
+-->

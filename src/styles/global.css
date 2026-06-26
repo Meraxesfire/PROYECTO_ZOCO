@@ -11,3 +11,13 @@ body {
   width: 100%;
   height: 100%;
 }
+
+.titulo-seccion {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  font-family: 'HkNova', sans-serif;
+  justify-content: center;
+  text-align: center;
+  margin: 5rem;
+}

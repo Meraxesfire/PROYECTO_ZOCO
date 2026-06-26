@@ -1,7 +1,6 @@
 ---
 
 ---
-
 <div class="header-landing-page">
     <nav class="nav-header-landing-page">
         <div class="logo">
@@ -9,29 +8,46 @@
                 <img class="logo-header-landing-page" src="/logoHeaderLanding.png" alt="Logo de ZOCO eyewear"/>
             </a>
         </div>
+    <!-- Este primer button solo es para mobile y tiene display:none por defecto-->
         <button class="btn-menu-mobile" type="button" aria-label="Abrir menu" aria-expanded="false">
             <span class="hamburger"></span>
             <span class="hamburger"></span>
             <span class="hamburger"></span>
         </button>
-        <ul class="nav-links-header-landing-page">
-            <li><a href="/productos">OPTICAL</a></li>
-            <li><a href="/nosotros">SUN</a></li>
-            <li><a href="/contacto">ABOUT</a></li>
-            <li><a href="/blog">STORES</a></li>
-        </ul>
-
+        <div class="div-menu-burger-pc">
+            <button class="btn-menu-burger-pc" type="button" aria-label="Abrir menu" aria-expanded="false">
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+            </button>
+            <ul class="nav-links-header-landing-page">
+                <li><a href="/productos">OPTICAL</a></li>
+                <li><a href="/nosotros">SUN</a></li>
+                <li><a href="/contacto">ABOUT</a></li>
+                <li><a href="/blog">STORES</a></li>
+            </ul>
+            <button class="btn-ubicacion-stores" type="button" aria-label="Ubicación de tiendas" aria-expanded="false">
+                <a href="/stores">
+                    <img class="ubicacion-stores" src="/ubicacion.png" alt="Ubicación de tiendas"/>
+                </a>
+            </button>
+        </div>
     </nav>
+
     <video autoplay muted loop playsinline class="background-video">
         <source src="/videos/videoLanding.mp4" type="video/mp4" />
     </video>
+    <p class="header-text">Summer season '26'</p>
 </div>
 
 <script>
-    //Script para el mneu hamburguesa del nav:
-    const nav = document.querySelector('.nav-header-landing-page');
-    const menuButton = document.querySelector('.btn-menu-mobile');
+    //Script para el MENU hamburguesa del nav de pc y de mobile:
+    const nav = document.querySelector<HTMLElement>('.nav-header-landing-page');
+    const menuButton = document.querySelector<HTMLButtonElement>('.btn-menu-mobile');
+    
+    //consts para el menu hamburguesa de pc
     const menuLinks = document.querySelectorAll('.nav-links-header-landing-page a');//cogemos los links del nav menu
+    const menuBurgerPc = document.querySelector<HTMLButtonElement>('.btn-menu-burger-pc');//const del boton de menu burger de pc
 
     if (nav && menuButton) {
         menuButton.addEventListener('click', () => {
@@ -44,7 +60,38 @@
             link.addEventListener('click', () => {
                 nav.classList.remove('is-open'); //cuando se hace click en un link del menu, se cierra el menu
                 menuButton.setAttribute('aria-expanded', 'false'); //cambiamos el aria-expanded a false
+                nav.classList.remove('is-open-pc');
+                if (menuBurgerPc) menuBurgerPc.setAttribute('aria-expanded', 'false');
             });
         });
+    }
+    //Aqui misma logica para el menu hamburguesa de pc, que se abre y cierra al hacer click en el boton de menu burger de pc
+    if (nav && menuBurgerPc) {
+        menuBurgerPc.addEventListener('click', () => {
+            nav.classList.toggle('is-open-pc');//añade la clase is-open-pc al nav para que se muestre el menu en pc
+            const expandedPc = nav.classList.contains('is-open-pc');
+            menuBurgerPc.setAttribute('aria-expanded', expandedPc ? 'true' : 'false');
+            //cuando está cerrado el menu, 
+            //aria-expanded es false, cuando está abierto es true.
+        });
+    }
+
+    //script para aparecer el menu hamburgesa al hacer scroll hacia abajo y desaparecer al hacer scroll hacia arriba
+    const header = document.querySelector<HTMLElement>('.header-landing-page');
+    const iconoUbicacion = document.querySelector<HTMLElement>('.btn-ubicacion-stores');
+
+    const observer = new IntersectionObserver(([entry]) => { //este intersection observer observa cuando el header se sale de la pantalla y cuando vuelve a entrar, para mostrar u ocultar el menu hamburguesa de pc y el icono de ubicacion de tiendas
+        const displayValue = entry.isIntersecting ? 'none' : 'inline-flex';
+        if (menuBurgerPc) menuBurgerPc.style.display = displayValue;
+        if (iconoUbicacion) iconoUbicacion.style.display = displayValue;
+
+        if (entry.isIntersecting && nav) { //esta linea es para que cuando el header vuelva a entrar en la pantalla, se cierre el menu hamburguesa de pc y se cambie el aria-expanded a false
+            nav.classList.remove('is-open-pc');
+            if (menuBurgerPc) menuBurgerPc.setAttribute('aria-expanded', 'false');
+        }
+    }, { threshold: 0.1 });
+
+    if (header) {
+        observer.observe(header);
     }
 </script>

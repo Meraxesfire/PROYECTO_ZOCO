@@ -1,0 +1,14 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": ["AGENTS.md"],
+  "references": {
+    "astro": {
+      "repository": "https://github.com/Meraxesfire/PROYECTO_ZOCO",
+      "path": "./"
+    },
+    "supabase": {
+      "description": "https://github.com/Meraxesfire/PROYECTO_ZOCO",
+      "path": "https://github.com/Meraxesfire/PROYECTO_ZOCO"
+    }
+  }
+}

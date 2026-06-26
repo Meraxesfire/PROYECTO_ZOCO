@@ -17,21 +17,57 @@ const { data, error } = await supabase
 	.from('gafas')
 	.select('*')
 	.limit(4);
+
+//query para sacar gafas best_sellers, que son las que tienen  el boolean best_seller true en la bbdd de supabase. Se hace un select de 4 filas de la tabla gafas donde best_seller es true.
+const { data: bestSellers, error: bestSellersError } = await supabase
+	.from('gafas')
+	.select('*')
+	.eq('best_seller', true)
+	.limit(4);
+
 ---
 
 	<Layout title={pageTitle}>
-
-
-
-
 	<!-- <h1>Landing Page</h1>
 	<p>Gafas cargadas, auditoria de conexión realizada:
 		<!--slice recorre las 3 primera filas de la tabla y luego .map((gafa) => gafa.nombre_modelo).join(', ') las une a traves de una coma para motrarlas en una misma fila
 		De momento tenemos el modelo {data?.slice(0,3).map((gafa) => gafa.nombre_modelo).join(', ')} en la primera, segunda y tercera fila fila</p>
 		<!--Para mostrarlas de forma independiente en un P cada una: 
 		{data?.slice(0, 3).map((gafa) => <p>{gafa.nombre_modelo}</p>)}-->
-
 	</Layout>	
+	<div class="best-sellers-section">
+		<h2 class="titulo-seccion">Best Sellers</h2>
+		<div class="best-sellers-grid">
+			{data?.slice(0, 4).map((gafa) => (
+				<div class="best-seller-card" key={gafa.id}>
+					<h3>{gafa.nombre_modelo}</h3>
+					<p>Color: {gafa.color}</p>
+					<p>Descripción: {gafa.descripcion}</p>
+				</div>
+			))}
+		</div>
+		
+	</div>
+
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
+	
 
 
 
@@ -45,7 +81,7 @@ const { data, error } = await supabase
 	 <section style="max-width: 900px; margin: 2rem auto; padding: 1rem; border: 1px solid #ddd; border-radius: 12px;">
 		<h2>Prueba de conexion a Supabase</h2>
 		<p>
-			Tabla probada: <strong>{gafas}</strong>
+			Tabla probada: <strong>gafas</strong>
 		</p>
 		{
 			error ? (
