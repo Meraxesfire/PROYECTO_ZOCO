@@ -1,0 +1,35 @@
+---
+//importamos el header de la landing page que está en un componente a parte:
+
+import HeaderLandingPage from '../components/HeaderLandingPage.astro';
+import '../styles/global.css';
+import '../styles/landing-page.css';
+
+interface Props {
+     title:string;
+}
+
+const title = Astro.props.title;
+---
+
+<html lang="es">
+    <head>
+        <title>ZOCO eyewear | {title}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
+
+        <!-- Cookiebot script for cookie consent management -->
+        <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" 
+        data-cbid="b9262937-ba22-4d28-bbcd-aa28c8aff8b8" data-blockingmode="auto" 
+        type="text/javascript"></script>
+        
+    </head>
+    <body>
+        <HeaderLandingPage />
+        <main class="landing-container">
+            <slot />
+        </main>
+
+    </body>
+</html>

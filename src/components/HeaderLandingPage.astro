@@ -1,0 +1,49 @@
+---
+
+---
+
+<div class="header-landing-page">
+    <nav class="nav-header-landing-page">
+        <div class="logo">
+            <a href="/">
+                <img class="logo-header-landing-page" src="/logoHeaderLanding.png" alt="Logo de ZOCO eyewear"/>
+            </a>
+        </div>
+        <button class="btn-menu-mobile" type="button" aria-label="Abrir menu" aria-expanded="false">
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
+        </button>
+        <ul class="nav-links-header-landing-page">
+            <li><a href="/productos">OPTICAL</a></li>
+            <li><a href="/nosotros">SUN</a></li>
+            <li><a href="/contacto">ABOUT</a></li>
+            <li><a href="/blog">STORES</a></li>
+        </ul>
+
+    </nav>
+    <video autoplay muted loop playsinline class="background-video">
+        <source src="/videos/videoLanding.mp4" type="video/mp4" />
+    </video>
+</div>
+
+<script>
+    const nav = document.querySelector('.nav-header-landing-page');
+    const menuButton = document.querySelector('.btn-menu-mobile');
+    const menuLinks = document.querySelectorAll('.nav-links-header-landing-page a');//cogemos los links del nav menu
+
+    if (nav && menuButton) {
+        menuButton.addEventListener('click', () => {
+            nav.classList.toggle('is-open');//añadimos la clase is-open al nav para que se muestre el menu en mobile
+            const expanded = nav.classList.contains('is-open'); //la const expanded es true si el nav tiene la clase is-open, false si no la tiene
+            menuButton.setAttribute('aria-expanded', expanded ? 'true' : 'false'); //cambiamos el aria-expanded segun el estado del menu
+        });
+
+        menuLinks.forEach((link) => { //funcion: cuando se hace click en un link del menu, se cierra el menu y se cambia el aria-expanded a false
+            link.addEventListener('click', () => {
+                nav.classList.remove('is-open'); //cuando se hace click en un link del menu, se cierra el menu
+                menuButton.setAttribute('aria-expanded', 'false'); //cambiamos el aria-expanded a false
+            });
+        });
+    }
+</script>

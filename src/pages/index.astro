@@ -1,11 +1,67 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from '../layouts/LayoutLandingPage.astro';
+import { supabase } from '../lib/supabase';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import '../styles/global.css';
+
+// Para que Vercel haga ISR real en tu index.astro, el código en el servidor se configura así:
+// ESTE EXPORT ES EL TRUCO DEL ISR EN VERCEL:
+export const prerender=true;
+
+//constante de título de la página, previsamente declarada en el layout de la landing page, para que se muestre en el title del head.
+const pageTitle = 'Inicio';
+
+//Auditoria de conexion con SUPABASE
+// Para probar la conexion con supabase, hacemos un select de 4 filas de la tabla gafas.
+const { data, error } = await supabase
+	.from('gafas')
+	.select('*')
+	.limit(4);
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+	<Layout title={pageTitle}>
+
+
+
+
+	<!-- <h1>Landing Page</h1>
+	<p>Gafas cargadas, auditoria de conexión realizada:
+		<!--slice recorre las 3 primera filas de la tabla y luego .map((gafa) => gafa.nombre_modelo).join(', ') las une a traves de una coma para motrarlas en una misma fila
+		De momento tenemos el modelo {data?.slice(0,3).map((gafa) => gafa.nombre_modelo).join(', ')} en la primera, segunda y tercera fila fila</p>
+		<!--Para mostrarlas de forma independiente en un P cada una: 
+		{data?.slice(0, 3).map((gafa) => <p>{gafa.nombre_modelo}</p>)}-->
+
+	</Layout>	
+
+
+
+
+
+
+
+
+
+	<!--Auditoria de conexion con SUPABASE 
+	 <section style="max-width: 900px; margin: 2rem auto; padding: 1rem; border: 1px solid #ddd; border-radius: 12px;">
+		<h2>Prueba de conexion a Supabase</h2>
+		<p>
+			Tabla probada: <strong>{gafas}</strong>
+		</p>
+		{
+			error ? (
+				<>
+					<p style="color: #b00020; font-weight: 700;">Conexion no validada.</p>
+					<p><strong>Error:</strong> {error.message}</p>
+					<p>
+						Asegurate de que la tabla exista y que las politicas RLS permitan SELECT con la clave anon.
+					</p>
+				</>
+			) : (
+				<>
+					<p style="color: #0a7d2c; font-weight: 700;">Conexion valida.</p>
+					<p>Filas recibidas: {data?.length ?? 0}</p>
+					<pre style="overflow: auto; background: #f6f6f6; padding: 0.75rem; border-radius: 8px;">{JSON.stringify(data, null, 2)}</pre>
+				</>
+			)
+		}
+	</section> -->
