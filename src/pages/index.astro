@@ -39,7 +39,7 @@ const { data: bestSellers, error: bestSellersError } = await supabase
 		<h2 class="titulo-seccion">Best Sellers</h2>
 		<div class="best-sellers-grid">
 			{data?.slice(0, 4).map((gafa) => (
-				<div class="best-seller-card" key={gafa.id}>
+				<div class="best-seller-card" id={gafa.id}>
 					<h3>{gafa.nombre_modelo}</h3>
 					<p>Color: {gafa.color}</p>
 					<p>Descripción: {gafa.descripcion}</p>
