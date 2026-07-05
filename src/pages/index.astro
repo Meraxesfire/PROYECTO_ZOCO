@@ -7,9 +7,11 @@ import '../styles/global.css';
 // Para que Vercel haga ISR real en tu index.astro, el código en el servidor se configura así:
 // ESTE EXPORT ES EL TRUCO DEL ISR EN VERCEL:
 export const prerender=true;
-
+   
 //constante de título de la página, previsamente declarada en el layout de la landing page, para que se muestre en el title del head.
 const pageTitle = 'Inicio';
+
+//--------------------------------------------------------------------------------------------------
 
 //Auditoria de conexion con SUPABASE
 // Para probar la conexion con supabase, hacemos un select de 4 filas de la tabla gafas.

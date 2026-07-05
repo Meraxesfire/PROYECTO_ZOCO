@@ -1,0 +1,57 @@
+---
+import HeaderPages from '../components/HeaderPages.astro';
+import '../styles/global.css';
+import CatalogBody from '../components/CatalogBody.astro';
+import { supabase } from '../lib/supabase';
+
+interface Props {
+     title:string;
+     pageTitle:string;
+    catalogType?: 'OPTICAL' | 'SUN'; //esto decide que tipo de catalogo estamos viendo si OPTICAL o SUN, y es opcional, si no se pasa el prop, se mostrará el catalogo por defecto que es OPTICAL
+    mediaSrc?: string; //ruta de la imagen de cabecera para HeaderPages
+}
+
+const title = Astro.props.title; //este titulo se pasa desde la pagina que llama al layout, y se mostrará en el title del head de la pagina.el titulo de la pestaña
+const pageTitle = Astro.props.pageTitle;
+const catalogType = Astro.props.catalogType || 'OPTICAL'; //si no se pasa el prop catalogType, se mostrará el catalogo por defecto que es OPTICAL
+const mediaSrc = Astro.props.mediaSrc; //ruta de la imagen de cabecera  
+
+
+//A continuación la query para filtrar los elementos de la grilla según el tipo de catalogo que se pasa como prop, si no se pasa, se mostrará el catalogo por defecto que es OPTICAL
+//La query debe filtrar por tipo (OPTICAL/SUN) y traer los campos id, nombre y tipo de la tabla gafas de supabase. Luego se asigna a la constante products para pasarlo al componente CatalogBody. Si no hay datos, se asigna un array vacío para evitar errores.
+//Tambien debe ordenar por nombre ascendente para que se muestren en orden alfabético.
+
+const { data, error } = await supabase
+  .from('catalogo_gafas_por_modelo') //tabla de supabase que contiene las gafas con la portada
+    .select('nombre_modelo, genero, coleccion, tipo, material, forma, variantes_color')//seleccionamos los campos que necesitamos
+  .order('nombre_modelo', { ascending: true }) //ordenamos por nombre ascendente
+    .ilike('tipo', catalogType); //filtramos por el tipo de catalogo sin sensibilidad a mayusculas/minusculas
+  //se mostrará el catalogo por defecto que es OPTICAL
+
+  const products = data ?? []; //si no hay datos, se asigna un array vacío para evitar errores
+
+---
+
+<html>
+    <head>
+        <title>ZOCO eyewear | {title}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
+
+        <!-- Cookiebot script for cookie consent management -->
+        <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" 
+        data-cbid="b9262937-ba22-4d28-bbcd-aa28c8aff8b8" data-blockingmode="auto" 
+        type="text/javascript"></script>
+        
+    </head>
+    <body>
+        <HeaderPages pageTitle={pageTitle} mediaSrc={mediaSrc}/> <!--componenente común en todas las pages salvo en landing-->
+        <main class="header-catalog-container">
+            <CatalogBody sectionTitle={pageTitle} products={products} /> <!--componenente común en todas las pages salvo en landing-->
+        </main>
+
+    </body>
+
+
+</html>

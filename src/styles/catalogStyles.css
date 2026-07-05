@@ -1,0 +1,151 @@
+ .catalog-body {
+        width: 100%;
+        padding: 1.5rem;
+    }
+
+    .catalog-header h2 {
+        margin: 0 0 1rem;
+        font-size: 1.6rem;
+    }
+
+    .catalog-products-container {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 1rem;
+    }
+
+    .filters-section {
+        border: 1px solid #e5e5e5;
+        border-radius: 12px;
+        padding: 1rem;
+        min-height: 320px;
+        background: #fff;
+    }
+
+    .catalog-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
+    .catalog-card {
+        border: 1px solid #e5e5e5;
+        border-radius: 12px;
+        background: #fff;
+        padding: 0.8rem;
+    }
+
+    .catalog-card-head {
+        margin-bottom: 0.6rem;
+    }
+
+    .catalog-card-title {
+        margin: 0;
+        font-size: 1rem;
+    }
+
+    .catalog-meta {
+        margin: 0.2rem 0 0;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .colors-carousel {
+        display: flex;
+        gap: 0.6rem;
+        overflow-x: auto;
+        padding-bottom: 0.4rem;
+        scroll-snap-type: x mandatory;
+    }
+
+    .color-item {
+        flex: 0 0 140px;
+        scroll-snap-align: start;
+    }
+
+    .color-image {
+        width: 100%;
+        height: 140px;
+        object-fit: cover;
+        border-radius: 8px;
+        display: block;
+    }
+
+    .color-name {
+        margin: 0.35rem 0 0;
+        font-size: 0.88rem;
+    }
+
+    .empty-state {
+        grid-column: 1 / -1;
+        padding: 1rem;
+        border: 1px dashed #c8c8c8;
+        border-radius: 10px;
+        color: #666;
+        background: #fafafa;
+    }
+
+
+/* styles propios de headerPages.astro*/
+  .header-catalog {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .header-content {
+    text-align: center;
+    z-index: 2;
+  }
+
+  .logo-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+  }
+
+  .logo-header-catalog {
+    width: 80px;
+    height: auto;
+  }
+
+  .header-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+/*--------------------------------------------------------------------------*/
+    @media screen and (max-width: 1200px) {
+        .catalog-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    @media screen and (max-width: 960px) {
+        .catalog-products-container {
+            grid-template-columns: 1fr;
+        }
+
+        .catalog-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        .catalog-body {
+            padding: 1rem;
+        }
+
+        .catalog-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .color-item {
+            flex-basis: 165px;
+        }
+    }

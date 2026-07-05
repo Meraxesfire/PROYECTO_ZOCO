@@ -1,0 +1,26 @@
+---
+import '../styles/catalogStyles.css';
+
+interface Props {
+  pageTitle: string; 
+  mediaSrc?: string;//la "?" significa que es opcional, puede pasarse o no
+  mediaAlt?: string;
+  logoHref?: string; //esto será el href al que apunta el logo que es a /home
+}
+
+const { pageTitle, 
+mediaSrc, 
+mediaAlt = "Imagen de cabecera", //valor por defecto si no se pasa el prop mediaAlt
+logoHref ="/"//distinto el valor por defecto del href del logo que es a /home
+} = Astro.props;
+
+---
+
+<header class="header-catalog" style={mediaSrc ? `background-image: url('${mediaSrc}')` : ''}>
+  <div class="header-content">
+    <a href={logoHref} class="logo-link"> <!--logo con link para volver al HOME -->
+      <img class="logo-header-catalog" src="/logoHeaderLanding.png" alt="Logo de ZOCO eyewear" />
+    </a>
+    <h1 class="header-title">{pageTitle}</h1>
+  </div>
+</header>

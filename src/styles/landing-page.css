@@ -36,15 +36,10 @@
     padding: 1rem 2rem;
 }
 
-.div-menu-burger-pc{
-    display: flex;
-    flex-direction: row;
-    gap: 10rem;
-}
 
 .div-menu-btns-burger-pc{
     margin:0;
-    
+    cursor:pointer;
 }
 
 .btn-menu-burger-pc{
@@ -63,6 +58,7 @@
     border:#000000;
     background: rgba(255, 255, 255, 0);
     z-index: 300;
+    cursor:pointer;
 }
 
 .btn-ubicacion-stores{

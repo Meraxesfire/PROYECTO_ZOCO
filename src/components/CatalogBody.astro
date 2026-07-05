@@ -1,0 +1,74 @@
+---
+
+import '../styles/catalogStyles.css';
+
+interface ColorVariant {
+    gafa_id: number;
+    color_montura: string;
+    color_desc?: string;
+    pvp?: number;
+    es_novedad?: boolean;
+    best_seller?: boolean;
+    portada_img_url: string;
+}
+
+interface CatalogModel {
+    nombre_modelo: string;
+    genero?: string;
+    coleccion?: string;
+    tipo?: string;
+    material?: string;
+    forma?: string;
+    variantes_color: ColorVariant[];
+}
+
+interface Props {
+    sectionTitle: string;
+    products: CatalogModel[];
+}
+
+const { sectionTitle, products = [] } = Astro.props as Props;
+---
+
+<section class="catalog-body">
+    <header class="catalog-header">
+        <h2>{sectionTitle}</h2>
+    </header>
+
+    <div class="catalog-products-container">
+        <aside class="filters-section">
+            Placeholder: filtros de catalogo.
+        </aside>
+
+        <div class="catalog-grid">
+            {
+                products.length === 0 ? (
+                    <p class="empty-state">No hay modelos disponibles en este catalogo.</p>
+                ) : (
+                    products.map((model) => (
+                        <article class="catalog-card">
+                            <div class="catalog-card-head">
+                                <h3 class="catalog-card-title">{model.nombre_modelo}</h3>
+                                {model.coleccion && <p class="catalog-meta">{model.coleccion}</p>}
+                            </div>
+
+                            <div class="colors-carousel" aria-label={`Variantes de color de ${model.nombre_modelo}`}>
+                                {(model.variantes_color ?? []).map((variant) => (
+                                    <div class="color-item">
+                                        <img
+                                            src={variant.portada_img_url}
+                                            alt={`${model.nombre_modelo} ${variant.color_montura}`}
+                                            class="color-image"
+                                            loading="lazy"
+                                        />
+                                        <p class="color-name">{variant.color_montura}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </article>
+                    ))
+                )
+            }
+        </div>
+    </div>
+</section>
