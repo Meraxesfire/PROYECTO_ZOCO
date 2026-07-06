@@ -1,8 +1,10 @@
 ---
 import Layout from '../layouts/LayoutLandingPage.astro';
+import GafaCardComponent from '../components/GafaCardComponent.astro';
 import { supabase } from '../lib/supabase';
 
 import '../styles/global.css';
+import '../styles/landing-page.css';
 
 // Para que Vercel haga ISR real en tu index.astro, el código en el servidor se configura así:
 // ESTE EXPORT ES EL TRUCO DEL ISR EN VERCEL:
@@ -13,20 +15,43 @@ const pageTitle = 'Inicio';
 
 //--------------------------------------------------------------------------------------------------
 
-//Auditoria de conexion con SUPABASE
-// Para probar la conexion con supabase, hacemos un select de 4 filas de la tabla gafas.
-const { data, error } = await supabase
-	.from('gafas')
-	.select('*')
-	.limit(4);
-
-//query para sacar gafas best_sellers, que son las que tienen  el boolean best_seller true en la bbdd de supabase. Se hace un select de 4 filas de la tabla gafas donde best_seller es true.
+// Query para sacar best sellers con foto de portada disponible.
 const { data: bestSellers, error: bestSellersError } = await supabase
-	.from('gafas')
-	.select('*')
+	.from('gafas_con_portada')
+	.select('id, portada_img_url, nombre_modelo, color, es_novedad')
 	.eq('best_seller', true)
+	.not('portada_img_url', 'is', null)
 	.limit(4);
 
+const { data: newArrivals, error: newArrivalsError } = await supabase
+	.from('gafas_con_portada')
+	.select('id, portada_img_url, nombre_modelo, color, es_novedad')
+	.eq('es_novedad', true)
+	.not('portada_img_url', 'is', null)
+	.limit(4);
+
+// Query para sacar las 2 fotos de portada de las nuevas gafas SUN y OPTICAL, para mostrarlas en la sección de New Arrivals.
+const { data: newArrivalsSun, error: newArrivalsSunError } = await supabase
+	.from('new_arrivals_photos')
+	.select('foto_modelo, foto_hover')
+	.ilike('tipo', 'SUN')
+	.not('foto_modelo', 'is', null)
+	.limit(1);
+
+	//query para gafa optical de new arrival
+const { data: newArrivalsOptical, error: newArrivalsOpticalError } = await supabase
+	.from('new_arrivals_photos')
+	.select('foto_modelo, foto_hover')
+	.ilike('tipo', 'OPTICAL')
+	.not('foto_modelo', 'is', null)
+		.limit(1);
+
+
+//seguridad de queries
+if (bestSellersError) console.error('bestSellers query failed:', bestSellersError.message);
+if (newArrivalsError) console.error('newArrivals query failed:', newArrivalsError.message);
+if (newArrivalsSunError) console.error('newArrivalsSun query failed:', newArrivalsSunError.message);
+if (newArrivalsOpticalError) console.error('newArrivalsOptical query failed:', newArrivalsOpticalError.message);
 ---
 
 	<Layout title={pageTitle}>
@@ -36,19 +61,62 @@ const { data: bestSellers, error: bestSellersError } = await supabase
 		De momento tenemos el modelo {data?.slice(0,3).map((gafa) => gafa.nombre_modelo).join(', ')} en la primera, segunda y tercera fila fila</p>
 		<!--Para mostrarlas de forma independiente en un P cada una: 
 		{data?.slice(0, 3).map((gafa) => <p>{gafa.nombre_modelo}</p>)}-->
-	</Layout>	
+
 	<div class="best-sellers-section">
 		<h2 class="titulo-seccion">Best Sellers</h2>
 		<div class="best-sellers-grid">
-			{data?.slice(0, 4).map((gafa) => (
-				<div class="best-seller-card" id={gafa.id}>
-					<h3>{gafa.nombre_modelo}</h3>
-					<p>Color: {gafa.color}</p>
-					<p>Descripción: {gafa.descripcion}</p>
-				</div>
+			{bestSellers?.map((gafa) => (
+				<GafaCardComponent
+					portadaImgUrl={gafa.portada_img_url}
+					nombreModelo={gafa.nombre_modelo}
+					codigoColorModelo={gafa.color}
+					esNovedad={gafa.es_novedad}
+				/>
 			))}
 		</div>
-		
+	</div>
+
+
+
+<!-- Seccion new arrivals, viene de las queries de la tabla new_arrivals_photos-->
+	<div class="new-arrivals-section">
+		<h2 class="titulo-seccion">New Arrivals</h2>
+		<div class="new-arrivals-grid">
+			<a class="featured-card" href="#" aria-label="Nueva gafa SUN">
+				{newArrivalsSun?.[0]?.foto_modelo ? (
+					<>
+						<img class="img-base" src={newArrivalsSun[0].foto_modelo} alt="Nueva gafa SUN" />
+						{newArrivalsSun?.[0]?.foto_hover && (
+						<img class="img-hover" src={newArrivalsSun[0].foto_hover} alt="Nueva gafa SUN hover" />
+						)}
+					</>
+				) : (
+					<p>Imagen SUN no disponible</p>
+				)}
+			</a>
+			<a class="featured-card" href="#" aria-label="Nueva gafa OPTICAL">
+				{newArrivalsOptical?.[0]?.foto_modelo ? (
+					<>
+						<img class="img-base" src={newArrivalsOptical[0].foto_modelo} alt="Nueva gafa OPTICAL" />
+						{newArrivalsOptical?.[0]?.foto_hover && (
+						<img class="img-hover" src={newArrivalsOptical[0].foto_hover} alt="Nueva gafa OPTICAL hover" />
+						)}
+					</>
+				) : (
+					<p>Imagen OPTICAL no disponible</p>
+				)}
+			</a>
+		</div>
+		<div class="new-arrivals-carrousel">
+			{newArrivals?.map((gafa) => (
+				<GafaCardComponent
+					portadaImgUrl={gafa.portada_img_url}
+					nombreModelo={gafa.nombre_modelo}
+					codigoColorModelo={gafa.color}
+					esNovedad={gafa.es_novedad}
+				/>
+			))}
+		</div>
 	</div>
 
 	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
@@ -103,3 +171,4 @@ const { data: bestSellers, error: bestSellersError } = await supabase
 			)
 		}
 	</section> -->
+	</Layout>

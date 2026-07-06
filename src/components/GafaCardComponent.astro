@@ -1,0 +1,51 @@
+---
+import '../styles/global.css';
+import '../styles/landing-page.css';
+import { supabase } from '../lib/supabase';
+
+interface Props {
+    portadaImgUrl: string;
+    nombreModelo: string;
+    codigoColorModelo: string;
+    esNovedad?: boolean;
+}
+
+const {
+    portadaImgUrl,
+    nombreModelo,
+    codigoColorModelo,
+    esNovedad = false,
+} = Astro.props;
+---
+
+<article class="gafa-card-component">
+    {esNovedad && <span class="new-badge">New</span>}
+
+    <div class="gafa-card-image">
+        <img src={portadaImgUrl} alt={nombreModelo} loading="lazy" />
+    </div>
+
+    <div class="gafa-card-details">
+        <h3>{nombreModelo}</h3>
+        <p>{codigoColorModelo}</p>
+    </div>
+</article>
+
+<style>
+    .gafa-card-component {
+        position: relative;
+    }
+
+    .new-badge {
+        position: absolute;
+        top: 0.75rem;
+        left: 0.75rem;
+        z-index: 2;
+        padding: 0.25rem 0.6rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        background: #0f0f0f;
+        color: #fff;
+    }
+</style>

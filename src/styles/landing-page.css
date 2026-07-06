@@ -172,7 +172,40 @@
     }
 }
 
+/*STYLES PARA BLOQUE DE NEW ARRIVALS*/
 
+.new-arrivals-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+.new-arrivals-grid img{
+    width: 100%;
+    height: 100%;
+}
+
+.featured-card {
+    position: relative;
+    display: block;
+    overflow: hidden;
+  }
+
+  .featured-card img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .img-hover {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 220ms ease;
+  }
+
+  .featured-card:hover .img-hover {
+    opacity: 1;
+  }
 
 @media screen and (max-width: 768px) {
     .nav-header-landing-page {
