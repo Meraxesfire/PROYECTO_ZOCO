@@ -1,5 +1,6 @@
 ---
 import LayoutCatalog from '../layouts/LayoutCatalog.astro';
+import FooterPages from '../components/FooterPages.astro';
 import { supabase } from '../lib/supabase';
 import '../styles/global.css';
 
@@ -7,10 +8,13 @@ import '../styles/global.css';
 const pageTitle = 'Sun'; //constante de título de la página, previsamente declarada en el layout de LayoutCatalog.astro, para que se muestre en el title del head.
 const title = 'Sun'; //constante de título de la página, previsamente declarada en el layout de LayoutCatalog.astro, para que se muestre en el title del head.
 const catalogType = 'SUN'; //constante de tipo de catálogo, para que se muestre en el layout de LayoutCatalog.astro, y se pueda filtrar por tipo de catálogo en la base de datos.
-const mediaSrc = '/prueba_media_header.png'; //constante de ruta de la imagen de cabecera, para que se muestre en el layout de LayoutCatalog.astro.
+const mediaSrc = 'https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/ZOCO%20MEDIA/sun-header-media.mp4'; //constante de ruta del video de cabecera, para que se muestre en el layout de LayoutCatalog.astro.
 
 ---
 
 <LayoutCatalog title={title} pageTitle={pageTitle} catalogType={catalogType} mediaSrc={mediaSrc}>
 
+
+
+	<FooterPages />
 </LayoutCatalog>
