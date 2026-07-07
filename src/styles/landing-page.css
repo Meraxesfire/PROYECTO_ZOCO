@@ -150,6 +150,8 @@
     text-align: flex-start;
 }
 
+
+
 @media screen and (min-width: 769px) { /* Estilos especificos de menu burger para pantallas de escritorio */
     .nav-header-landing-page.is-open-pc .nav-links-header-landing-page {
         position: fixed;
@@ -172,7 +174,7 @@
     }
 }
 
-/*STYLES PARA BLOQUE DE NEW ARRIVALS*/
+/*STYLES PARA BLOQUE DE NEW ARRIVALS---------------------------------------------*/
 
 .new-arrivals-grid{
     display: grid;
@@ -205,6 +207,16 @@
 
   .featured-card:hover .img-hover {
     opacity: 1;
+  }
+
+
+  .new-arrivals-carrousel{
+    margin:4rem 10rem;
+        padding-bottom: 2rem;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+
   }
 
 @media screen and (max-width: 768px) {

@@ -18,15 +18,8 @@ const pageTitle = 'Inicio';
 // Query para sacar best sellers con foto de portada disponible.
 const { data: bestSellers, error: bestSellersError } = await supabase
 	.from('gafas_con_portada')
-	.select('id, portada_img_url, nombre_modelo, color, es_novedad')
+	.select('*')
 	.eq('best_seller', true)
-	.not('portada_img_url', 'is', null)
-	.limit(4);
-
-const { data: newArrivals, error: newArrivalsError } = await supabase
-	.from('gafas_con_portada')
-	.select('id, portada_img_url, nombre_modelo, color, es_novedad')
-	.eq('es_novedad', true)
 	.not('portada_img_url', 'is', null)
 	.limit(4);
 
@@ -47,11 +40,29 @@ const { data: newArrivalsOptical, error: newArrivalsOpticalError } = await supab
 		.limit(1);
 
 
+
+//Queries para carrousel de gafas de NEW ARRIVALS, que se muestran en la sección de New Arrivals, y que vienen de la tabla gafas_con_portada, filtradas por es_novedad = true y con foto de portada disponible.
+const { data: newArrivalsCarrousel, error: newArrivalsCarrouselError } = await supabase
+	.from('gafas_con_portada')
+	.select('*')
+	.not('portada_img_url', 'is', null)
+	.order('id', { ascending: false })
+	.limit(10);
+
+const newArrivalsCarrouselItems = (newArrivalsCarrousel ?? []).filter((gafa) => {
+	if (gafa.es_novedad === true || gafa.es_novedad === 1) return true;
+	if (typeof gafa.es_novedad === 'string') {
+		const value = gafa.es_novedad.trim().toLowerCase();
+		return value === 'true' || value === 't' || value === '1';
+	}
+	return false;
+});
+
 //seguridad de queries
 if (bestSellersError) console.error('bestSellers query failed:', bestSellersError.message);
-if (newArrivalsError) console.error('newArrivals query failed:', newArrivalsError.message);
 if (newArrivalsSunError) console.error('newArrivalsSun query failed:', newArrivalsSunError.message);
 if (newArrivalsOpticalError) console.error('newArrivalsOptical query failed:', newArrivalsOpticalError.message);
+if (newArrivalsCarrouselError) console.error('newArrivalsCarrousel query failed:', newArrivalsCarrouselError.message);
 ---
 
 	<Layout title={pageTitle}>
@@ -69,7 +80,7 @@ if (newArrivalsOpticalError) console.error('newArrivalsOptical query failed:', n
 				<GafaCardComponent
 					portadaImgUrl={gafa.portada_img_url}
 					nombreModelo={gafa.nombre_modelo}
-					codigoColorModelo={gafa.color}
+					codigoColorModelo={gafa.color ?? gafa.color_montura ?? gafa.codigo_color_modelo ?? 'Sin color'}
 					esNovedad={gafa.es_novedad}
 				/>
 			))}
@@ -108,17 +119,18 @@ if (newArrivalsOpticalError) console.error('newArrivalsOptical query failed:', n
 			</a>
 		</div>
 		<div class="new-arrivals-carrousel">
-			{newArrivals?.map((gafa) => (
+			{newArrivalsCarrouselItems.map((gafa) => (
 				<GafaCardComponent
 					portadaImgUrl={gafa.portada_img_url}
 					nombreModelo={gafa.nombre_modelo}
-					codigoColorModelo={gafa.color}
+					codigoColorModelo={gafa.color ?? gafa.color_montura ?? gafa.codigo_color_modelo ?? 'Sin color'}
 					esNovedad={gafa.es_novedad}
 				/>
 			))}
 		</div>
 	</div>
 
+	
 	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
 	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
 	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
@@ -171,4 +183,14 @@ if (newArrivalsOpticalError) console.error('newArrivalsOptical query failed:', n
 			)
 		}
 	</section> -->
+
+	<section style="max-width: 1200px; margin: 3rem auto; padding: 0 1rem;">
+		<h2 class="titulo-seccion">Prueba Gafa Card</h2>
+		<GafaCardComponent
+			portadaImgUrl="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=900&q=80"
+			nombreModelo="Gafa test"
+			codigoColorModelo="C1 - Black"
+			esNovedad={true}
+		/>
+	</section>
 	</Layout>
