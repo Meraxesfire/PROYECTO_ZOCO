@@ -1,0 +1,108 @@
+---
+import '../styles/global.css';
+import HeaderFooterLinks from '../components/HeaderFooterLinks.astro';
+import FooterPages from '../components/FooterPages.astro';
+import LayoutFooterLinkPages from '../layouts/layoutFooterLinkPages.astro';
+
+const pagetitle = 'Preguntas Frecuentes';
+
+---
+
+<LayoutFooterLinkPages title={pagetitle}>
+<HeaderFooterLinks pagetitle={pagetitle} />
+<br>
+<div class="faq-container">
+    <h1 class="titulo-1">Preguntas frecuentes</h1>
+    <br>
+    <br>
+    <p class="parrafo-1">Sobre el producto</p>
+    <br>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Son todos los productos originales?</summary>
+        <div class="accordion-content">
+            En nuestra tienda ZOCOEYEWEAR.COM ofrecemos únicamente gafas de sol y complementos 100% originales. Como ópticos nos aseguramos de trabajar exclusivamente con fabricantes que cumplan los más altos estándares de calidad. Los pedidos que recibas de nuestra tienda incluirán todos los accesorios originales que se incluyen con el producto cuando se compra nuevo: funda o estuche original, paño de limpieza y documentación que demuestra su autenticidad.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Tenéis todos los productos en stock?</summary>
+        <div class="accordion-content">
+            Cada producto indica claramente si está en stock en nuestro almacén o si, por el contrario, hay una rotura de stock. Si tenemos el producto en stock el plazo de envío oscila entre 24 y 48 horas. Si por cualquier motivo hubiera algún inconveniente o retraso con tus gafas, nuestro departamento de Atención al Cliente, te contactará lo antes posible.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Qué pasa si compro un producto que está descatalogado?</summary>
+        <div class="accordion-content">
+            En ZOCOEYEWEAR.COM ponemos a tu disposición todo el catálogo de la colección actualizado. A veces se puede dar la situación de comprar un producto que ya no está disponible. Siempre intentamos minimizar estos errores, pero puede ocurrir. Si este fuera tu caso, no te preocupes, nos pondremos en contacto contigo lo antes posible y te ofreceremos alternativas. Si estas no te convencen, te reembolsaremos el dinero sin coste alguno para ti inmediatamente.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿El precio que sale en la web es el precio que pagaré por el producto?</summary>
+        <div class="accordion-content">
+            Sí, en ZOCOEYEWEAR.COM todos los precios de nuestros productos son válidos y tienen el IVA y los gastos de envío incluidos (en Península y Baleares-ver suplementos a los envíos en el apartado Envíos). Los precios estarán vigentes mientras aparezcan en la web salvo que haya habido algún error tipográfico en la creación del producto.
+        </div>
+    </details>
+    <p class="parrafo-1">Realización de Pedidos</p>
+    <br>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Cómo hago una compra?</summary>
+        <div class="accordion-content">
+            Puedes añadir a la cesta de ZOCOEYEWEAR.COM todas las gafas de sol que quieras, y cuando estés seguro de tu elección, simplemente tienes que hacer click en el botón de "Finalizar Compra". Automáticamente, el sistema te irá guiando a través de los pasos para completar el pedido: Identificación o Registro, Entrega, Método de pago, Confirmación del pedido. Finalmente te confirmamos la correcta realización del pedido. Asimismo, recibirás un email con un resumen de tu compra.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">No he recibido ningún email de confirmación. ¿Está mi pedido realizado?</summary>
+        <div class="accordion-content">
+            Algunas veces, puede pasar que los emails lleguen a la bandeja de correo basura (SPAM). Comprueba primero que no haya llegado en esta bandeja. Si sigues sin recibir nada, comprueba en tu cuenta de usuario el estado de tus pedidos. Si el pedido está incompleto o con error, es que no se ha finalizado correctamente. No te preocupes, en ninguno de los dos casos, se te ha cobrado nada. De todas formas, si sigues con dudas, puedes ponerte en contacto con nosotros. ¡Estaremos encantados de ayudarte!
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Y si me equivoco de producto?</summary>
+        <div class="accordion-content">
+            Cuánto antes lo detectes mejor. Ponte en contacto con nuestro departamento de Atención al Cliente y comunícanoslo. Indícanos la referencia de tu pedido, y lo cambiaremos por ti.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Puedo registrarme sin realizar ningún pedido?</summary>
+        <div class="accordion-content">
+            Por supuesto. Puedes rellenar tu ficha de cliente en ZOCOEYEWEAR.COM Además, te recomendamos que actives la opción de recibir información de ofertas y novedades para que estés siempre al día de las nuevas colecciones y las promociones que iremos lanzando.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Cómo hago el seguimiento de mi pedido?</summary>
+        <div class="accordion-content">
+            Cada vez que un pedido cambie de estado recibirás una notificación por email. Todos tus pedidos están registrados en tu zona privada de cliente. Existen distintos estados en los que puede estar tu pedido: Pedido, Proceso, Entregado, Incompleto, Incidencia, Pendiente de pago, Cancelado.
+        </div>
+    </details>
+</div>
+
+<style>
+  .accordion-section {
+    margin-bottom: 1rem;
+    font-family: 'HkNova', sans-serif;
+  }
+  .accordion-section summary {
+    cursor: pointer;
+    padding: 0.5rem 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .accordion-section summary::-webkit-details-marker {
+    display: none;
+  }
+  .accordion-section summary::before {
+    content: '▶';
+    font-size: 0.8em;
+    transition: transform 0.2s;
+  }
+  .accordion-section[open] summary::before {
+    content: '▼';
+  }
+  .accordion-content {
+    padding: 0.5rem 1rem;
+  }
+</style>
+
+<FooterPages />
+</LayoutFooterLinkPages>

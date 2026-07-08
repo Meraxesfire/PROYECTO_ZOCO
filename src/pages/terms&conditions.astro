@@ -1,0 +1,104 @@
+---
+import '../styles/global.css';
+import HeaderFooterLinks from '../components/HeaderFooterLinks.astro';
+import FooterPages from '../components/FooterPages.astro';
+import LayoutFooterLinkPages from '../layouts/layoutFooterLinkPages.astro';
+
+const pagetitle = 'Terminos y Condiciones'; //constante de título de la página, previsamente declarada en el layout de la landing page, para que se muestre en el title del head.
+
+
+---
+
+<!--PRIMERO UN LAYOUT COMUN A TODAS LAS PAGINAS DE FOOTER -->
+<LayoutFooterLinkPages title={pagetitle}>
+<HeaderFooterLinks pagetitle={pagetitle} />
+<br>
+<div class="terminos-condiciones-container">
+    <h1 class="titulo-1">Terminos y Condiciones</h1>
+    <br>
+    <br>
+    <details class="accordion-section">
+        <summary class="parrafo-1">A. Finalidad:</summary>
+        <div class="accordion-content">
+            A.1. Las condiciones legales que se detallan a continuación rigen el acceso y uso del sitio web denominado www.zocoeyewear.com, el cual pertenece a la empresa ISPAL EYEWEAR SL.
+            <br>
+            A.2. El acceso o uso del sitio implica que el usuario ha leído y comprendido las presentes condiciones legales, y se compromete a cumplirlas en su totalidad.
+            <br>
+            A.3. En caso de que el usuario no esté de acuerdo con alguna de las condiciones legales, deberá abstenerse de acceder al sitio.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">B. Propiedad del sitio web</summary>
+        <div class="accordion-content">
+            B.1. En cumplimiento con la Ley 34/2002, de 11 de julio y demás legislación aplicable, se informa al usuario que el sitio web www.zocoeyewear.com, es propiedad de la empresa ISPAL EYEWEAR SL con CIF B10606499 con domicilio social en calle Trajano, 20 41002 Sevilla y domicilio comercial en calle Arcos, 3 Local 41011 Sevilla.
+            <br>
+            B.2. Para cualquier consulta, el usuario puede contactar con la empresa mediante el número de teléfono 664 666 991 o la dirección de correo electrónica info@zocoeyewear.com
+            <br>
+            B.3. Todas las comunicaciones con ISPAL EYEWEAR SL podrán realizarse mediante correo ordinario o correo electrónico. La empresa se comunicará con el usuario a través del correo electrónico que éste haya proporcionado
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">C. Funcionamiento del sitio web</summary>
+        <div class="accordion-content">
+            C.1. ISPAL EYEWEAR SL se reserva el derecho de modificar, en cualquier momento y sin previo aviso, los contenidos, la estructura, el funcionamiento o las condiciones de acceso del sitio.
+            <br>
+            C.2. El usuario es consciente y acepta que parte de la información contenida en el sitio podría ser incorrecta, incompleta o antigua, o contener errores tipográficos. ISPAL EYEWEAR SL no está obligada a actualizar el contenido del sitio y no será responsable por la falta de actualización de la información. Es responsabilidad exclusiva del usuario evaluar la exactitud y/o utilidad de cualquier información, consejo, opinión o cualquier otro contenido disponible a través del sitio.
+            <br>
+            C.3. ISPAL EYEWEAR SL se reserva el derecho de suspender temporalmente el acceso al sitio, sin previo aviso, para realizar operaciones de mantenimiento, actualización, mejora o reparación.
+            <br>
+            C.4. El usuario tiene prohibido el uso del sitio para el envío, transmisión o publicación de cualquier material ilegal, amenazante, calumnioso, difamatorio, propagandístico, escandaloso, obsceno, pornográfico o cualquier otro material que pueda dar lugar a responsabilidades civiles o penales de acuerdo con la legislación aplicable. El usuario será el único responsable en caso de incurrir en dicha conducta.
+            <br>
+            C.5. ISPAL EYEWEAR SL no garantiza que el sitio o los servidores que lo alojan estén libres de virus u otro software potencialmente peligroso, ni la disponibilidad, continuidad, utilidad e infalibilidad del funcionamiento del sitio, sus servicios o contenidos, ni la licitud, fiabilidad o utilidad de la información y contenidos suministrados.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">D. Comportamiento de los usuarios y prohibiciones</summary>
+        <div class="accordion-content">
+            D.1. El uso de los servicios y contenidos ofrecidos por ISPAL EYEWEAR SL es responsabilidad exclusiva del usuario.
+            <br>
+            D.2. ISPAL EYEWEAR SL no tiene la obligación de verificar ni monitorear los contenidos e información proporcionados por los usuarios.
+            <br>
+            D.3. El usuario se compromete a utilizar el sitio web y sus contenidos y servicios diligentemente, cumpliendo con la ley, las buenas costumbres y las presentes condiciones generales, y manteniendo el respeto hacia los demás usuarios.
+            <br>
+            D.4. El usuario se compromete a utilizar los materiales e información contenidos en el sitio web de manera adecuada, sin utilizarlos para actividades ilegales o delictivas que violen los derechos de terceros, la regulación de propiedad intelectual e industrial, u otras normas aplicables, y es el único responsable ante ISPAL EYEWEAR SL y terceros por cualquier incumplimiento.
+            <br>
+            D.5. El usuario se compromete a no transmitir, introducir, difundir o poner a disposición de terceros ningún tipo de material o información que viole la ley, la moral, el orden público y las condiciones generales de uso.
+            <br>
+            D.6. El usuario debe proporcionar información veraz y correcta, sin suplantar a terceros o actuar en su nombre.
+            <br>
+            D.7. El acceso al sitio web queda registrado por la dirección IP del ordenador del usuario, por lo que cualquier infracción a las condiciones generales será registrada.
+        </div>
+    </details>
+</div>
+
+<style>
+  .accordion-section {
+    margin-bottom: 1rem;
+    font-family: 'HkNova', sans-serif;
+  }
+  .accordion-section summary {
+    cursor: pointer;
+    padding: 0.5rem 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .accordion-section summary::-webkit-details-marker {
+    display: none;
+  }
+  .accordion-section summary::before {
+    content: '▶';
+    font-size: 0.8em;
+    transition: transform 0.2s;
+  }
+  .accordion-section[open] summary::before {
+    content: '▼';
+  }
+  .accordion-content {
+    padding: 0.5rem 1rem;
+  }
+</style>
+
+<FooterPages />
+</LayoutFooterLinkPages>

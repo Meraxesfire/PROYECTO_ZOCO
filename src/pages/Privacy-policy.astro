@@ -1,0 +1,101 @@
+---
+import '../styles/global.css';
+import HeaderFooterLinks from '../components/HeaderFooterLinks.astro';
+import FooterPages from '../components/FooterPages.astro';
+import LayoutFooterLinkPages from '../layouts/layoutFooterLinkPages.astro';
+
+const pagetitle = 'Política de Privacidad';
+
+---
+
+<LayoutFooterLinkPages title={pagetitle}>
+<HeaderFooterLinks pagetitle={pagetitle} />
+<br>
+<div class="privacy-policy-container">
+    <h1 class="titulo-1">Política de privacidad</h1>
+    <br>
+    <br>
+    Le informamos que para el acceso de determinados contenidos o servicios será necesario facilitar datos de carácter personal. Los Usuarios deberán la veracidad, exactitud, autenticidad de los datos ISPAL EYEWEAR SL preservará la confidencialidad y seguridad de sus datos personales y dará a los mismos el tratamiento automatizado que corresponda en función de su naturaleza o finalidad, en los términos indicados en la Sección Información básica sobre protección de datos.
+    <br>
+    <br>
+    Es voluntad de nuestra empresa tratar los datos a los principios prescritos en el art 5 del Reglamento UE 679/2016, de manera que haya una relación lícita, leal y transparente. Los fines serán determinados, explícitos y legítimos; y no serán tratados ulteriormente de manera incompatible con los mismos. Los datos que recogemos de los usuarios serán adecuados, pertinentes y limitados.
+    <br>
+    <br>
+    Es importante, y atendiendo a la reciente normativa Europea en Protección de Datos REGLAMENTO UE 2016/679 del PARLAMENTO y del CONSEJO EUROPEO, que lea la Información Básica. También ha de saber, que el hecho de dejar sus datos no atribuye, ni confirma, ni anula, ni legitima, ni perfecciona ningún vínculo contractual con nuestra empresa.
+    <br>
+    <br>
+    <details class="accordion-section">
+        <summary class="parrafo-1">Información Básica sobre protección de datos</summary>
+        <div class="accordion-content">
+            <strong>Responsable:</strong> ISPAL EYEWEAR SL en adelante Responsable del Fichero, C/ TRAJANO 20 - C.P. 41002 (SEVILLA) Atención al Usuario Tel: +34 673 99 54 85 E-mail: info@zocoeyewear.com
+            <br>
+            <br>
+            <strong>Finalidad:</strong> Gestionar servicios de venta de artículos ópticos y relacionados con nuestro objeto social a clientes, proveedores, solicitantes o personas de contacto. También informarle que sus datos pasarán a formar parte de una base de datos automatizada, con la finalidad de informarle sobre nuestros servicios, promociones, eventos relacionados con nuestro objeto social, teniendo en cuenta sus preferencias. Usted siempre podrá darse de baja gratuitamente.
+            <br>
+            <br>
+            <strong>Legitimación:</strong> consentimiento, relación contractual, pre-contractual o negocial con el interesado. Base legal: Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo, de 27 de abril de 2016, relativo a la protección de las personas físicas en lo que respecta al tratamiento de datos personales y a la libre circulación de estos datos. Ley 34/2002, de 11 de julio, de servicios de la sociedad de la información y de comercio electrónico. Real Decreto Legislativo 1/2007, de 16 de noviembre, por el que se aprueba el texto refundido de la Ley General para la Defensa de los Consumidores y Usuarios. Revisión vigente desde 12 de Junio de 2018.
+            <br>
+            <br>
+            <strong>Destinatarios:</strong> las condiciones de los servicios y precios se encuentran explicitados en nuestra página web. Podremos ceder sus datos a empresas colaboradoras o distribuidores de nuestros productos en diferentes países o áreas geográficas con el objeto de que sean atendidas sus peticiones y puedan prestarle un buen servicio. Por lo demás, no cederemos sus datos a ningún otro operador sin su previo consentimiento, salvo por interés público o imperativo legal.
+            <br>
+            <br>
+            <strong>Duración:</strong> mantendremos los datos 5 años desde la recepción del último dato; o bien, lo que prescriben las diferentes normativas a las que nos debamos acoger.
+            <br>
+            <br>
+            <strong>Menores de edad:</strong> nuestros servicios van dirigidos a personas con capacidad de obrar, por lo que no contrataremos servicios a personas que no tengan la mayoría de edad. Será bajo la responsabilidad de la patria potestad o representante legal el falseamiento de identidad o edad de las personas que accedan o contraten.
+            <br>
+            <br>
+            <strong>Precisiones:</strong> los servicios de la pág. (no contratos) sólo podrán ser utilizados por menores de 14 años con el consentimiento de sus representantes legales, siempre que estos aporten documentación justificativa suficiente. Tratamientos: le informamos que nuestra empresa no realiza tratamientos automatizados que vulneren la intimidad o derechos fundamentales de las personas, ni buscamos perfiles que están enriquecidos con otras bases de datos (minería de datos) ajenas a su conocimiento o consentimiento.
+            <br>
+            <br>
+            <strong>Derechos:</strong> siempre podrá ejercer sus derechos que le asisten por ley de acceso, rectificación, cancelación y oposición, además del derecho limitación, bloqueo y a la portabilidad de forma gratuita. Para ello, es preciso que usted mismo o a través de persona legalmente autorizada aporte los siguientes documentos al Responsable de Fichero con los datos necesarios:
+            <br>
+            <br>
+            - Fotocopia DNI
+            <br>
+            - Identificación y representación suficiente.
+            <br>
+            - Explicación y objeto de la reclamación.
+            <br>
+            - Domicilio para envío de comunicaciones o correo electrónico, para ponernos en contacto con usted a la mayor brevedad.
+            <br>
+            <br>
+            <strong>Información adicional:</strong> usted en todo momento podrá pedir información adicional y complementaria a la básica sobre sus datos personales ("segunda capa"), en la misma dirección electrónica que le facilitamos para poder ejercer sus derechos.
+            <br>
+            <br>
+            En caso de que considere, que no han sido atendidas sus peticiones, podrá ejercer sus derechos ante la autoridad de control, Agencia Española de Protección de Datos. www.aepd.es.
+        </div>
+    </details>
+</div>
+
+<style>
+  .accordion-section {
+    margin-bottom: 1rem;
+    font-family: 'HkNova', sans-serif;
+  }
+  .accordion-section summary {
+    cursor: pointer;
+    padding: 0.5rem 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .accordion-section summary::-webkit-details-marker {
+    display: none;
+  }
+  .accordion-section summary::before {
+    content: '▶';
+    font-size: 0.8em;
+    transition: transform 0.2s;
+  }
+  .accordion-section[open] summary::before {
+    content: '▼';
+  }
+  .accordion-content {
+    padding: 0.5rem 1rem;
+  }
+</style>
+
+<FooterPages />
+</LayoutFooterLinkPages>

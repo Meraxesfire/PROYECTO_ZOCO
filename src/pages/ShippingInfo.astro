@@ -1,0 +1,88 @@
+---
+import '../styles/global.css';
+import HeaderFooterLinks from '../components/HeaderFooterLinks.astro';
+import FooterPages from '../components/FooterPages.astro';
+import LayoutFooterLinkPages from '../layouts/layoutFooterLinkPages.astro';
+
+const pagetitle = 'Información de Envío';
+
+---
+
+<LayoutFooterLinkPages title={pagetitle}>
+<HeaderFooterLinks pagetitle={pagetitle} />
+<br>
+<div class="shipping-info-container">
+    <h1 class="titulo-1">Envío</h1>
+    <br>
+    <br>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Cuál es el tiempo de entrega previsto?</summary>
+        <div class="accordion-content">
+            Si el producto que has comprado en ZOCOEYEWEAR.COM se encuentra en stock el tiempo de envío es de 24 a 48 horas en días laborables. Si el tiempo de entrega tuviera algún retraso, contactaríamos contigo para notificarte el retraso y darte un tiempo de entrega aproximado. Para calcular los tiempos de envío de cada producto, únicamente se contemplan días hábiles, por lo que no computan sábados, domingos ni festivos para estimar dichos tiempos de envío. Para los pedidos realizados después de las 14.00h, el tiempo de envío se contabilizará a partir del siguiente día hábil.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Cuáles son los gastos de envío?</summary>
+        <div class="accordion-content">
+            Los gastos de envío en España Peninsular y Baleares son gratuitos.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Con qué empresas realizáis los envíos?</summary>
+        <div class="accordion-content">
+            Enviamos con varias agencias de transporte (Correos Express, DHL, Geneis). Puedes controlar en todo momento el estado del envío con el número de seguimiento que se asignará a tu pedido. Una vez realizado el pedido, te enviamos un mail indicándote dicho número de seguimiento.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Enviáis a Canarias, Ceuta y Melilla…y al resto del Mundo?</summary>
+        <div class="accordion-content">
+            En ZOCOEYEWEAR.COM si enviamos nuestras gafas a las maravillosas Islas Canarias a Ceuta y a la Melilla, incluso a cualquier lugar del mundo. A la hora de hacer el pedido los gastos de transportes aparecerán antes de realizar el pago.
+            <br>
+            <br>
+            Como estimación puedes consultar la siguiente tabla de precios de envíos con CorreosExpress.
+            <br>
+            <br>
+            Canarias	20 €
+            <br>
+            Ceuta	30 €
+            <br>
+            Melilla	30 €
+            <br>
+            Europa	30 € 
+            <br>
+            Resto Mundo	Consultar
+        </div>
+    </details>
+</div>
+
+<style>
+  .accordion-section {
+    margin-bottom: 1rem;
+    font-family: 'HkNova', sans-serif;
+  }
+  .accordion-section summary {
+    cursor: pointer;
+    padding: 0.5rem 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .accordion-section summary::-webkit-details-marker {
+    display: none;
+  }
+  .accordion-section summary::before {
+    content: '▶';
+    font-size: 0.8em;
+    transition: transform 0.2s;
+  }
+  .accordion-section[open] summary::before {
+    content: '▼';
+  }
+  .accordion-content {
+    padding: 0.5rem 1rem;
+  }
+</style>
+
+<FooterPages />
+</LayoutFooterLinkPages>

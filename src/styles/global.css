@@ -14,11 +14,45 @@ body {
 }
 
 .titulo-seccion {
-  font-size: 3.5rem;
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
   font-weight: bold;
   margin-bottom: 1rem;
   font-family: 'HkNova', sans-serif;
   justify-content: center;
   text-align: center;
   margin: 5rem;
+}
+
+/*PAGINAS DE FOOTER*/
+.titulo-1,
+.parrafo-1,
+.terminos-condiciones-container,
+.shipping-info-container,
+.faq-container,
+.privacy-policy-container,
+.cookies-policy-container {
+  font-family: 'HkNova', sans-serif;
+}
+
+.titulo-1 {
+  font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+  line-height: 1.2;
+}
+
+.parrafo-1 {
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  margin-bottom: clamp(0.75rem, 1.4vw, 1rem);
+  line-height: 1.35;
+}
+
+.terminos-condiciones-container,
+.shipping-info-container,
+.faq-container,
+.privacy-policy-container,
+.cookies-policy-container {
+  font-size: clamp(0.85rem, 1.15vw, 1rem);
+  margin-bottom: clamp(0.75rem, 1.4vw, 1rem);
+  margin-left: clamp(1rem, 6vw, 5rem);
+  margin-right: clamp(1rem, 6vw, 5rem);
+  line-height: 1.5;
 }

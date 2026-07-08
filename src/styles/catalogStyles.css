@@ -117,6 +117,7 @@
 
   .header-content {
     display:flex;
+    flex:wrap;
     flex-direction: row;
     align-items: flex-end;
     z-index: 2;

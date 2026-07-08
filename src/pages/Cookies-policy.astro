@@ -1,0 +1,138 @@
+---
+import '../styles/global.css';
+import HeaderFooterLinks from '../components/HeaderFooterLinks.astro';
+import FooterPages from '../components/FooterPages.astro';
+import LayoutFooterLinkPages from '../layouts/layoutFooterLinkPages.astro';
+
+const pagetitle = 'Política de Cookies';
+
+---
+
+<LayoutFooterLinkPages title={pagetitle}>
+<HeaderFooterLinks pagetitle={pagetitle} />
+<br>
+<div class="cookies-policy-container">
+    <h1 class="titulo-1">Política de cookies</h1>
+    <br>
+    <br>
+    De acuerdo con la normativa vigente, le facilitamos información sobre el uso de 'cookies' en nuestra página web, a la vez que solicitamos consentimiento por parte del usuario para usarlas.
+    <br>
+    <br>
+    Esta página web únicamente utiliza cookies técnicas, de personalización y análisis, propias y de terceros, que en ningún caso tratan datos de carácter personal ni captan hábitos de navegación para fines publicitarios.
+    <br>
+    <br>
+    Por ello, al acceder a nuestra web, en cumplimiento del artículo 22 de la Ley de Servicios de la Sociedad de la Información, al tratar cookies de análisis, le hemos solicitado su consentimiento para su uso, que en todo caso se instalarán pasado un plazo de tiempo prudencial para que el usuario tenga tiempo de decidir prestar su consentimiento o no.
+    <br>
+    <br>
+    De todas formas, le informamos que puede activar o desactivar estas cookies siguiendo las instrucciones de su navegador de Internet.
+    <br>
+    <br>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Qué son las 'cookies'?</summary>
+        <div class="accordion-content">
+            Las 'cookies' sirven para almacenar y recuperar información relativa a los usuarios que visitan una web. Se usan para hacer seguimiento de las páginas visitadas así como para recordar ciertas acciones del usuario tales como preferencias de navegación. Estas preferencias son recordadas cuando un usuario visita de nuevo la página.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Qué información guardan en la web de zocoeyewear.com?</summary>
+        <div class="accordion-content">
+            1. Información estadística del uso del site.
+            <br>
+            2. Registro de actividad que ha llevado a cabo el visitante (páginas vistas, búsquedas, compras, etc.)
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Qué sucede si bloqueo su uso?</summary>
+        <div class="accordion-content">
+            En caso de bloquear su uso, es posible que algunos servicios de la web no estén disponibles.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Cómo puedo bloquear las 'cookies' en mi navegador?</summary>
+        <div class="accordion-content">
+            En los siguientes enlaces encontraréis información relativa a vuestro navegador:
+            <br>
+            1. Chrome
+            <br>
+            2. Firefox
+            <br>
+            3. Safari
+            <br>
+            4. Edge
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Qué es una cookie?</summary>
+        <div class="accordion-content">
+            Una cookie es un archivo de texto inofensivo que se guarda en su navegador cuando visita una página web que los use, casi todas lo hacen. La utilidad de la cookie es que la web sea capaz de recordar su visita cuando vuelva a navegar por dicho espacio web. Las cookies se utilizan desde hace más de 20 años, cuando aparecieron los primeros navegadores para la World Wide Web.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Qué no es una cookie?</summary>
+        <div class="accordion-content">
+            No es un virus, ni un troyano, ni un gusano, ni spam, ni spyware, ni abre ventanas pop-up.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Qué información almacena una cookie?</summary>
+        <div class="accordion-content">
+            Las cookies no suelen almacenar información sensible sobre usted, como tarjetas de crédito o datos bancarios, fotografías, su DNI o información personal, etc. Los datos que se guardan son de carácter técnico, preferencias personales, personalización de contenidos, etc. El servidor web no lo asocia a usted como persona sino en su navegador web. De hecho, si usted navega habitualmente con Internet Explorer y prueba a navegar por la misma web con Firefox o Chrome verá que la web no se da cuenta de que usted es la misma persona porque en realidad está asociando al navegador, no a la persona.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Qué tipo de cookies existen?</summary>
+        <div class="accordion-content">
+            <strong>Cookies técnicas:</strong> Son las más elementales y permiten, entre otras cosas, saber cuando está navegando un humano o una aplicación automatizada, cuando navega un usuario anónimo y un registrado, tareas básicas para el funcionamiento de cualquier sitio web dinámico.
+            <br>
+            <br>
+            <strong>Cookies de análisis:</strong> Recogen información sobre el tipo de navegación que está realizando, las secciones que más utiliza, productos consultados, franja horaria de uso, idioma, etc.
+            <br>
+            <br>
+            <strong>Cookies publicitarias:</strong> Muestran publicidad en función de su navegación, su país de procedencia, idioma, etc.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Qué son las cookies propias y de terceros?</summary>
+        <div class="accordion-content">
+            Las cookies propias son las generadas por la página que está visitando y las de terceros son las generadas por servicios o proveedores externos como Facebook, Twitter, Google, etc.
+        </div>
+    </details>
+    <details class="accordion-section">
+        <summary class="parrafo-1">¿Se pueden eliminar las cookies?</summary>
+        <div class="accordion-content">
+            Sí. No sólo eliminar, también bloquear, de forma general o particular para un dominio específico. Para eliminar las cookies de un sitio web debe ir a la configuración de su navegador y allí podrá buscar las asociadas al dominio en cuestión y proceder a su eliminación.
+        </div>
+    </details>
+</div>
+
+<style>
+  .accordion-section {
+    margin-bottom: 1rem;
+    font-family: 'HkNova', sans-serif;
+  }
+  .accordion-section summary {
+    cursor: pointer;
+    padding: 0.5rem 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .accordion-section summary::-webkit-details-marker {
+    display: none;
+  }
+  .accordion-section summary::before {
+    content: '▶';
+    font-size: 0.8em;
+    transition: transform 0.2s;
+  }
+  .accordion-section[open] summary::before {
+    content: '▼';
+  }
+  .accordion-content {
+    padding: 0.5rem 1rem;
+  }
+</style>
+
+<FooterPages />
+</LayoutFooterLinkPages>

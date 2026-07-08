@@ -1,0 +1,91 @@
+---
+import '../styles/global.css';
+import HeaderFooterLinks from '../components/HeaderFooterLinks.astro';
+import FooterPages from '../components/FooterPages.astro';
+import LayoutFooterLinkPages from '../layouts/layoutFooterLinkPages.astro';
+
+const pagetitle = 'Únete a Zoco';
+
+---
+
+<LayoutFooterLinkPages title={pagetitle}>
+<HeaderFooterLinks pagetitle={pagetitle} />
+<br>
+<div class="jobs-container">
+  <div class="jobs-text">
+    <h1 class="titulo-1">Únete a Zoco®</h1>
+    <br>
+    <p>ZOCO® también es talento. Un equipo joven y creativo que comparte el amor por el arte, se emociona con el trabajo bien hecho y siempre quiere ir más allá.</p>
+    <br>
+    <p>¿Tú también tienes carácter ZOCO®? ¡Queremos conocerte!</p>
+    <br>
+    <br>
+    <details class="accordion-section">
+      <summary class="parrafo-1">Ofertas disponibles</summary>
+      <div class="accordion-content">
+        <p>Si estás interesado en formar parte del equipo profesional de Zoco® escríbenos a profesional@zocoeyewear.com</p>
+      </div>
+    </details>
+  </div>
+  <div class="jobs-image">
+    <img src="/ZOCO_OFFICE.png" alt="Únete a Zoco" />
+  </div>
+</div>
+
+<FooterPages />
+</LayoutFooterLinkPages>
+
+<style>
+  .accordion-section {
+    margin-bottom: 1rem;
+    font-family: 'HkNova', sans-serif;
+  }
+  .accordion-section summary {
+    cursor: pointer;
+    padding: 0.5rem 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .accordion-section summary::-webkit-details-marker {
+    display: none;
+  }
+  .accordion-section summary::before {
+    content: '▶';
+    font-size: 0.8em;
+    transition: transform 0.2s;
+  }
+  .accordion-section[open] summary::before {
+    content: '▼';
+  }
+  .accordion-content {
+    padding: 0.5rem 1rem;
+  }
+
+  .jobs-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 2rem 4rem;
+    font-family: 'HkNova', sans-serif;
+  }
+
+  .jobs-text {
+    flex: 1;
+  }
+
+  .jobs-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .jobs-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+</style>

@@ -3,24 +3,24 @@
 
 const currentYear =new Date().getFullYear();
 const startYear = 2024;
-const copyright= startYear ==currentYear ? `© ${currentYear} ZOCO` : `© ${startYear}-${currentYear} ZOCO`;
+const copyrightYears = startYear == currentYear ? `${currentYear}` : `${startYear}-${currentYear}`;
 
 ---
 
 <footer class="footer">
     <div class="footer-bussiness-content">
         <img src="https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/sign/LOGOS%20ZOCO/zocobgRemove.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8yMGU5OTgzYS1jNmMwLTQ1NjItYWNjNy1hMDQ5MWYyMGM5M2MiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT0dPUyBaT0NPL3pvY29iZ1JlbW92ZS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgzNDI5MjkyLCJleHAiOjQ5MzcwMjkyOTJ9.Nz0VT39WB7CsWMraK5Q8Q1d1tUvyIj_fL4XaMpSPxas" alt="Logo ZOCO" class="footer-logo" />
-        <p>{copyright}</p>
+        <p>&copy; {copyrightYears} ZOCO</p>
         <p>All rights reserved.</p>
     </div>
     <div class="footer-info-links">
         <p>INFO</p>
-        <a href="/Terms-conditions" class="footer-link">Terms & Conditions</a>
-        <a href="/Shipping-info" class="footer-link">Shipping Info</a>
+        <a href="/terms&conditions" class="footer-link">Terms & Conditions</a>
+        <a href="/ShippingInfo" class="footer-link">Shipping Info</a>
         <a href="/FAQ" class="footer-link">FAQ</a>
         <a href="/Jobs" class="footer-link">Jobs</a>
         <a href="/Privacy-policy" class="footer-link">Privacy Policy</a>
-        <a href="/cookies-policy" class="footer-link">Cookies Policy</a>
+        <a href="/Cookies-policy" class="footer-link">Cookies Policy</a>
     </div>
     <div class="footer-social-links">
         <p>SOCIAL</p>

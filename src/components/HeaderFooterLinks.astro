@@ -1,0 +1,65 @@
+---
+import '../styles/global.css';
+
+interface Props{
+    pagetitle: string;
+    mediaSrc?: string;
+    mediaAlt?: string;
+    logoHref?: string;
+}
+
+const { 
+pagetitle, 
+mediaSrc,
+mediaAlt = "Imagen de cabecera", 
+logoHref ="/" } 
+= Astro.props;
+
+
+---
+
+<!--HEADER COMUN A TODAS LAS PAGINAS DE LINKS DE INCLUIDAS EN EL FOOTER COMUN -->
+<header class="header-footer-links">
+    <div class="fondo-header-footer-links">
+        <a href={logoHref} class="logo-link">
+            <img class="logo-header-footer-links" src="/logoHeaderLanding.png" alt="Logo de ZOCO eyewear" />
+        </a>
+        <h1 class="header-title">{pagetitle}</h1>
+    </div>
+</header>
+
+<style>
+
+    @font-face{
+        font-family:'HkNova';
+        src: url('/font/HKNova-Medium.ttf') format('truetype');
+        font-display: swap;
+    }
+
+    .fondo-header-footer-links {
+        display: flex;
+        width:100%;
+        height:10rem;
+        flex-direction:row;
+        align-items: center;
+        background-color: #70c2a5;
+    }
+
+    .logo-link {
+        display: inline-block;
+        margin-right: clamp(0.75rem, 2vw, 1.5rem);
+    }
+
+    .logo-header-footer-links {
+        width: clamp(11rem, 26vw, 25rem);
+        height: auto;
+    }
+
+    .header-title {
+        font-size: clamp(1.1rem, 3.2vw, 2.5rem);
+        font-weight: bold;
+        color: white;
+        font-family: 'HkNova', sans-serif;
+        line-height: 1.15;
+    }
+</style>
