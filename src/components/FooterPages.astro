@@ -10,8 +10,16 @@ const copyrightYears = startYear == currentYear ? `${currentYear}` : `${startYea
 <footer class="footer">
     <div class="footer-bussiness-content">
         <img src="https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/sign/LOGOS%20ZOCO/zocobgRemove.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8yMGU5OTgzYS1jNmMwLTQ1NjItYWNjNy1hMDQ5MWYyMGM5M2MiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT0dPUyBaT0NPL3pvY29iZ1JlbW92ZS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgzNDI5MjkyLCJleHAiOjQ5MzcwMjkyOTJ9.Nz0VT39WB7CsWMraK5Q8Q1d1tUvyIj_fL4XaMpSPxas" alt="Logo ZOCO" class="footer-logo" />
-        <p>&copy; {copyrightYears} ZOCO</p>
-        <p>All rights reserved.</p>
+        <p class="bussines-p">&copy; {copyrightYears} ZOCO</p>
+        <p class="bussines-p">All rights reserved.</p>
+        <br>
+        <div class="subscribe-container">
+            <p>Subscribe to our newsletter</p>
+            <form class="subscribe-form" action="" method="post" target="_blank" novalidate>
+                <input class="input-subscribe-form" type="email" name="EMAIL" placeholder="Your email address" required>
+                <button class="subscribe-form-button" type="submit">Subscribe</button>
+                </form>
+        </div>
     </div>
     <div class="footer-info-links">
         <p>INFO</p>
@@ -37,20 +45,28 @@ const copyrightYears = startYear == currentYear ? `${currentYear}` : `${startYea
     .footer {
         background-color: #70c2a5;
         width: 100%;
-        height:16rem;
-        display: flex;
-        justify-content: space-evenly;
+        min-height: 19rem;
+        display: grid;
+        grid-template-columns: minmax(18rem, 0.6fr) auto auto;
+        column-gap: clamp(2rem, 6vw, 6rem);
+        row-gap: 1.25rem;
         align-items: flex-start;
-        padding: 50px 30px;
+        padding: 35px clamp(1.25rem, 3vw, 30px);
         text-align: center;
         font-family: 'HkNova', sans-serif;
+        padding-bottom:2rem;
     }
 
     .footer-bussiness-content {
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
+        text-align: left;
+        margin-left: 30px;
     }
+    .bussines-p{
+        font-size: clamp(0.7rem, 0.85vw, 0.85rem);
+        color: rgb(0, 0, 0);}
 
     .footer-logo {
         width: 90px;
@@ -59,11 +75,50 @@ const copyrightYears = startYear == currentYear ? `${currentYear}` : `${startYea
         margin-bottom: 10px;
     }
 
+    .subscribe-container p{
+        color: rgb(55, 127, 127);   
+        font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+    }
+
+    .subscribe-form{
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 10px;
+    }
+
+    .input-subscribe-form {
+        padding: 0.5rem;
+        border: none;
+        width: min(100%, 15rem);
+        margin-right: 0;
+        background: transparent;
+        border-bottom: 1px solid #303030;
+    }
+    .input-subscribe-form::placeholder {
+        color: rgb(57, 125, 125);
+    }
+
+    .input-subscribe-form:focus {
+        outline: none;
+        border-bottom: 1px solid #303030;
+    }
+
+    .subscribe-form-button{
+        font-family: 'HkNova', sans-serif;
+        padding: 0.2rem 1rem;
+        background-color: #4c4b4b3c;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+
     .footer-info-links, .footer-social-links {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        margin-left: 20px;
+        margin-left: 0;
     }
 
     .footer-info-links p, .footer-social-links p {
@@ -87,6 +142,46 @@ const copyrightYears = startYear == currentYear ? `${currentYear}` : `${startYea
         height: auto;
         margin-right: 5px;
     }
+
+    @media (max-width: 900px) {
+        .footer {
+            grid-template-columns: 1fr 1fr;
+            column-gap: 2rem;
+            row-gap: 1.5rem;
+            min-height: auto;
+        }
+
+        .footer-bussiness-content {
+            grid-column: 1 / -1;
+            margin-left: 0;
+        }
+    }
+
+    @media (max-width: 640px) {
+        .footer {
+            grid-template-columns: 1fr;
+            row-gap: 1.25rem;
+            padding: 1.5rem 1rem 2rem;
+            text-align: left;
+        }
+
+        .footer-bussiness-content,
+        .footer-info-links,
+        .footer-social-links {
+            margin-left: 0;
+            align-items: flex-start;
+        }
+
+        .footer-logo {
+            width: clamp(70px, 22vw, 90px);
+        }
+
+        .subscribe-form-button {
+            width: auto;
+        }
+    }
+
+
 
 
 </style>

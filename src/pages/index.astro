@@ -59,6 +59,24 @@ const newArrivalsCarrouselItems = (newArrivalsCarrousel ?? []).filter((gafa) => 
 	return false;
 });
 
+
+//Querie para sacar los videos de las colecciones de la landing page, que vienen de la tabla videos_colecciones_landing	, filtradas por tipo de colección y con video disponible.
+	const {data: videosColecciones, error: videosColeccionesError } = await supabase
+	.from('videos_colecciones_landing')
+	.select('id, media_url, nombre_coleccion')
+	.in('id', [1,2]);
+
+	if (videosColeccionesError) {
+		console.error('videosColecciones query failed:', videosColeccionesError.message);
+	}
+		//Constantes para almacenar cada uno de los videos de las colecciones, para poder mostrarlos en la landing page.
+	const videoColeccion1 = videosColecciones?.find((video) => video.id === 1) ?? null;
+	const videoColeccion2 = videosColecciones?.find((video) => video.id === 2) ?? null;
+
+//Querie para el enlace que tiene el boton "mostrar más" sobre los videos de colecciones, que llevan al catalogo con un filtro por nombre de colcción ya aplicado por defecto
+//Debe abrir automaticamente el catalogo con el filtro de esa colección aplicado.
+
+
 //seguridad de queries
 if (bestSellersError) console.error('bestSellers query failed:', bestSellersError.message);
 if (newArrivalsSunError) console.error('newArrivalsSun query failed:', newArrivalsSunError.message);
@@ -74,8 +92,17 @@ if (newArrivalsCarrouselError) console.error('newArrivalsCarrousel query failed:
 		<!--Para mostrarlas de forma independiente en un P cada una: 
 		{data?.slice(0, 3).map((gafa) => <p>{gafa.nombre_modelo}</p>)}-->
 
-	<div class="best-sellers-section">
+		<div class="texto-promo-landing">
+			<!--<img src="https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/ZOCO%20MEDIA/fondo-colores%20(1).png" alt="Fondo de colores de Zoco eyewear" class="fondo-colores" />-->
+			<h3>Formas únicas. Color esencial. Diseñadas para llevar.</h3>
+			<p>"ZOCO Captura la esencia y la luz de Andalucía en diseños que combinan la audacia de la originalidad con una versatilidad absoluta. Piezas exclusivas, cómodas y sin complicaciones, creadas para destacar en el día a día."</p>
+		</div>
+	
+		<div class="best-sellers-section">
+		<div class="titulos-best-sellers">
 		<h2 class="titulo-seccion">Best Sellers</h2>
+		<h4>Descubre nuestros modelos más vendidos</h4>
+		</div>
 		<div class="best-sellers-grid">
 			{bestSellers?.map((gafa) => (
 				<GafaCardComponent
@@ -131,32 +158,29 @@ if (newArrivalsCarrouselError) console.error('newArrivalsCarrousel query failed:
 		</div>
 	</div>
 
+	<!--Sección texto info de Zoco -->
 
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
-	Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia cumque officiis, impedit eaque error id, amet voluptatem consequuntur corporis modi maxime autem repellat delectus. Sequi magni et quos odit facilis.
 	
 	<!-- Seccion de colecciones-->
 	<div class="coleccion-1-container">
-
+		{videoColeccion1?.media_url ? (
+			<video class="video-coleccion" autoplay muted loop playsinline>
+				<source src={videoColeccion1.media_url} type="video/mp4" />
+			</video>
+		) : (
+			<p>Video colección 1 no disponible.</p>
+		)}
+		<button class="boton-mostrar-mas" onclick="window.location.href='/catalogo?coleccion=coleccion1'">Show more</button>
 	</div>
 	<div class="coleccion-2-container">
-
+		{videoColeccion2?.media_url ? (
+			<video class="video-coleccion" autoplay muted loop playsinline>
+				<source src={videoColeccion2.media_url} type="video/mp4" />
+			</video>
+		) : (
+			<p>Video colección 2 no disponible.</p>
+		)}
+		<button class="boton-mostrar-mas" onclick="window.location.href='/catalogo?coleccion=coleccion2'">Show more</button>
 	</div>
 
 	<section style="max-width: 1200px; margin: 3rem auto; padding: 0 1rem;">
