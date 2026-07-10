@@ -31,4 +31,229 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
     </a>
     <h1 class="header-title">{pageTitle}</h1>
   </div>
+  <!--SECCION MENÚ PARA HEADER DE PAGES OPTICAL/SUN -->
+        <div class="menu-header-pages">
+            <ul class="nav-links-header-pages">
+                <li><a href="/optical">OPTICAL</a></li>
+                <li><a href="/sun">SUN</a></li>
+                <li><a href="/about">ABOUT</a></li>
+                <li><a href="/stores">STORES</a></li>
+            </ul>
+        </div>
+
+        <!--Div para menú en mobile -->
+        <div class="div-menu-burger-mobile">
+            <button class="btn-menu-burger-mobile-pages" type="button" aria-label="Abrir menu" aria-expanded="false">
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+            </button>
+        </div>
 </header>
+
+<style>
+
+  /* styles propios de headerPages.astro*/
+  .header-catalog {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    overflow: hidden;
+    }
+
+    .header-catalog-video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        max-height: 10rem;
+        object-fit: cover;
+        z-index: 1;
+  }
+
+  .header-content {
+    display:flex;
+    flex-wrap:wrap;
+    flex-direction: row;
+    align-items: flex-end;
+    z-index: 2;
+  }
+
+  .logo-link {
+    display: inline-block;
+  }
+
+  .logo-header-catalog {
+    width: 25rem;
+    height: auto;
+  }
+
+  .header-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 1rem;
+    font-family: 'HkNova', sans-serif;
+  }
+
+/*-----------STYLES PARA MENÚ DE HEADER Y DESPLEGABLE BURGER----------------*/
+.menu-header-pages {
+    position: relative;
+    display: flex;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    padding: 1rem;
+    margin-left: auto;
+}
+
+.nav-links-header-pages {
+  font-family: 'HkNova', sans-serif;
+  font-size: clamp(0.5rem, 1.8vw, 1.5rem);
+    list-style: none;
+    display: flex;
+    gap: calc(1rem + 1vw);
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links-header-pages li a {
+    text-decoration: none;
+    color: white;
+  letter-spacing: 0.08em;
+  position: relative;
+}
+
+.nav-links-header-pages li a::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #ffffff;
+  transition: 0.4s ease;
+}
+
+.nav-links-header-pages li a:hover::after {
+  width: 100%;
+}
+
+/*STYLES PARA MOBILE-------------------------*/
+
+.div-menu-burger-mobile {
+    position: relative;
+    display: none; /* Oculto por defecto en pantallas grandes */
+    z-index: 3;
+    padding: 1rem;
+    margin-left: auto;
+}
+
+.hamburger {
+  display: block;
+  width: 24px;
+  height: 2px;
+  border-radius: 999px;
+  background: #000;
+  transition: transform 0.8s ease, opacity 0.2s ease;
+}
+@media screen and (max-width:768px){
+
+.menu-header-pages {
+    position: fixed;
+    top: calc(1rem + 44px + 0.5rem);
+    right: 15px;
+    left: 15px;
+    width: auto;
+    max-width: 18rem;
+    margin-left: auto;
+    padding: 1rem;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.45);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    z-index: 210;
+    display: none;
+}
+
+.div-menu-burger-mobile {
+    display: flex;
+}
+
+.btn-menu-burger-mobile-pages{
+  position: fixed;
+  top: 1rem;
+  right: 15px;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.45);
+  z-index: 220;
+  cursor: pointer;
+}
+
+.header-catalog.is-open .menu-header-pages {
+  display: flex;
+}
+
+.header-catalog.is-open .nav-links-header-pages {
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.header-catalog.is-open .nav-links-header-pages li a {
+  font-size: 1.3rem;
+  color: #111111;
+}
+
+.header-catalog.is-open .hamburger:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.header-catalog.is-open .hamburger:nth-child(2) {
+  opacity: 0;
+}
+
+.header-catalog.is-open .hamburger:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+}
+
+</style>
+
+
+<script>
+  //script para el menú desplegable tipo burger en headerPages.astro
+  const header = document.querySelector('.header-catalog');
+  const menuButton = document.querySelector('.btn-menu-burger-mobile-pages');
+  const menuLinks = document.querySelectorAll('.nav-links-header-pages a');
+
+  if (header && menuButton) {
+    menuButton.addEventListener('click', () => {
+      header.classList.toggle('is-open');
+      const expanded = header.classList.contains('is-open');
+      menuButton.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    });
+
+    menuLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        header.classList.remove('is-open');
+        menuButton.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+</script>

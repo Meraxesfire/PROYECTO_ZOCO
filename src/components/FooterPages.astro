@@ -32,7 +32,7 @@ const copyrightYears = startYear == currentYear ? `${currentYear}` : `${startYea
     </div>
     <div class="footer-social-links">
         <p>SOCIAL</p>
-        <a href="https://www.instagram.com/zocoeyewear/" target="_blank" rel="noopener noreferrer" class="footer-link">
+        <a href="https://www.instagram.com/zocoeyewear" target="_blank" rel="noopener noreferrer" class="footer-link">
             <img class="logo-rrss" src="https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/sign/LOGOS%20ZOCO/ig_logo.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8yMGU5OTgzYS1jNmMwLTQ1NjItYWNjNy1hMDQ5MWYyMGM5M2MiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT0dPUyBaT0NPL2lnX2xvZ28ucG5nIiwic2NvcGUiOiJkb3dubG9hZCIsImlhdCI6MTc4MzQyOTk2MywiZXhwIjo0OTM3MDI5OTYzfQ.ePRRsBwI2RooYNJ4qVPIKLxmGgtYjZkN59Gx6Za2dsc" alt="Instagram logo-link"/>
             Instagram</a>
         <a href="https://www.facebook.com/zocoeyewear" target="_blank" rel="noopener noreferrer" class="footer-link">
@@ -56,6 +56,10 @@ const copyrightYears = startYear == currentYear ? `${currentYear}` : `${startYea
         font-family: 'HkNova', sans-serif;
         padding-bottom:2rem;
     }
+    
+    .footer-link{
+        font-size: clamp(0.7rem, 1.5vw, 1.5rem);
+    }
 
     .footer-bussiness-content {
         display: flex;
@@ -77,7 +81,7 @@ const copyrightYears = startYear == currentYear ? `${currentYear}` : `${startYea
 
     .subscribe-container p{
         color: rgb(55, 127, 127);   
-        font-size: clamp(1.05rem, 2.2vw, 1.5rem);
+        font-size: clamp(0.5rem, 2.2vw, 1.5rem);
     }
 
     .subscribe-form{

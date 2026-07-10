@@ -91,12 +91,6 @@ if (newArrivalsCarrouselError) console.error('newArrivalsCarrousel query failed:
 		De momento tenemos el modelo {data?.slice(0,3).map((gafa) => gafa.nombre_modelo).join(', ')} en la primera, segunda y tercera fila fila</p>
 		<!--Para mostrarlas de forma independiente en un P cada una: 
 		{data?.slice(0, 3).map((gafa) => <p>{gafa.nombre_modelo}</p>)}-->
-
-		<div class="texto-promo-landing">
-			<!--<img src="https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/ZOCO%20MEDIA/fondo-colores%20(1).png" alt="Fondo de colores de Zoco eyewear" class="fondo-colores" />-->
-			<h3>Formas únicas. Color esencial. Diseñadas para llevar.</h3>
-			<p>"ZOCO Captura la esencia y la luz de Andalucía en diseños que combinan la audacia de la originalidad con una versatilidad absoluta. Piezas exclusivas, cómodas y sin complicaciones, creadas para destacar en el día a día."</p>
-		</div>
 	
 		<div class="best-sellers-section">
 		<div class="titulos-best-sellers">
@@ -114,8 +108,13 @@ if (newArrivalsCarrouselError) console.error('newArrivalsCarrousel query failed:
 			))}
 		</div>
 	</div>
-
-
+ 
+	<div class="texto-promo-landing">
+			<img src="https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/ZOCO%20MEDIA/fondo-prueba-2.png" alt="Fondo de colores de Zoco eyewear" class="fondo-colores" />
+			<h3>Formas únicas. Color esencial. Diseñadas para llevar.</h3>
+			<p>"Desde su nacimiento ZOCO ha estado marcada por una combinación singular de diseño, oficio óptico y espíritu familiar. Formas propias y atemporales, con combinaciones cromaticas cuidadosamente equilibradas."</p>
+			<p><i>-LookVision 2026</i></p>
+	</div>
 
 <!-- Seccion new arrivals, viene de las queries de la tabla new_arrivals_photos-->
 	<div class="new-arrivals-section">
@@ -183,7 +182,7 @@ if (newArrivalsCarrouselError) console.error('newArrivalsCarrousel query failed:
 		<button class="boton-mostrar-mas" onclick="window.location.href='/catalogo?coleccion=coleccion2'">Show more</button>
 	</div>
 
-	<section style="max-width: 1200px; margin: 3rem auto; padding: 0 1rem;">
+	<!--<section style="max-width: 1200px; margin: 3rem auto; padding: 0 1rem;">
 		<h2 class="titulo-seccion">Prueba Gafa Card</h2>
 		<GafaCardComponent
 			portadaImgUrl="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=900&q=80"
@@ -191,7 +190,7 @@ if (newArrivalsCarrouselError) console.error('newArrivalsCarrousel query failed:
 			codigoColorModelo="C1 - Black"
 			esNovedad={true}
 		/>
-	</section>
+	</section> -->
 
 	<!-- Seccion de footer, componente footerPages.astro-->
 	<footer>

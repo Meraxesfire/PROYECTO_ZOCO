@@ -178,36 +178,47 @@
 
 .fondo-colores{
     position: absolute;
-    top: 75%;
-    left: 50%;
-    width: 50rem;
-    height: 40rem;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    transform: translate(-50%, -50%);
-    z-index: -1;
+    object-position: center;
+    z-index: 0;
 }
 .texto-promo-landing {
-    position:relative;
-    z-index: 0;
-    padding: 4rem 4rem;
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    min-height: clamp(26rem, 56vw, 46rem);
+    padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 4vw, 3rem);
     text-align: center;
-    margin: 1rem 10rem;
-    display:flex;
+    margin-top: 1rem;
+    margin-bottom: clamp(1rem, 4vw, 3rem);
+    display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 .texto-promo-landing h3 {
-    top: 80%;
-    font-size: clamp(1.8rem, 2vw, 0.4rem);
+    position: relative;
+    z-index: 1;
+    font-size: clamp(1.2rem, 2.5vw, 3rem);
     font-family: 'HkNova', sans-serif;
     color: #111111;
     margin-bottom: 1rem;
+    max-width: 34ch;
 }
 .texto-promo-landing p {
-    font-size: clamp(1.5rem, 2.5vw, 0.8rem);
+    position: relative;
+    z-index: 1;
+    font-size: clamp(0.8rem, 1.8vw, 2rem);
     font-family: 'HkNova', sans-serif;
-    color: #6f6f6f;
+    color: #ffffff;
     line-height: 1.5;
+    max-width: 70ch;
 }
 
 /*STYLES PARA BLOQUE DE BEST SELLERS*/
