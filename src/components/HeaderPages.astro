@@ -41,6 +41,20 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
             </ul>
         </div>
 
+        <!--Div para desplegabla + icono stores cuando el header queda atras en el viewport -->
+        <div class="div-menu-burger-pc">
+            <button class="btn-menu-burger-pc" type="button" aria-label="Abrir menu" aria-expanded="false">
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+            </button>
+            <button class="btn-ubicacion-stores" type="button" aria-label="Ubicación de tiendas" aria-expanded="false">
+                <a href="/stores">
+                    <img class="ubicacion-stores" src="/ubicacion.png" alt="Ubicación de tiendas"/>
+                </a>
+            </button>
+        </div>
+
         <!--Div para menú en mobile -->
         <div class="div-menu-burger-mobile">
             <button class="btn-menu-burger-mobile-pages" type="button" aria-label="Abrir menu" aria-expanded="false">
@@ -112,23 +126,81 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
     margin-left: auto;
 }
 
+  .div-menu-burger-pc {
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .btn-menu-burger-pc,
+  .btn-ubicacion-stores {
+    display: none;
+  }
+
+  .btn-menu-burger-pc {
+    position: fixed;
+    flex-direction: column;
+    gap: 6px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    top: 1rem;
+    right: calc(1rem + 44px + 0.5rem);
+    justify-content: center;
+    align-items: center;
+    border-radius: 0;
+    border: none;
+    background: rgba(255, 255, 255, 0);
+    z-index: 300;
+    cursor: pointer;
+  }
+
+  .btn-ubicacion-stores {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    top: 1rem;
+    right: 1rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0;
+    border: none;
+    background: rgba(255, 255, 255, 0);
+    z-index: 300;
+  }
+
+  .btn-ubicacion-stores a {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ubicacion-stores {
+    display: flex;
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+  }
+
 .nav-links-header-pages {
   font-family: 'HkNova', sans-serif;
   font-size: clamp(0.5rem, 1.8vw, 1.5rem);
-    list-style: none;
-    display: flex;
-    gap: calc(1rem + 1vw);
-    margin: 0;
-    padding: 0;
+  list-style: none;
+  display: flex;
+  gap: calc(1rem + 1vw);
+  margin: 0;
+  padding: 0;
 }
 
 .nav-links-header-pages li a {
-    text-decoration: none;
-    color: white;
+  text-decoration: none;
+  color: white;
   letter-spacing: 0.08em;
   position: relative;
 }
 
+/*-----------ANIMACIÓN DEL SUBRAYADO DEL MENÚ NORMAL DEL HEADER----------------*/
 .nav-links-header-pages li a::after {
   content: '';
   position: absolute;
@@ -144,14 +216,42 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
   width: 100%;
 }
 
+/*-----------STYLES DEL MENÚ QUE APARECE CUANDO EL HEADER SALE DEL VIEWPORT----------------*/
+.header-catalog.is-open-pc .menu-header-pages {
+  position: fixed;
+  top: calc(1rem + 44px + 0.5rem);
+  right: calc(1rem + 44px + 0.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding: 1rem;
+  margin: 0;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.45);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  z-index: 290;
+}
+
+.header-catalog.is-open-pc .nav-links-header-pages {
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.header-catalog.is-open-pc .nav-links-header-pages li a {
+  color: #111111;
+  font-size: 1.3rem;
+}
+
+
 /*STYLES PARA MOBILE-------------------------*/
 
 .div-menu-burger-mobile {
-    position: relative;
-    display: none; /* Oculto por defecto en pantallas grandes */
-    z-index: 3;
-    padding: 1rem;
-    margin-left: auto;
+  position: relative;
+  display: none; /* Oculto por defecto en pantallas grandes */
+  z-index: 3;
+  padding: 1rem;
+  margin-left: auto;
 }
 
 .hamburger {
@@ -163,6 +263,10 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
   transition: transform 0.8s ease, opacity 0.2s ease;
 }
 @media screen and (max-width:768px){
+
+.div-menu-burger-pc {
+  display: none !important;
+}
 
 .menu-header-pages {
     position: fixed;
@@ -236,7 +340,7 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
 
 
 <script>
-  //script para el menú desplegable tipo burger en headerPages.astro
+  //script para el menú desplegable tipo burger en MOBILE en headerPages.astro
   const header = document.querySelector('.header-catalog');
   const menuButton = document.querySelector('.btn-menu-burger-mobile-pages');
   const menuLinks = document.querySelectorAll('.nav-links-header-pages a');
@@ -254,6 +358,41 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
         menuButton.setAttribute('aria-expanded', 'false');
       });
     });
+  }
+
+
+  //SCRIPT PARA HACER DESPLEGABLE Y ICONO STORES CUANDO SE LPASA EL PRIMER NAV DE HEADER PAGES A PC, NO MOBILE. SOLO PARA PC
+  const menuBurgerPc = document.querySelector<HTMLButtonElement>('.btn-menu-burger-pc');
+  const iconoUbicacion = document.querySelector<HTMLButtonElement>('.btn-ubicacion-stores');
+  const headerPages = document.querySelector<HTMLElement>('.header-catalog');
+
+  if (headerPages && menuBurgerPc && iconoUbicacion) {
+    menuBurgerPc.addEventListener('click', () => {
+      headerPages.classList.toggle('is-open-pc');
+      const expanded = headerPages.classList.contains('is-open-pc');
+      menuBurgerPc.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    });
+
+    const menuLinksPc = document.querySelectorAll('.nav-links-header-pages a');
+    menuLinksPc.forEach((link) => {
+      link.addEventListener('click', () => {
+        headerPages.classList.remove('is-open-pc');
+        menuBurgerPc.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    const observer = new IntersectionObserver(([entry]) => {
+      const displayValue = entry.isIntersecting ? 'none' : 'inline-flex';
+      menuBurgerPc.style.display = displayValue;
+      iconoUbicacion.style.display = displayValue;
+
+      if (entry.isIntersecting) {
+        headerPages.classList.remove('is-open-pc');
+        menuBurgerPc.setAttribute('aria-expanded', 'false');
+      }
+    }, { threshold: 0.1 });
+
+    observer.observe(headerPages);
   }
 
 </script>
