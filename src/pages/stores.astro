@@ -1,1 +1,30 @@
-prueba pagina stores
+---
+import HeaderPages from '../components/HeaderPages.astro';
+import FooterPages from '../components/FooterPages.astro';
+import '../styles/global.css';
+
+const pageTitle = 'Stores';
+const mediaSrc = 'https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/ZOCO%20MEDIA/store-header-media.mp4';
+
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ZOCO eyewear | {pageTitle}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js"
+      data-cbid="b9262937-ba22-4d28-bbcd-aa28c8aff8b8" data-blockingmode="auto"
+      type="text/javascript"></script>
+  </head>
+  <body>
+    <HeaderPages pageTitle={pageTitle} mediaSrc={mediaSrc} />
+
+    <main class="stores-content">
+    </main>
+
+    <FooterPages />
+  </body>
+</html>

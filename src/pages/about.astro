@@ -1,1 +1,85 @@
-prueba pagina about
+---
+import HeaderPages from '../components/HeaderPages.astro';
+import FooterPages from '../components/FooterPages.astro';
+import '../styles/global.css';
+
+const pageTitle = 'About';
+const mediaSrc = 'https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/ZOCO%20MEDIA/about-header-media.mp4';
+
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ZOCO eyewear | {pageTitle}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js"
+      data-cbid="b9262937-ba22-4d28-bbcd-aa28c8aff8b8" data-blockingmode="auto"
+      type="text/javascript"></script>
+  </head>
+  <body>
+    <HeaderPages pageTitle={pageTitle} mediaSrc={mediaSrc} />
+
+    <main class="about-content">
+      <div class="about-container">
+        <div class="about-text">
+          <h1>Nuestra Historia</h1>
+          <br>
+          <p>ZOCO® nace en Sevilla en 2024 con una visión clara: fusionar la artesanía óptica tradicional con el diseño contemporáneo. Todo comenzó en un pequeño taller del centro histórico, donde un equipo de ópticos y diseñadores decidió crear gafas que contaran historias.</p>
+          <br>
+          <p>Inspirados por la luz única de Andalucía, los tonos cálidos del atardecer y la energía vibrante de la ciudad, cada montaje se convierte en una pieza de identidad. ZOCO® no solo fabrica gafas: crea accesorios que reflejan carácter, autenticidad y pasión por el detalle.</p>
+          <br>
+          <p>Hoy, nuestro taller sigue siendo el corazón de la marca. Cada par de gafas pasa por las manos de nuestros artesanos antes de llegar a ti. Porque creemos que la calidad no se fabrica: se construye con cuidado, con tiempo y con orgullo.</p>
+          <br>
+          <p>Bienvenido a ZOCO®. Bienvenido a una forma de ver el mundo.</p>
+        </div>
+        <div class="about-image">
+          <img src="/logoHeaderLanding.png" alt="ZOCO eyewear" />
+        </div>
+      </div>
+    </main>
+
+    <FooterPages />
+  </body>
+</html>
+
+<style>
+  .about-content {
+    padding: 2rem 4rem;
+    font-family: 'HkNova', sans-serif;
+  }
+
+  .about-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 3rem;
+  }
+
+  .about-text {
+    flex: 1;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  .about-text h1 {
+    color: #70c2a5;
+    font-size: 2rem;
+  }
+
+  .about-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .about-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+  }
+</style>
