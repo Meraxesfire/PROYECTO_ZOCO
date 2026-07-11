@@ -1,0 +1,19 @@
+---
+import '../styles/global.css';
+import HeaderPages from '../components/HeaderPages.astro';
+import FooterPages from '../components/FooterPages.astro';
+import LayoutFooterLinkPages from '../layouts/layoutFooterLinkPages.astro';
+
+const pageTitle = 'Contacto';
+const mediaSrc = 'https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/ZOCO%20MEDIA/contact-header-media.mp4';
+
+---
+
+<LayoutFooterLinkPages title={pageTitle}>
+<HeaderPages pageTitle={pageTitle} mediaSrc={mediaSrc} />
+<br>
+<div class="contact-container">
+</div>
+
+<FooterPages />
+</LayoutFooterLinkPages>

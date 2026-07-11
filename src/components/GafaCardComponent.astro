@@ -88,4 +88,20 @@ const {
     font-size: 2.4rem;
   }
 }
+
+    @media screen and (max-width: 768px) {
+    .gafa-card-component {
+        min-width: 35%;
+        max-width: 35vw;
+        padding: 0.9rem;
+    }
+
+    .gafa-card-details h3 {
+        font-size: clamp(0.95rem, 3.8vw, 1.2rem);
+    }
+
+    .gafa-card-details p {
+        font-size: clamp(0.78rem, 3.2vw, 0.98rem);
+    }
+}
     </style>

@@ -87,6 +87,7 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
         height: 100%;
         max-height: 10rem;
         object-fit: cover;
+        object-position: center 38%;
         z-index: 1;
   }
 
@@ -200,7 +201,6 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
   position: relative;
 }
 
-/*-----------ANIMACIÓN DEL SUBRAYADO DEL MENÚ NORMAL DEL HEADER----------------*/
 .nav-links-header-pages li a::after {
   content: '';
   position: absolute;
@@ -263,6 +263,25 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
   transition: transform 0.8s ease, opacity 0.2s ease;
 }
 @media screen and (max-width:768px){
+
+.header-catalog {
+  min-height: 7.5rem;
+}
+
+.header-content {
+  align-items: center;
+  padding-right: 4.25rem;
+}
+
+.logo-header-catalog {
+  width: clamp(9.5rem, 42vw, 13.5rem);
+}
+
+.header-title {
+  font-size: clamp(1rem, 4.6vw, 1.45rem);
+  line-height: 1.1;
+  margin-bottom: 0;
+}
 
 .div-menu-burger-pc {
   display: none !important;

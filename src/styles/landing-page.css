@@ -419,4 +419,9 @@
         font-family: 'HkNova', sans-serif;
     }
 
+    .texto-promo-landing {
+  justify-content: flex-start;
+  padding-top: 9rem; /* prueba entre 2.6rem y 3.2rem */
+}
+
 }

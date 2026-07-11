@@ -6,7 +6,11 @@ const startYear = 2024;
 const copyrightYears = startYear == currentYear ? `${currentYear}` : `${startYear}-${currentYear}`;
 
 ---
-
+    <div class="b2b-container">
+        <h1>¿Quieres formar parte de nuestra gran familia?</h1>
+        <p>Si eres un <b>profesional del sector óptico</b> y quieres ofrecer a tus clientes la experiencia ZOCO®, ponte en contacto con nosotros. Estamos deseando colaborar contigo y llevar la visión de ZOCO® a más personas.</p>
+        <button class="b2b-button" onclick="window.location.href='/contact'">Contact us</button>
+    </div>
 <footer class="footer">
     <div class="footer-bussiness-content">
         <img src="https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/sign/LOGOS%20ZOCO/zocobgRemove.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV8yMGU5OTgzYS1jNmMwLTQ1NjItYWNjNy1hMDQ5MWYyMGM5M2MiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJMT0dPUyBaT0NPL3pvY29iZ1JlbW92ZS5wbmciLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzgzNDI5MjkyLCJleHAiOjQ5MzcwMjkyOTJ9.Nz0VT39WB7CsWMraK5Q8Q1d1tUvyIj_fL4XaMpSPxas" alt="Logo ZOCO" class="footer-logo" />
@@ -23,6 +27,7 @@ const copyrightYears = startYear == currentYear ? `${currentYear}` : `${startYea
     </div>
     <div class="footer-info-links">
         <p>INFO</p>
+        <a href="/contact" class="footer-link">Contact</a>  
         <a href="/terms&conditions" class="footer-link">Terms & Conditions</a>
         <a href="/ShippingInfo" class="footer-link">Shipping Info</a>
         <a href="/FAQ" class="footer-link">FAQ</a>
@@ -42,6 +47,50 @@ const copyrightYears = startYear == currentYear ? `${currentYear}` : `${startYea
 </footer>
 
 <style>
+
+    .b2b-container {
+        display:block;
+        position: relative;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        background-color: #ffcd07;
+        color:white;
+        font-family: 'HkNova', sans-serif;
+        padding: clamp(1.9rem, 4vw, 4rem);
+    }
+
+    .b2b-container h1 {
+        font-size: clamp(1.5rem, 3vw, 2.5rem);
+        margin-bottom: 1rem;
+    }
+
+    .b2b-container p{
+        font-size: clamp(0.4rem, 1.9vw, 1.5rem);
+        max-width: 800px;
+        margin: 0 auto;
+        color:black;
+    }
+
+    .b2b-button {
+        margin-top: 1rem;
+        padding: 0.5rem 1.5rem;
+        font-size: clamp(0.7rem, 1.5vw, 1.5rem);
+        background-color: #303030;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        font-family: 'HkNova', sans-serif;
+    }
+
+    .b2b-button:hover {
+        background-color: #ffffff;
+        color: #303030;
+        font-weight: bold;
+        font-family: 'HkNova', sans-serif;
+    }
     .footer {
         background-color: #70c2a5;
         width: 100%;

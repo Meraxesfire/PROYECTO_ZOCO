@@ -9,5 +9,11 @@ export default defineConfig({
   adapter: vercel(),
   devToolbar: {
     enabled: false
+  },
+  vite: {
+    server: {
+      allowedHosts: ['.loca.lt']
+    }
   }
+
 });
