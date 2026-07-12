@@ -59,6 +59,7 @@
     background: rgba(255, 255, 255, 0);
     z-index: 300;
     cursor:pointer;
+    transition: transform 0.3s ease;
 }
 
 .btn-ubicacion-stores{
@@ -74,6 +75,7 @@
     border: #000000;
     background: rgba(255, 255, 255, 0);
     z-index: 300;
+    transition: transform 0.3s ease;
 }
 
 .btn-ubicacion-stores a{
@@ -96,6 +98,10 @@
     border: none;
     background: transparent;
     cursor: pointer;
+}
+
+.btn-menu-burger-pc:hover, .btn-ubicacion-stores:hover {
+    transform: scale(1.5);
 }
 
 .hamburger {
