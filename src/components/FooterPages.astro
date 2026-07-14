@@ -83,6 +83,7 @@ const copyrightYears = startYear == currentYear ? `${currentYear}` : `${startYea
         cursor: pointer;
         font-weight: bold;
         font-family: 'HkNova', sans-serif;
+        transition: all 0.3s ease;
     }
 
     .b2b-button:hover {
@@ -90,6 +91,7 @@ const copyrightYears = startYear == currentYear ? `${currentYear}` : `${startYea
         color: #507c79;
         font-weight: bold;
         font-family: 'HkNova', sans-serif;
+        transition: all 0.3s ease;
     }
     .footer {
         background-color: #70c2a5;
@@ -231,6 +233,11 @@ const copyrightYears = startYear == currentYear ? `${currentYear}` : `${startYea
 
         .subscribe-form-button {
             width: auto;
+        }
+
+
+        .b2b-container p{
+            font-size: clamp(0.9rem, 2.5vw, 1.5rem);
         }
     }
 

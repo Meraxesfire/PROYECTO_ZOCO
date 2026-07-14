@@ -23,6 +23,11 @@
 .logo-header-landing-page{
     max-width: 25vw;
     height: auto;
+    transition: all 1s ease;
+}
+.logo-header-landing-page:hover {
+    transform: scale(1.15);
+    transition: all 1s ease;
 }
 
 .nav-header-landing-page {
@@ -412,6 +417,7 @@
     margin-block: 4rem;
     margin-inline: clamp(1rem, 6vw, 10rem);
     padding-bottom: 2rem;
+    padding-top:1.2rem;
     display: flex;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
@@ -446,7 +452,14 @@
     cursor: pointer;
     text-align: center;
     text-decoration: none;
+    transition: all 0.5s ease;
 }
+.boton-mostrar-mas:hover{
+    background-color: #f8f8f8c7;
+    color: #000000;
+    transition: all 0.5s ease;
+}
+
 .video-coleccion{
     position: relative;
     width: 100%;
@@ -562,10 +575,18 @@
         padding-top: 2rem;
     }
 
+    .pin-inner h3 {
+        font-size: clamp(0.5rem, 1.8vw, 1rem);
+    }
+
     .pin-inner #aboutText,
     .kw-spacer,
     .kw {
-        font-size: clamp(1.25rem, 5.5vw, 2.4rem);
+        font-size: clamp(1.15rem, 5vw, 2.2rem);
+    }
+
+    .pin-inner .firma-comentario {
+        font-size: clamp(0.75rem, 1.5vw, 1rem);
     }
 
     .kw {
