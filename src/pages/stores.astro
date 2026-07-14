@@ -3,8 +3,21 @@ import HeaderPages from '../components/HeaderPages.astro';
 import FooterPages from '../components/FooterPages.astro';
 import '../styles/global.css';
 
+import { supabase } from '../lib/supabase';
+
 const pageTitle = 'Stores';
 const mediaSrc = 'https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/ZOCO%20MEDIA/store-header-media.mp4';
+
+
+//Query para obtener los datos de la tabla "tiendas" desde Supabase
+const {data: tiendas, error: tiendasError} = await supabase
+.from('tiendas')
+.select('*');
+
+if(tiendasError) { //control de errores en caso de que la query falle, para que no se rompa la página y se pueda mostrar un mensaje de error en la consola.
+  console.error('Error al obtener los datos de las tiendas:', tiendasError);
+}
+
 
 ---
 
@@ -23,8 +36,26 @@ const mediaSrc = 'https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/pub
     <HeaderPages pageTitle={pageTitle} mediaSrc={mediaSrc} />
 
     <main class="stores-content">
+      <div class="stores-list">
+
+
+      </div>
+      <div class="stores-location-map" id="map" style="width: 50%; height: auto;"></div >
+
+
+
     </main>
+
+    
 
     <FooterPages />
   </body>
+
+  <script is:inline define:vars={{ tiendas }}>
+  // 'define:vars' toma la variable 'tiendas' de Astro (servidor) 
+  // y la convierte mágicamente en una variable de JS para el navegador (cliente).
+  
+  // Guardamos los datos en el objeto global 'window' para que initMap pueda verlos
+  window.tiendasZoco = tiendas;
+  </script>
 </html>

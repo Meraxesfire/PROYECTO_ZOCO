@@ -26,6 +26,36 @@ logoHref ="/" }
         </a>
         <h1 class="header-title">{pagetitle}</h1>
     </div>
+    <div class="menu-header-pages">
+        <ul class="nav-links-header-pages">
+            <li class="nav-home-dropdown"><a href="/">Home</a></li>
+            <li><a href="/optical">Optical</a></li>
+            <li><a href="/sun">Sun</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/stores">Stores</a></li>
+        </ul>
+    </div>
+
+    <div class="div-menu-burger-pc">
+        <button class="btn-menu-burger-pc" type="button" aria-label="Abrir menu" aria-expanded="false">
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
+        </button>
+        <button class="btn-ubicacion-stores" type="button" aria-label="Ubicación de tiendas" aria-expanded="false">
+            <a href="/stores">
+                <img class="ubicacion-stores" src="/ubicacion.png" alt="Ubicación de tiendas"/>
+            </a>
+        </button>
+    </div>
+
+    <div class="div-menu-burger-mobile">
+        <button class="btn-menu-burger-mobile-pages" type="button" aria-label="Abrir menu" aria-expanded="false">
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
+            <span class="hamburger"></span>
+        </button>
+    </div>
 </header>
 
 <style>
@@ -36,13 +66,22 @@ logoHref ="/" }
         font-display: swap;
     }
 
-    .fondo-header-footer-links {
+    .header-footer-links {
         display: flex;
-        width:100%;
-        height:10rem;
-        flex-direction:row;
         align-items: center;
         background-color: #70c2a5;
+        min-height: 10rem;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .fondo-header-footer-links {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: auto;
+        height: auto;
+        flex: 0 0 auto;
     }
 
     .logo-link {
@@ -63,4 +102,295 @@ logoHref ="/" }
         font-family: 'HkNova', sans-serif;
         line-height: 1.15;
     }
+
+    .menu-header-pages {
+        position: relative;
+        display: flex;
+        top: 0;
+        right: 0;
+        z-index: 3;
+        padding: 1rem;
+        margin-left: auto;
+    }
+
+    .div-menu-burger-pc {
+        margin: 0;
+        cursor: pointer;
+    }
+
+    .btn-menu-burger-pc,
+    .btn-ubicacion-stores {
+        display: none;
+    }
+
+    .btn-menu-burger-pc {
+        position: fixed;
+        flex-direction: column;
+        gap: 6px;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        top: 1rem;
+        right: calc(1rem + 44px + 0.5rem);
+        justify-content: center;
+        align-items: center;
+        border-radius: 0;
+        border: none;
+        background: rgba(255, 255, 255, 0);
+        z-index: 300;
+        cursor: pointer;
+    }
+
+    .btn-ubicacion-stores {
+        position: fixed;
+        width: 50px;
+        height: 50px;
+        top: 1rem;
+        right: 1rem;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0;
+        border: none;
+        background: rgba(255, 255, 255, 0);
+        z-index: 300;
+    }
+
+    .btn-ubicacion-stores a {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .ubicacion-stores {
+        display: flex;
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+    }
+
+    .nav-links-header-pages {
+        font-family: 'HkNova', sans-serif;
+        font-size: clamp(0.5rem, 1.8vw, 1.5rem);
+        list-style: none;
+        display: flex;
+        gap: calc(1rem + 1vw);
+        margin: 0;
+        padding: 0;
+    }
+
+    .nav-links-header-pages .nav-home-dropdown {
+        display: none;
+    }
+
+    .nav-links-header-pages li a {
+        text-decoration: none;
+        color: white;
+        letter-spacing: 0.08em;
+        position: relative;
+    }
+
+    .nav-links-header-pages li a::after {
+        content: '';
+        position: absolute;
+        bottom: -6px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: #ffffff;
+        transition: 0.4s ease;
+    }
+
+    .nav-links-header-pages li a:hover::after {
+        width: 100%;
+    }
+
+    .header-footer-links.is-open-pc .menu-header-pages {
+        position: fixed;
+        top: calc(1rem + 44px + 0.5rem);
+        right: calc(1rem + 44px + 0.5rem);
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+        padding: 1rem;
+        margin: 0;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.45);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        z-index: 290;
+    }
+
+    .header-footer-links.is-open-pc .nav-links-header-pages {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .header-footer-links.is-open-pc .nav-links-header-pages .nav-home-dropdown {
+        display: list-item;
+    }
+
+    .header-footer-links.is-open .nav-links-header-pages .nav-home-dropdown {
+        display: list-item;
+    }
+
+    .header-footer-links.is-open-pc .nav-links-header-pages li a {
+        color: #111111;
+        font-size: 1.3rem;
+    }
+
+    .btn-menu-burger-pc, .btn-ubicacion-stores {
+        transition: transform 0.3s ease;
+    }
+
+    .btn-menu-burger-pc:hover, .btn-ubicacion-stores:hover {
+        transform: scale(1.2);
+    }
+
+    .div-menu-burger-mobile {
+        position: relative;
+        display: none;
+        z-index: 3;
+        padding: 1rem;
+        margin-left: auto;
+    }
+
+    .hamburger {
+        display: block;
+        width: 24px;
+        height: 2px;
+        border-radius: 999px;
+        background: #000;
+        transition: transform 0.8s ease, opacity 0.2s ease;
+    }
+
+    @media screen and (max-width:768px){
+        .div-menu-burger-pc {
+            display: none !important;
+        }
+
+        .menu-header-pages {
+            position: fixed;
+            top: calc(1rem + 44px + 0.5rem);
+            right: 15px;
+            left: 15px;
+            width: auto;
+            max-width: 18rem;
+            margin-left: auto;
+            padding: 1rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.45);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            z-index: 210;
+            display: none;
+            align-items: flex-start;
+        }
+
+        .div-menu-burger-mobile {
+            display: flex;
+        }
+
+        .btn-menu-burger-mobile-pages{
+            position: fixed;
+            top: 1rem;
+            right: 15px;
+            display: inline-flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 44px;
+            height: 44px;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            border: none;
+            background: rgba(255, 255, 255, 0.45);
+            z-index: 220;
+            cursor: pointer;
+        }
+
+        .header-footer-links.is-open .menu-header-pages {
+            display: flex;
+            width: fit-content;
+            max-width: calc(100vw - 30px);
+        }
+
+        .header-footer-links.is-open .nav-links-header-pages {
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .header-footer-links.is-open .nav-links-header-pages li a {
+            font-size: 1.3rem;
+            color: #111111;
+        }
+
+        .header-footer-links.is-open .hamburger:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .header-footer-links.is-open .hamburger:nth-child(2) {
+            opacity: 0;
+        }
+
+        .header-footer-links.is-open .hamburger:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+    }
 </style>
+
+<script>
+    const header = document.querySelector<HTMLElement>('.header-footer-links');
+    const menuButton = document.querySelector<HTMLButtonElement>('.btn-menu-burger-mobile-pages');
+  const menuLinks = document.querySelectorAll('.nav-links-header-pages a');
+
+  if (header && menuButton) {
+    menuButton.addEventListener('click', () => {
+      header.classList.toggle('is-open');
+      const expanded = header.classList.contains('is-open');
+      menuButton.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    });
+
+    menuLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        header.classList.remove('is-open');
+        menuButton.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+    const menuBurgerPc = document.querySelector<HTMLButtonElement>('.btn-menu-burger-pc');
+    const iconoUbicacion = document.querySelector<HTMLButtonElement>('.btn-ubicacion-stores');
+    const headerFooterLinks = document.querySelector<HTMLElement>('.header-footer-links');
+
+  if (headerFooterLinks && menuBurgerPc && iconoUbicacion) {
+    menuBurgerPc.addEventListener('click', () => {
+      headerFooterLinks.classList.toggle('is-open-pc');
+      const expanded = headerFooterLinks.classList.contains('is-open-pc');
+      menuBurgerPc.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    });
+
+    const menuLinksPc = document.querySelectorAll('.nav-links-header-pages a');
+    menuLinksPc.forEach((link) => {
+      link.addEventListener('click', () => {
+        headerFooterLinks.classList.remove('is-open-pc');
+        menuBurgerPc.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    const observer = new IntersectionObserver(([entry]) => {
+      const displayValue = entry.isIntersecting ? 'none' : 'inline-flex';
+      menuBurgerPc.style.display = displayValue;
+      iconoUbicacion.style.display = displayValue;
+
+      if (entry.isIntersecting) {
+        headerFooterLinks.classList.remove('is-open-pc');
+        menuBurgerPc.setAttribute('aria-expanded', 'false');
+      }
+    }, { threshold: 0.1 });
+
+    observer.observe(headerFooterLinks);
+  }
+</script>

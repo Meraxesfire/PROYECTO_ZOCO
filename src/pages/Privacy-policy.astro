@@ -5,7 +5,9 @@ import FooterPages from '../components/FooterPages.astro';
 import LayoutFooterLinkPages from '../layouts/layoutFooterLinkPages.astro';
 
 const pagetitle = 'Política de Privacidad';
-
+// Para que Vercel haga ISR real en tu index.astro, el código en el servidor se configura así:
+// ESTE EXPORT ES EL TRUCO DEL ISR EN VERCEL:
+export const prerender=true;
 ---
 
 <LayoutFooterLinkPages title={pagetitle}>

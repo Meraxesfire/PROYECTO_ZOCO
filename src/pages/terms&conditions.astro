@@ -5,7 +5,9 @@ import FooterPages from '../components/FooterPages.astro';
 import LayoutFooterLinkPages from '../layouts/layoutFooterLinkPages.astro';
 
 const pagetitle = 'Terminos y Condiciones'; //constante de título de la página, previsamente declarada en el layout de la landing page, para que se muestre en el title del head.
-
+// Para que Vercel haga ISR real en tu index.astro, el código en el servidor se configura así:
+// ESTE EXPORT ES EL TRUCO DEL ISR EN VERCEL:
+export const prerender=true;
 
 ---
 

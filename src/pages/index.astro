@@ -6,10 +6,6 @@ import { supabase } from '../lib/supabase';
 
 import '../styles/global.css';
 import '../styles/landing-page.css';
-
-// Para que Vercel haga ISR real en tu index.astro, el código en el servidor se configura así:
-// ESTE EXPORT ES EL TRUCO DEL ISR EN VERCEL:
-export const prerender=true;
    
 //constante de título de la página, previsamente declarada en el layout de la landing page, para que se muestre en el title del head.
 const pageTitle = 'Inicio';
@@ -109,12 +105,13 @@ if (newArrivalsCarrouselError) console.error('newArrivalsCarrousel query failed:
 		</div>
 	</div>
  
-	<div class="texto-promo-landing">
-			<img src="https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/ZOCO%20MEDIA/fondo-prueba-2.png" alt="Fondo de colores de Zoco eyewear" class="fondo-colores" />
-			<h3>Formas únicas. Color esencial. Diseñadas para llevar.</h3>
-			<p>"Desde su nacimiento ZOCO ha estado marcada por una combinación singular de diseño, oficio óptico y espíritu familiar. Formas propias y atemporales, con combinaciones cromaticas cuidadosamente equilibradas."</p>
-			<p><i>-LookVision 2026</i></p>
-	</div>
+	<section class="pin-section" id="pinSection">
+		<div class="pin-inner" id="pinInner">
+			<h3>DICEN DE ZOCO</h3>
+			<p id="aboutText">«ZOCO está marcada por un <b data-kw class="palabra-color1">diseño singular</b>,  <b data-kw class="palabra-color2">oficio óptico</b> y  <b data-kw class="palabra-color3">espíritu familiar</b>. <br>Formas propias y atemporales, con combinaciones cromaticas cuidadosamente equilibradas.»</p>
+			<p class="firma-comentario"><i>-LookVision 2026</i></p>
+		</div>
+	</section>
 
 <!-- Seccion new arrivals, viene de las queries de la tabla new_arrivals_photos-->
 	<div class="new-arrivals-section">
@@ -200,5 +197,200 @@ if (newArrivalsCarrouselError) console.error('newArrivalsCarrousel query failed:
 
 	
 
+
+	<Fragment slot="page-scripts">
+	<script is:inline>
+	(function(){
+	  // Elementos principales del bloque con efecto scroll
+	  const pinSection = document.getElementById('pinSection');
+	  const pinInner   = document.getElementById('pinInner');
+	  const aboutText  = document.getElementById('aboutText');
+	  if(!pinSection || !pinInner || !aboutText) return;
+
+	  // Divide el texto en palabras normales y palabras destacadas data-kw
+	  function buildWords(){
+	    const nodes = Array.from(aboutText.childNodes);
+	    aboutText.innerHTML = '';
+	    let wordIndex = 0;
+	    const kwEls = [];
+	    const normalEls = [];
+
+	    nodes.forEach(node => {
+	      if(node.nodeType === Node.TEXT_NODE){
+	        node.textContent.split(/(\s+)/).forEach(chunk => {
+	          if(chunk.trim() === '') { aboutText.appendChild(document.createTextNode(chunk)); return; }
+	          const span = document.createElement('span');
+	          span.className = 'word';
+	          span.textContent = chunk;
+	          span.dataset.index = wordIndex++;
+	          aboutText.appendChild(span);
+	          normalEls.push(span);
+	        });
+	      } else if(node.nodeType === Node.ELEMENT_NODE && node.hasAttribute('data-kw')){
+	        const spacer = document.createElement('span');
+	        spacer.className = 'kw-spacer word';
+	        spacer.textContent = node.textContent;
+	        spacer.dataset.index = wordIndex++;
+	        aboutText.appendChild(spacer);
+
+	        const kw = document.createElement('span');
+	        kw.className = 'kw ' + node.className;
+	        kw.textContent = node.textContent;
+	        pinInner.appendChild(kw);
+
+	        kwEls.push({ el: kw, spacer });
+	      } else if(node.nodeType === Node.ELEMENT_NODE && node.tagName === 'BR'){
+	        aboutText.appendChild(document.createElement('br'));
+	      }
+	    });
+	    return { normalEls, kwEls };
+	  }
+
+	  // Generador simple para introducir variacion visual en las palabras normales
+	  function rand(seed){
+	    const x = Math.sin(seed * 999) * 10000;
+	    return x - Math.floor(x);
+	  }
+
+	  // Utilidades de animacion: acotado y interpolacion lineal
+	  const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+	  const lerp  = (a, b, t) => a + (b - a) * t;
+
+	  // Espera a que la fuente cargue antes de medir y animar texto
+	  document.fonts.ready.then(() => {
+	    requestAnimationFrame(() => {
+	      const { normalEls, kwEls } = buildWords();
+
+	      // Estado medido del layout para reposicionar las palabras destacadas
+	      let initialRects = [];
+	      let targetCenters = [];
+	      let pinDims = { width: 0, height: 0 };
+
+	      // Mide el texto base y calcula la posicion final de las data-kw
+	      function measure(){
+	        const pinRect = pinInner.getBoundingClientRect();
+	        pinDims = { width: pinRect.width, height: pinRect.height };
+
+	        initialRects = kwEls.map(({ spacer }) => {
+	          const r = spacer.getBoundingClientRect();
+	          const styles = window.getComputedStyle(spacer);
+	          const baseFontSize = parseFloat(styles.fontSize);
+	          const baseLineHeight = Number.isFinite(parseFloat(styles.lineHeight))
+	            ? parseFloat(styles.lineHeight)
+	            : baseFontSize * 1.5;
+	          return {
+	            left: r.left - pinRect.left,
+	            top: r.top - pinRect.top,
+	            width: r.width,
+	            height: r.height,
+	            centerX: r.left - pinRect.left + r.width / 2,
+	            centerY: r.top - pinRect.top + r.height / 2,
+	            baseFontSize,
+	            baseLineHeight
+	          };
+	        });
+
+	        kwEls.forEach(({ el }, i) => {
+	          const r = initialRects[i];
+	          el.style.left = r.centerX + 'px';
+	          el.style.top = r.centerY + 'px';
+	          el.style.fontSize = r.baseFontSize + 'px';
+	          el.style.lineHeight = r.baseLineHeight + 'px';
+	        });
+
+	        const centerX = pinRect.width / 2;
+	        const centerY = pinRect.height / 2;
+	        const maxSpacerHeight = Math.max(...kwEls.map(({ spacer }) => spacer.getBoundingClientRect().height));
+	        const gap = window.innerWidth < 768 ? maxSpacerHeight + 20 : 78;
+	        const n = kwEls.length;
+
+	        targetCenters = kwEls.map((_, i) => ({
+	          x: centerX,
+	          y: centerY + (i - (n - 1) / 2) * gap
+	        }));
+	      }
+
+	      // Primera medicion y recalculo cuando cambia el viewport
+	      measure();
+	      window.addEventListener('resize', measure);
+
+	      // Actualiza la animacion en funcion del scroll actual
+	      function update(){
+	        const rect = pinSection.getBoundingClientRect();
+	        const total = pinSection.offsetHeight - window.innerHeight;
+	        const scrolled = -rect.top;
+	        const progress = clamp(total > 0 ? scrolled / total : 0, 0, 1);
+
+			//AJUSTAR AQUI EL TIMING DEL SCROLL PARA QUE LAS PALABRAS SE MUEVAN Y CREZCAN A LA VELOCIDAD QUE QUERAMOS
+	        // Tramos de scroll: movimiento de keywords, desvanecido de texto normal y crecimiento final
+	        const animationEnd = 0.80;
+	        const t1 = clamp((progress - 0.20) / (animationEnd - 0.20), 0, 1);
+	        const t1words = clamp((progress - 0.20) / 0.40, 0, 1);
+	        const t2 = clamp((progress - 0.64) / (animationEnd - 0.64), 0, 1);
+
+	        // Letras normales: se dispersan y desaparecen progresivamente
+	        const nTotal = normalEls.length || 1;
+	        normalEls.forEach((el, i) => {
+	          const stagger = i / nTotal;
+	          const local = clamp((t1words - stagger * 0.5) / (1 - stagger * 0.5), 0, 1);
+	          const seed = Number(el.dataset.index) + 1;
+	          const dx = (rand(seed) - 0.5) * 260 * local;
+	          const dy = -120 * local - rand(seed * 2) * 60 * local;
+	          const rot = (rand(seed * 3) - 0.5) * 40 * local;
+	          el.style.opacity = 1 - local;
+	          el.style.transform = 'translate(' + dx + 'px, ' + dy + 'px) rotate(' + rot + 'deg)';
+	        });
+
+	        // Palabras data-kw: se desplazan al centro, crecen y en mobile separan mas sus lineas
+	        const growth = 1 + t2 * 2;
+	        const isMobile = window.innerWidth < 768;
+	        const maxBaseLineH = Math.max(...initialRects.map(r => r.baseLineHeight));
+	        const dynGap = isMobile ? maxBaseLineH * growth + 48 : 78;
+	        const nKw = kwEls.length;
+	        const h3Title = pinInner.querySelector('h3');
+	        const firmaComentario = pinInner.querySelector('.firma-comentario');
+	        const tH3 = isMobile ? clamp((progress - 0.40) / 0.20, 0, 1) : 0;
+
+	        // Reposicion y escalado de cada keyword destacada
+	        kwEls.forEach(({ el }, i) => {
+	          const start = initialRects[i];
+	          const dynTargetX = pinDims.width / 2;
+	          const dynTargetY = pinDims.height / 2 + (i - (nKw - 1) / 2) * dynGap;
+	          const curCenterX = lerp(start.centerX, dynTargetX, t1);
+	          const curCenterY = lerp(start.centerY, dynTargetY, t1);
+	          const dx = Math.round(curCenterX - start.centerX);
+	          const dy = Math.round(curCenterY - start.centerY);
+	          el.style.transform = 'translate(-50%, -50%) translate(' + dx + 'px, ' + dy + 'px)';
+	          el.style.fontSize = start.baseFontSize * growth + 'px';
+	          el.style.lineHeight = start.baseLineHeight * growth + 'px';
+	          el.style.opacity = 1;
+	        });
+
+	        // Fade solo en mobile para el titulo y la firma
+	        if (h3Title) {
+	          h3Title.style.opacity = isMobile ? String(1 - tH3) : '1';
+	        }
+
+	        if (firmaComentario) {
+	          firmaComentario.style.opacity = isMobile ? String(1 - tH3) : '1';
+	        }
+	      }
+
+	      // Throttle del scroll con requestAnimationFrame
+	      let ticking = false;
+	      function onScroll(){
+	        if(!ticking){
+	          requestAnimationFrame(() => { update(); ticking = false; });
+	          ticking = true;
+	        }
+	      }
+
+	      window.addEventListener('scroll', onScroll, { passive: true });
+	      update();
+	    });
+	  });
+	})();
+	</script>
+	</Fragment>
 
 	</Layout>

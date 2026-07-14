@@ -34,10 +34,11 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
   <!--SECCION MENÚ PARA HEADER DE PAGES OPTICAL/SUN -->
         <div class="menu-header-pages">
             <ul class="nav-links-header-pages">
-                <li><a href="/optical">OPTICAL</a></li>
-                <li><a href="/sun">SUN</a></li>
-                <li><a href="/about">ABOUT</a></li>
-                <li><a href="/stores">STORES</a></li>
+            <li class="nav-home-dropdown"><a href="/">Home</a></li>
+                <li><a href="/optical">Optical</a></li>
+                <li><a href="/sun">Sun</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/stores">Stores</a></li>
             </ul>
         </div>
 
@@ -194,6 +195,10 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
   padding: 0;
 }
 
+.nav-links-header-pages .nav-home-dropdown {
+  display: none;
+}
+
 .nav-links-header-pages li a {
   text-decoration: none;
   color: white;
@@ -236,6 +241,14 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
 .header-catalog.is-open-pc .nav-links-header-pages {
   flex-direction: column;
   gap: 0.8rem;
+}
+
+.header-catalog.is-open-pc .nav-links-header-pages .nav-home-dropdown {
+  display: list-item;
+}
+
+.header-catalog.is-open .nav-links-header-pages .nav-home-dropdown {
+  display: list-item;
 }
 
 .header-catalog.is-open-pc .nav-links-header-pages li a {
@@ -310,6 +323,7 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
     backdrop-filter: blur(10px);
     z-index: 210;
     display: none;
+  align-items: flex-start;
 }
 
 .div-menu-burger-mobile {
@@ -337,6 +351,8 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
 
 .header-catalog.is-open .menu-header-pages {
   display: flex;
+  width: fit-content;
+  max-width: calc(100vw - 30px);
 }
 
 .header-catalog.is-open .nav-links-header-pages {

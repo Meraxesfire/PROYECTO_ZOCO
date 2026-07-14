@@ -7,6 +7,11 @@ import LayoutFooterLinkPages from '../layouts/layoutFooterLinkPages.astro';
 const pageTitle = 'Contacto';
 const mediaSrc = 'https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/ZOCO%20MEDIA/contact-header-media.mp4';
 
+
+
+// Para que Vercel haga ISR real en tu index.astro, el código en el servidor se configura así:
+// ESTE EXPORT ES EL TRUCO DEL ISR EN VERCEL:
+export const prerender=true;
 ---
 
 <LayoutFooterLinkPages title={pageTitle}>
