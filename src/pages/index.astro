@@ -104,6 +104,7 @@ if (newArrivalsCarrouselError) console.error('newArrivalsCarrousel query failed:
 			))}
 		</div>
 	</div>
+	<button class="boton-mostrar-mas-best-sellers" onclick="window.location.href='/catalogo?coleccion=best-sellers'">Show more</button>
  
 	<section class="pin-section" id="pinSection">
 		<div class="pin-inner" id="pinInner">
@@ -128,6 +129,7 @@ if (newArrivalsCarrouselError) console.error('newArrivalsCarrousel query failed:
 				) : (
 					<p>Imagen SUN no disponible</p>
 				)}
+				<button class="new-arrivals-info-btn">Explora más Sol → </button>
 			</a>
 			<a class="featured-card" href="#" aria-label="Nueva gafa OPTICAL">
 				{newArrivalsOptical?.[0]?.foto_modelo ? (
@@ -140,7 +142,9 @@ if (newArrivalsCarrouselError) console.error('newArrivalsCarrousel query failed:
 				) : (
 					<p>Imagen OPTICAL no disponible</p>
 				)}
+				<button class="new-arrivals-info-btn">Explora más Ópticas → </button>
 			</a>
+			
 		</div>
 		<div class="new-arrivals-carrousel">
 			{newArrivalsCarrouselItems.map((gafa) => (

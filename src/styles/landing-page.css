@@ -193,6 +193,43 @@
     }
 }
 
+/*STYLES BLOQUE BEST SELLERS*/
+.titulos-best-sellers{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.titulos-best-sellers h4{
+    font-size: clamp(1rem, 1.8vw, 1.2rem);
+    margin-top:-80px;
+    text-align: center;
+    line-height: 1.35;
+    font-family: 'HkNova', sans-serif;
+    color: #6b6b6b;
+}
+
+.boton-mostrar-mas-best-sellers{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 1rem;
+    padding: 1rem 5rem;
+    font-size: 1rem;
+    color: #ffffff;
+    background-color: #000000b9;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.5s ease;
+}
+.boton-mostrar-mas-best-sellers:hover{
+    background-color: #c7c5c5c7;
+    color: #000000;
+    transition: all 0.5s ease;
+}
+
 /*STYLES BLOQUE DE TEXTO PROMO LANDING PAGE*/
 
 .fondo-colores{
@@ -279,6 +316,7 @@
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
     height: 250vh;
+    margin-top: 5rem;
 }
 
 .pin-inner {
@@ -361,22 +399,6 @@
     text-rendering: optimizeLegibility;
 }
 
-/*STYLES PARA BLOQUE DE BEST SELLERS*/
-
-.titulos-best-sellers{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.titulos-best-sellers h4{
-    font-size: clamp(1rem, 1.8vw, 1.2rem);
-    margin-top:-80px;
-    text-align: center;
-    line-height: 1.35;
-    font-family: 'HkNova', sans-serif;
-    color: #6b6b6b;
-}
-
 /*STYLES PARA BLOQUE DE NEW ARRIVALS---------------------------------------------*/
 
 .new-arrivals-grid{
@@ -392,7 +414,7 @@
 .featured-card {
     position: relative;
     display: block;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .featured-card img {
@@ -408,8 +430,10 @@
     transition: opacity 220ms ease;
   }
 
-  .featured-card:hover .img-hover {
+  .featured-card:hover .img-hover,
+  .featured-card:hover .new-arrivals-info-btn{
     opacity: 1;
+    color:#000000;
   }
 
 
@@ -423,6 +447,29 @@
     scroll-snap-type: x mandatory;
 
   }
+
+  .new-arrivals-info-btn{
+    position: absolute;
+    font-family: 'HkNova', sans-serif;
+    font-weight: 700;
+    bottom: 1rem;
+    padding: 0.5rem 1rem;
+    font-size:3rem;
+    color: #ffffff;
+    background-color:transparent;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    left: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .new-arrivals-info-btn:hover{
+    transform: scale(1.1);
+
+  }
+
 
 /*STYLES PARA COLECCIONES-------------------*/
 .coleccion-1-container,
