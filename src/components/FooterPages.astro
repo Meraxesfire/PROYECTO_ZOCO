@@ -1,11 +1,13 @@
 ---
 // Layout para el footer de todas las páginas
+import ChatWidget from './ChatWidget.astro';
 
 const currentYear =new Date().getFullYear();
 const startYear = 2024;
 const copyrightYears = startYear == currentYear ? `${currentYear}` : `${startYear}-${currentYear}`;
 
 ---
+    <ChatWidget />
     <div class="b2b-container">
         <h1>¿Quieres formar parte de nuestra gran familia?</h1>
         <p>Si eres un <b>profesional del sector óptico</b> y quieres ofrecer a tus clientes la experiencia ZOCO®, ponte en contacto con nosotros. Estamos deseando colaborar contigo y llevar la visión de ZOCO® a más personas.</p>

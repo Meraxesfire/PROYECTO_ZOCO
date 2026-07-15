@@ -1,0 +1,468 @@
+---
+// ============================================================================
+// ARCHIVO: src/components/ChatWidget.astro
+// PROPÓSITO: Componente de chat flotante que se muestra en todas las páginas
+//
+// CÓMO FUNCIONA:
+//   1. Muestra un botón flotante en la esquina inferior derecha
+//   2. Al hacer click, se abre un panel de chat con historial de conversación
+//   3. Los mensajes se envían a /api/chat (endpoint de Gemini)
+//   4. La IA responde con información sobre ZOCO (productos, envíos, etc.)
+//
+// PARA MODIFICAR:
+//   - Para cambiar el mensaje de bienvenida: edita el <p> dentro de .chat-msg.bot
+//   - Para cambiar colores: busca #70c2a5 (verde ZOCO) en los estilos
+//   - Para cambiar el tamaño del panel: edita width/height en .chat-panel
+//   - Para cambiar la posición: edita bottom/right en .chat-widget
+//   - Para cambiar el modelo de IA: edita src/pages/api/chat.ts
+// ============================================================================
+---
+
+<!-- ============================================================================
+  ESTRUCTURA HTML DEL CHAT
+  ----------------------------------------------------------------------------
+  - .chat-widget: Contenedor principal (position: fixed, esquina inferior derecha)
+  - .chat-toggle: Botón flotante que abre el chat
+  - .chat-panel: Panel de chat que se abre/cierra con animación
+    - .chat-header: Barra superior con avatar, nombre y botón cerrar
+    - .chat-messages: Área de scroll donde se muestran los mensajes
+    - .chat-typing: Indicador animado de "escribiendo..."
+    - .chat-input-area: Campo de texto + botón enviar
+============================================================================ -->
+
+<div class="chat-widget">
+  <!-- Botón flotante: se oculta cuando el panel está abierto -->
+  <button class="chat-toggle" id="chat-toggle" aria-label="Abrir chat">
+    <img src="https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/LOGOS%20ZOCO/bot-conversacional.png" alt="Chat" />
+  </button>
+
+  <!-- Panel de chat: hidden por defecto, se muestra con clase .open -->
+  <div class="chat-panel" id="chat-panel">
+
+    <!-- Header del chat con avatar y botón cerrar -->
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <img class="chat-avatar" src="https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/LOGOS%20ZOCO/bot-conversacional.png" alt="ZOCO Bot" />
+        <div>
+          <!-- Para cambiar el nombre del bot, edita aquí -->
+          <p class="chat-title">ZOCO Assistant</p>
+          <p class="chat-subtitle">En línea</p>
+        </div>
+      </div>
+      <button class="chat-close" id="chat-close" aria-label="Cerrar chat">&times;</button>
+    </div>
+
+    <!-- Contenedor de mensajes: se genera dinámicamente con JavaScript -->
+    <!-- Este mensaje de bienvenida se muestra al abrir el chat -->
+    <div class="chat-messages" id="chat-messages">
+      <div class="chat-msg bot">
+        <p>¡Hola! Soy el asistente de ZOCO. ¿En qué puedo ayudarte? Pregúntame sobre nuestras gafas, modelos o lo que necesites.</p>
+      </div>
+    </div>
+
+    <!-- Indicador de "escribiendo..." con animación de puntos -->
+    <div class="chat-typing" id="chat-typing">
+      <span></span><span></span><span></span>
+    </div>
+
+    <!-- Formulario de entrada: campo de texto + botón enviar -->
+    <form class="chat-input-area" id="chat-form">
+      <input type="text" id="chat-input" placeholder="Escribe tu mensaje..." autocomplete="off" />
+      <button type="submit" id="chat-send" aria-label="Enviar">
+        <!-- Icono de envío (flecha) -->
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </form>
+  </div>
+</div>
+
+
+<!-- ============================================================================
+  JAVASCRIPT DEL CHAT (client-side)
+  ----------------------------------------------------------------------------
+  Este script se ejecuta en el navegador (is:inline = no se procesa con bundler).
+  Usa un IIFE (Immediately Invoked Function Expression) para no pollutar el scope global.
+
+  FLUJO:
+  1. Usuario hace click en el botón → se abre el panel
+  2. Usuario escribe un mensaje y pulsa enviar
+  3. Se añade el mensaje al historial y a la pantalla
+  4. Se muestra el indicador de "escribiendo..."
+  5. Se envía POST a /api/chat con el mensaje + historial
+  6. La IA responde y se muestra en pantalla
+  7. Si hay error (429, red), se muestra mensaje amigable
+
+  PARA MODIFICAR:
+  - Mensaje de error de red: busca "No pude conectar"
+  - Mensaje de error de cuota: busca "Servicio ocupado"
+  - Mensaje de error genérice: busca "ha ocurrido un error"
+  - Duración de la animación de typing: no hay timeout, se oculta cuando la API responde
+============================================================================ -->
+<script is:inline>
+(function () {
+  // --- Referencias a elementos del DOM ---
+  const toggle = document.getElementById('chat-toggle');     // Botón flotante
+  const panel = document.getElementById('chat-panel');       // Panel de chat
+  const closeBtn = document.getElementById('chat-close');    // Botón cerrar (X)
+  const messages = document.getElementById('chat-messages'); // Contenedor de mensajes
+  const form = document.getElementById('chat-form');         // Formulario de entrada
+  const input = document.getElementById('chat-input');       // Campo de texto
+  const typing = document.getElementById('chat-typing');     // Indicador de typing
+
+  // --- Estado del chat ---
+  const historial = [];  // Array de mensajes: [{role: 'user'|'model', text: '...'}]
+  let isOpen = false;    // true cuando el panel está abierto
+
+  // --- Abrir el panel de chat ---
+  function openChat() {
+    panel.classList.add('open');      // Mostrar panel (transición CSS)
+    toggle.classList.add('hidden');   // Ocultar botón flotante
+    isOpen = true;
+    input.focus();                   // Poner foco en el campo de texto
+  }
+
+  // --- Cerrar el panel de chat ---
+  function closeChat() {
+    panel.classList.remove('open');   // Ocultar panel (transición CSS)
+    toggle.classList.remove('hidden'); // Mostrar botón flotante
+    isOpen = false;
+  }
+
+  // --- Event listeners para abrir/cerrar ---
+  toggle.addEventListener('click', openChat);
+  closeBtn.addEventListener('click', closeChat);
+
+  // --- Añadir un mensaje a la pantalla ---
+  // role: 'user' = mensaje del usuario (derecha, verde)
+  // role: 'bot' = respuesta de la IA (izquierda, gris)
+  function addMessage(text, role) {
+    const div = document.createElement('div');
+    div.className = 'chat-msg ' + (role === 'user' ? 'user' : 'bot');
+    // Convertir saltos de línea a <br> para que se muestren correctamente
+    div.innerHTML = '<p>' + text.replace(/\n/g, '<br>') + '</p>';
+    messages.appendChild(div);
+    // Auto-scroll al último mensaje
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  // --- Mostrar indicador de "escribiendo..." ---
+  function showTyping() {
+    typing.classList.add('visible');
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  // --- Ocultar indicador de "escribiendo..." ---
+  function hideTyping() {
+    typing.classList.remove('visible');
+  }
+
+  // --- Enviar mensaje ---
+  // Se ejecuta al hacer submit del formulario (Enter o botón enviar)
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;  // No enviar mensajes vacíos
+
+    // 1. Añadir mensaje del usuario a la pantalla e historial
+    addMessage(text, 'user');
+    historial.push({ role: 'user', text: text });
+    input.value = '';  // Limpiar campo de texto
+
+    // 2. Mostrar indicador de typing
+    showTyping();
+
+    try {
+      // 3. Enviar mensaje a la API
+      // NOTA: Se envía historial.slice(0, -1) porque el último mensaje
+      // (el actual) se envía como "mensajeUsuario" separado
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mensajeUsuario: text, historial: historial.slice(0, -1) }),
+      });
+
+      const data = await res.json();
+      hideTyping();
+
+      // 4. Manejar respuesta según el código de estado
+      if (res.status === 429) {
+        // Error de rate limit o cuota agotada
+        addMessage(data.error || 'Servicio ocupado, inténtalo de nuevo en unos segundos.', 'bot');
+        historial.pop();  // Quitar el mensaje del usuario del historial (no se pudo procesar)
+      } else if (data.respuesta) {
+        // Éxito: mostrar respuesta de la IA
+        addMessage(data.respuesta, 'bot');
+        historial.push({ role: 'model', text: data.respuesta });
+      } else {
+        // Error desconocido de la API
+        addMessage('Lo siento, ha ocurrido un error. Inténtalo de nuevo.', 'bot');
+        historial.pop();
+      }
+    } catch (err) {
+      // Error de red (no se pudo conectar con el servidor)
+      hideTyping();
+      addMessage('No pude conectar con el servidor. Inténtalo más tarde.', 'bot');
+      historial.pop();
+    }
+  });
+})();
+</script>
+
+
+<!-- ============================================================================
+  ESTILOS CSS DEL CHAT
+  ----------------------------------------------------------------------------
+  PARA CAMBIAR COLORES:
+  - #70c2a5 = Verde ZOCO (botón, header, mensajes del usuario, borde del input)
+  - #5aae91 = Verde oscuro (hover del botón enviar)
+  - #f0f0f0 = Gris claro (mensajes de la IA)
+  - #333 = Negro (texto de la IA)
+
+  PARA CAMBIAR TAMAÑO/POSICIÓN:
+  - Posición del botón: .chat-widget (bottom, right)
+  - Tamaño del panel: .chat-panel (width, height)
+  - En mobile: @media (max-width: 640px)
+============================================================================ -->
+<style>
+  /* Contenedor principal: fijo en la esquina inferior derecha */
+  .chat-widget {
+    position: fixed;
+    bottom: 24px;     /* Distancia desde abajo */
+    right: 24px;      /* Distancia desde la derecha */
+    z-index: 1000;    /* Siempre encima de todo */
+    font-family: 'HkNova', sans-serif;
+  }
+
+  /* ===================== BOTÓN FLLOTANTE ===================== */
+  /* Botón circular con imagen del bot. Se oculta cuando el panel está abierto. */
+  .chat-toggle {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s, opacity 0.3s;
+    background: #70c2a5;  /* Verde ZOCO */
+    padding: 0;
+  }
+  .chat-toggle:hover {
+    transform: scale(1.08);  /* Efecto hover: crece un poco */
+  }
+  .chat-toggle.hidden {
+    opacity: 0;
+    pointer-events: none;    /* No clickable cuando está oculto */
+    transform: scale(0.8);
+  }
+  .chat-toggle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  /* ===================== PANEL DE CHAT ===================== */
+  /* Panel que se abre/cierra con animación. Contiene header, mensajes e input. */
+  .chat-panel {
+    position: absolute;
+    bottom: 80px;     /* Posición encima del botón */
+    right: 0;
+    width: 370px;     /* Ancho del panel en desktop */
+    max-width: calc(100vw - 32px);  /* No más ancho que la pantalla */
+    height: 500px;    /* Alto del panel en desktop */
+    max-height: calc(100vh - 120px); /* No más alto que la pantalla */
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Animación de apertura: empieza invisible y abajo */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.95);
+    transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+  }
+  .chat-panel.open {
+    /* Animación de cierre: visible y en posición normal */
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  /* ===================== HEADER ===================== */
+  /* Barra superior verde con avatar, nombre y botón cerrar */
+  .chat-header {
+    background: #70c2a5;  /* Verde ZOCO */
+    color: #fff;
+    padding: 14px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;  /* No se encoge */
+  }
+  .chat-header-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .chat-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #fff;
+  }
+  .chat-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  .chat-subtitle {
+    font-size: 0.75rem;
+    margin: 0;
+    opacity: 0.85;
+  }
+  /* Botón cerrar (X) */
+  .chat-close {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.6rem;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 1;
+    transition: opacity 0.2s;
+  }
+  .chat-close:hover {
+    opacity: 0.7;
+  }
+
+  /* ===================== MENSAJES ===================== */
+  /* Área scrollable donde se muestran los mensajes del chat */
+  .chat-messages {
+    flex: 1;           /* Ocupa todo el espacio disponible */
+    overflow-y: auto;  /* Scroll vertical */
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;         /* Espacio entre mensajes */
+  }
+  /* Estilo base de cada mensaje */
+  .chat-msg {
+    max-width: 80%;    /* Los mensajes no ocupan todo el ancho */
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    word-wrap: break-word;  /* Que las palabras largas se corten */
+  }
+  .chat-msg p {
+    margin: 0;
+  }
+  /* Mensaje del usuario: alineado a la derecha, verde */
+  .chat-msg.user {
+    align-self: flex-end;
+    background: #70c2a5;  /* Verde ZOCO */
+    color: #fff;
+    border-bottom-right-radius: 4px;  /* Esquina inferior derecha más cuadrada */
+  }
+  /* Mensaje de la IA: alineado a la izquierda, gris */
+  .chat-msg.bot {
+    align-self: flex-start;
+    background: #f0f0f0;  /* Gris claro */
+    color: #333;
+    border-bottom-left-radius: 4px;   /* Esquina inferior izquierda más cuadrada */
+  }
+
+  /* ===================== INDICADOR DE TYPING ===================== */
+  /* Tres puntos animados que aparecen mientras la IA responde */
+  .chat-typing {
+    display: none;     /* Oculto por defecto */
+    padding: 0 16px 8px;
+    align-items: center;
+    gap: 4px;
+  }
+  .chat-typing.visible {
+    display: flex;     /* Se muestra con la clase .visible */
+  }
+  .chat-typing span {
+    width: 7px;
+    height: 7px;
+    background: #aaa;
+    border-radius: 50%;
+    animation: bounce 1.2s infinite;  /* Animación de rebote */
+  }
+  .chat-typing span:nth-child(2) {
+    animation-delay: 0.2s;  /* Retraso para efecto cascada */
+  }
+  .chat-typing span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  @keyframes bounce {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+
+  /* ===================== ÁREA DE INPUT ===================== */
+  /* Campo de texto + botón enviar en la parte inferior */
+  .chat-input-area {
+    display: flex;
+    padding: 12px;
+    gap: 8px;
+    border-top: 1px solid #e5e5e5;
+    flex-shrink: 0;  /* No se encoge */
+    background: #fff;
+  }
+  /* Campo de texto */
+  .chat-input-area input {
+    flex: 1;         /* Ocupa todo el espacio disponible */
+    border: 1px solid #ddd;
+    border-radius: 24px;  /* Bordes redondeados */
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    font-family: 'HkNova', sans-serif;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .chat-input-area input:focus {
+    border-color: #70c2a5;  /* Verde ZOCO al enfocar */
+  }
+  /* Botón enviar (círculo verde con icono de flecha) */
+  .chat-input-area button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: #70c2a5;  /* Verde ZOCO */
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+  .chat-input-area button:hover {
+    background: #5aae91;  /* Verde más oscuro en hover */
+  }
+
+  /* ===================== RESPONSIVE (MOBILE) ===================== */
+  /* En pantallas pequeñas, el panel ocupa casi toda la pantalla */
+  @media (max-width: 640px) {
+    .chat-widget {
+      bottom: 16px;
+      right: 16px;
+    }
+    .chat-panel {
+      width: calc(100vw - 32px);         /* Casi todo el ancho */
+      height: calc(100vh - 100px);       /* Casi todo el alto */
+      bottom: 72px;
+      right: -8px;  /* Pequeño ajuste para que se centre */
+    }
+  }
+</style>
