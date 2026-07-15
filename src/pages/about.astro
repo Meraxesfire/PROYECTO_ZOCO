@@ -27,7 +27,7 @@ const mediaSrc = 'https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/pub
         <div class="track" id="track">
           <div class="contenedor-slide">
               <div class="about-text carrusel-item">
-                <h1>Nuestra Historia</h1>
+                <h1 class="titulo-slide-about">Nuestra Historia</h1>
                 <br>
                 <p>ZOCO® nace en Sevilla en 2024 con una visión clara: fusionar la artesanía óptica tradicional con el diseño contemporáneo. Todo comenzó en un pequeño taller del centro histórico, donde un equipo de ópticos y diseñadores decidió crear gafas que contaran historias.</p>
                 <br>
@@ -282,6 +282,7 @@ const mediaSrc = 'https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/pub
   gap: clamp(1rem, 3vw, 3rem);
   align-items: center;
   min-height: clamp(30vh, 50vh, 60vh);
+  max-height: 100vh;
 }
 
 /* Elemento interno del slide (texto o imagen), ocupa el espacio disponible */
@@ -294,6 +295,7 @@ const mediaSrc = 'https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/pub
 }
 
 /* Bloque de texto del slide */
+
 .about-text {
   font-size: clamp(0.9rem, 1.1vw, 1.1rem);
   line-height: 1.6;
@@ -302,8 +304,8 @@ const mediaSrc = 'https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/pub
 
 /* Título dentro del bloque de texto */
 .about-text h1 {
-  color: #70c2a5;
-  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  color: #000000;
+  font-size: clamp(2rem, 3.4vw, 3.5rem);
 }
 
 /* Contenedor de la imagen del slide */
@@ -311,20 +313,25 @@ const mediaSrc = 'https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/pub
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   height: 100%;
+  padding: 0;
+  overflow: hidden;
 }
 
-/* Imagen: responsive, no sobrepasa su contenedor, bordes redondeados */
+/* Imagen: cover total sin restricciones */
 .about-image img {
-  max-width: 100%;
-  max-height: clamp(200px, 40vh, 400px);
-  object-fit: contain;
-  border-radius: 4px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-width: none;
+  max-height: none;
+  border-radius: 0;
 }
 
-/* Flechas de navegación (solo mobile) */
+/* Flechas de navegación (desktop + mobile) */
 .arrow {
-  display: none;
+  display: flex;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -387,14 +394,11 @@ const mediaSrc = 'https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/pub
 
   .about-image {
     height: auto;
+    padding: 0;
   }
 
   .about-image img {
-    max-height: clamp(150px, 30vh, 250px);
-  }
-
-  .arrow {
-    display: flex;
+    max-height: none;
   }
 }
 </style>
