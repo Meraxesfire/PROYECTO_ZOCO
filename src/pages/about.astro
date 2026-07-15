@@ -23,63 +23,378 @@ const mediaSrc = 'https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/pub
     <HeaderPages pageTitle={pageTitle} mediaSrc={mediaSrc} />
 
     <main class="about-content">
-      <div class="about-container">
-        <div class="about-text">
-          <h1>Nuestra Historia</h1>
-          <br>
-          <p>ZOCO® nace en Sevilla en 2024 con una visión clara: fusionar la artesanía óptica tradicional con el diseño contemporáneo. Todo comenzó en un pequeño taller del centro histórico, donde un equipo de ópticos y diseñadores decidió crear gafas que contaran historias.</p>
-          <br>
-          <p>Inspirados por la luz única de Andalucía, los tonos cálidos del atardecer y la energía vibrante de la ciudad, cada montaje se convierte en una pieza de identidad. ZOCO® no solo fabrica gafas: crea accesorios que reflejan carácter, autenticidad y pasión por el detalle.</p>
-          <br>
-          <p>Hoy, nuestro taller sigue siendo el corazón de la marca. Cada par de gafas pasa por las manos de nuestros artesanos antes de llegar a ti. Porque creemos que la calidad no se fabrica: se construye con cuidado, con tiempo y con orgullo.</p>
-          <br>
-          <p>Bienvenido a ZOCO®. Bienvenido a una forma de ver el mundo.</p>
-        </div>
-        <div class="about-image">
-          <img src="/logoHeaderLanding.png" alt="ZOCO eyewear" />
+      <div class="hover-slider" id="slider">
+        <div class="track" id="track">
+          <div class="contenedor-slide">
+              <div class="about-text carrusel-item">
+                <h1>Nuestra Historia</h1>
+                <br>
+                <p>ZOCO® nace en Sevilla en 2024 con una visión clara: fusionar la artesanía óptica tradicional con el diseño contemporáneo. Todo comenzó en un pequeño taller del centro histórico, donde un equipo de ópticos y diseñadores decidió crear gafas que contaran historias.</p>
+                <br>
+                <p>Hoy, nuestro taller sigue siendo el corazón de la marca. Cada par de gafas pasa por las manos de nuestros artesanos antes de llegar a ti. Porque creemos que la calidad no se fabrica: se construye con cuidado, con tiempo y con orgullo.</p>
+                <br>
+                <p>Bienvenido a ZOCO®. Bienvenido a una forma de ver el mundo.</p>
+              </div>
+              <div class="about-image carrusel-item">
+                <img src="https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/ZOCO%20MEDIA/optica_delgado_grano_envejecido.png" alt="Primera optica delgado" />
+              </div>
+          </div>
+          <div class="contenedor-slide">
+              <div class="about-text carrusel-item">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae nemo hic adipisci odit facilis blanditiis unde magni iste vero labore suscipit, libero dolorum, mollitia ipsa explicabo earum soluta at temporibus!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam et doloremque facilis, dolorum autem modi aperiam mollitia minima amet, exercitationem doloribus quidem, voluptatem voluptatibus labore vero velit! Ut, vero suscipit.
+              </div>
+              <div class="about-image carrusel-item">
+                <img src="https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/ZOCO%20MEDIA/hermanos%20trabajando.png" alt="Primera optica delgado" />
+              </div>
+          </div>
+          <div class="contenedor-slide">
+              <div class="about-text carrusel-item">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae nemo hic adipisci odit facilis blanditiis unde magni iste vero labore suscipit, libero dolorum, mollitia ipsa explicabo earum soluta at temporibus!
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam et doloremque facilis, dolorum autem modi aperiam mollitia minima amet, exercitationem doloribus quidem, voluptatem voluptatibus labore vero velit! Ut, vero suscipit.
+              </div>
+              <div class="about-image carrusel-item">
+                <img src="https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/ZOCO%20MEDIA/optica_delgado_grano_envejecido.png" alt="Primera optica delgado" />
+              </div>
+          </div>
         </div>
       </div>
+      <!-- Flechas fuera del overflow:hidden del slider -->
+      <div class="arrow arrow-left" id="arrow-left">&#8592;</div>
+      <div class="arrow arrow-right" id="arrow-right">&#8594;</div>
     </main>
 
     <FooterPages />
+
+    <!-- ============================================
+         SCRIPT: Carrusel horizontal con scroll
+         Desktop: rueda del ratón (wheel event)
+         Mobile: swipe táctil (touch events)
+         Al llegar al final/inicio, el scroll vertical
+         se reanuda automáticamente.
+         ============================================ -->
+    <script is:inline>
+    (function () {
+      // Referencias al contenedor (slider) y a la pista que se mueve (track)
+      var slider = document.getElementById('slider');
+      var track  = document.getElementById('track');
+      var arrowLeft  = document.getElementById('arrow-left');
+      var arrowRight = document.getElementById('arrow-right');
+      if (!slider || !track) return;
+
+      // Número total de slides y último índice válido
+      var slides = track.children.length;
+      var maxIndex = slides - 1;
+
+      // currentIndex: slide objetivo (0, 1, 2...)
+      // currentX: posición actual en % (puede ser decimal durante la animación)
+      // startX / targetX: origen y destino de la animación actual
+      // startTime: momento en que empezó la animación
+      // rafId: ID del requestAnimationFrame activo
+      // isMoving: true mientras hay una animación en curso (bloquea nuevos inputs)
+      var currentIndex = 0;
+      var currentX = 0;
+      var startX = 0;
+      var targetX = 0;
+      var startTime = 0;
+      var rafId = null;
+      var isMoving = false;
+
+      // Variables para touch (mobile)
+      var touchStartX = 0;
+      var touchStartY = 0;
+      var swiped = false; // evita disparar múltiples veces en un mismo gesto
+
+      // Duración de cada transición en ms (más alto = más lento/suave)
+      var DURATION = 2000;
+
+      // Función de easing: acelera al inicio, desacelera al final
+      function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      }
+
+      // Bucle de animación: se ejecuta cada frame hasta completar DURATION
+      function animate(now) {
+        // t = progreso de 0 a 1
+        var t = Math.min(1, (now - startTime) / DURATION);
+        // Aplicar easing al progreso para suavizar
+        var eased = easeInOutCubic(t);
+        // Interpolar entre posición origen y destino
+        currentX = startX + (targetX - startX) * eased;
+        // Mover el track con translateX (GPU, sin repaints pesados)
+        track.style.transform = 'translateX(' + currentX + '%)';
+
+        if (t < 1) {
+          // Todavía no terminó, pedir siguiente frame
+          rafId = requestAnimationFrame(animate);
+        } else {
+          // Animación completada, permitir nuevos inputs
+          isMoving = false;
+          rafId = null;
+        }
+      }
+
+      // Mover a un slide específico (index)
+      function goTo(index) {
+        // Limitar al rango válido
+        currentIndex = Math.max(0, Math.min(maxIndex, index));
+        // La animación arranca desde donde esté visualmente
+        startX = currentX;
+        // Cada slide ocupa 100% del ancho del slider
+        targetX = -currentIndex * 100;
+        startTime = performance.now();
+        isMoving = true;
+
+        // Actualizar visibilidad de flechas
+        updateArrows();
+
+        // Cancelar animación anterior si hubiera
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(animate);
+      }
+
+      // Actualizar flechas: ocultar izquierda en primer slide, derecha en último
+      function updateArrows() {
+        if (arrowLeft)  arrowLeft.classList.toggle('arrow-hidden', currentIndex === 0);
+        if (arrowRight) arrowRight.classList.toggle('arrow-hidden', currentIndex === maxIndex);
+      }
+
+      // --- DESKTOP: wheel event ---
+      // Listener del wheel: convierte scroll vertical en movimiento horizontal
+      slider.addEventListener('wheel', function (e) {
+        var scrollingDown = e.deltaY > 0;
+        var scrollingUp   = e.deltaY < 0;
+
+        var atEnd   = currentIndex === maxIndex;
+        var atStart = currentIndex === 0;
+
+        // Si estamos en el límite en esa dirección, NO interceptar:
+        // dejar que el navegador haga scroll vertical normal
+        if ((scrollingDown && atEnd) || (scrollingUp && atStart)) return;
+
+        // Bloquear el scroll vertical y mover el carrusel
+        e.preventDefault();
+        // Ignorar input si ya hay una animación en curso
+        if (isMoving) return;
+
+        goTo(currentIndex + (scrollingDown ? 1 : -1));
+      }, { passive: false });
+
+      // --- MOBILE: touch events (swipe) ---
+      // Al tocar, guardamos la posición inicial del dedo
+      slider.addEventListener('touchstart', function (e) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        swiped = false;
+      }, { passive: true });
+
+      // Durante el movimiento, prevenir scroll vertical si el gesto es horizontal
+      slider.addEventListener('touchmove', function (e) {
+        if (swiped || isMoving) return;
+
+        var diffX = touchStartX - e.touches[0].clientX;
+        var diffY = touchStartY - e.touches[0].clientY;
+
+        // Si el movimiento es más horizontal que vertical, bloquear scroll vertical
+        if (Math.abs(diffX) > Math.abs(diffY)) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+
+      // Al soltar, si el swipe fue suficientemente largo, cambiar de slide
+      slider.addEventListener('touchend', function (e) {
+        if (swiped || isMoving) return;
+
+        var touchEndX = e.changedTouches[0].clientX;
+        var diff = touchStartX - touchEndX; // positivo = swipe izquierda (siguiente)
+
+        var minSwipe = 50; // píxeles mínimos para considerar swipe
+
+        if (Math.abs(diff) < minSwipe) return; // demasiado corto, ignorar
+
+        var atEnd   = currentIndex === maxIndex;
+        var atStart = currentIndex === 0;
+
+        // Swipe izquierda (siguiente) bloqueado si estamos al final
+        if (diff > 0 && atEnd) return;
+        // Swipe derecha (anterior) bloqueado si estamos al inicio
+        if (diff < 0 && atStart) return;
+
+        swiped = true; // marcar que ya procesamos este gesto
+        goTo(currentIndex + (diff > 0 ? 1 : -1));
+      }, { passive: true });
+
+      // Posición inicial del track
+      track.style.transform = 'translateX(0%)';
+
+      // Estado inicial de flechas
+      updateArrows();
+
+      // Flechas clickeables para navegar
+      if (arrowLeft) {
+        arrowLeft.addEventListener('click', function () {
+          if (currentIndex > 0 && !isMoving) goTo(currentIndex - 1);
+        });
+      }
+      if (arrowRight) {
+        arrowRight.addEventListener('click', function () {
+          if (currentIndex < maxIndex && !isMoving) goTo(currentIndex + 1);
+        });
+      }
+    })();
+    </script>
   </body>
 </html>
 
 <style>
-  .about-content {
-    padding: 2rem 4rem;
-    font-family: 'HkNova', sans-serif;
+/* ============================================
+   ESTILOS: Carrusel horizontal on-hover
+   ============================================ */
+
+/* Contenedor principal de la página about */
+.about-content {
+  padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 4vw, 4rem);
+  font-family: 'HkNova', sans-serif;
+  position: relative;
+}
+
+/* Slider: contenedor con overflow oculto que enmascara los slides fuera de vista
+   touch-action: pan-y permite scroll vertical nativo en mobile,
+   el JS se encarga del swipe horizontal */
+.hover-slider {
+  overflow: hidden;
+  position: relative;
+  touch-action: pan-y;
+}
+
+/* Track: pista horizontal que se mueve con translateX durante la animación
+   will-change: transform le dice al browser que prepare la GPU para transforms */
+.track {
+  display: flex;
+  will-change: transform;
+}
+
+/* Cada slide ocupa el 100% del ancho del slider (1 slide visible a la vez = 2 elementos: texto + imagen)
+   min-height asegura que el contenedor no colapse si el contenido es corto */
+.contenedor-slide {
+  flex: 0 0 100%;
+  display: flex;
+  gap: clamp(1rem, 3vw, 3rem);
+  align-items: center;
+  min-height: clamp(30vh, 50vh, 60vh);
+}
+
+/* Elemento interno del slide (texto o imagen), ocupa el espacio disponible */
+.carrusel-item {
+  flex: 1;
+  box-sizing: border-box;
+  padding: clamp(1rem, 3vw, 2.5rem) clamp(0.75rem, 2vw, 1.25rem);
+  text-align: center;
+  font-size: clamp(0.95rem, 1.2vw, 1.2rem);
+}
+
+/* Bloque de texto del slide */
+.about-text {
+  font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Título dentro del bloque de texto */
+.about-text h1 {
+  color: #70c2a5;
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+}
+
+/* Contenedor de la imagen del slide */
+.about-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+/* Imagen: responsive, no sobrepasa su contenedor, bordes redondeados */
+.about-image img {
+  max-width: 100%;
+  max-height: clamp(200px, 40vh, 400px);
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+/* Flechas de navegación (solo mobile) */
+.arrow {
+  display: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #333;
+  cursor: pointer;
+  z-index: 10;
+  transition: opacity 0.3s, background 0.2s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.arrow:active {
+  background: rgba(200, 200, 200, 0.9);
+}
+
+.arrow-left {
+  left: 8px;
+}
+
+.arrow-right {
+  right: 8px;
+}
+
+.arrow-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Mobile: slides apilados verticalmente, centrados, gap reducido, flechas visibles */
+@media (max-width: 768px) {
+  .contenedor-slide {
+    flex-direction: column;
+    justify-content: center;
+    min-height: auto;
+    padding: 0.5rem 0;
+    gap: 0.25rem;
   }
 
-  .about-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: 3rem;
+  .carrusel-item {
+    flex: none;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
   }
 
   .about-text {
-    flex: 1;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #333;
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
   }
 
   .about-text h1 {
-    color: #70c2a5;
-    font-size: 2rem;
+    font-size: clamp(1.2rem, 5vw, 1.6rem);
   }
 
   .about-image {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+    height: auto;
   }
 
   .about-image img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 12px;
+    max-height: clamp(150px, 30vh, 250px);
   }
+
+  .arrow {
+    display: flex;
+  }
+}
 </style>
