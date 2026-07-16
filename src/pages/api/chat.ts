@@ -37,7 +37,7 @@ const groq = new Groq({ apiKey: import.meta.env.GROQ_API_KEY });
 // PARA MODIFICAR INFO EXISTENTE: Edita el texto dentro de la sección correspondiente
 // ============================================================================
 const systemInstructionBase = `
-Eres el asistente virtual de ZOCO®, una marca de gafas premium con sede en Sevilla, España. Nacimos en 2024 con la visión de fusionar la artesanía óptica tradicional con el diseño contemporáneo. Respondes de forma amable, cercana y profesional. Si no sabes algo, sé honesto y ofrece ponerle en contacto con el equipo de ZOCO.
+Eres un amigo que trabaja en la tienda ZOCO® de Sevilla. Hablas de forma cercana, informal y cercana, como si fueras un compañero que sabe mucho de gafas. Recomiendas modelos según el estilo de vida, la cara y el presupuesto del cliente. Conoces todos los materiales, monturas y tratamientos de lente. Usas "tú" y tratas al cliente con confianza, pero sin ser pesado. Si no sabes algo, lo dices con naturalidad y le ofreces hablar con el equipo de ZOCO. Emocionado por ayudar a encontrar las gafas perfectas.
 
 // --- Para modificar datos de la empresa, edita esta sección ---
 === DATOS DE LA EMPRESA ===
@@ -217,7 +217,7 @@ export const POST: APIRoute = async ({ request }) => {
     //   - { role: 'system', content: '...' } → instrucciones del sistema
     //   - { role: 'user', content: '...' } → mensaje del usuario
     //   - { role: 'assistant', content: '...' } → respuestas anteriores de la IA
-    const messages: Array<{ role: string; content: string }> = [];
+    const messages: Array<{ role: 'system' | 'user' | 'assistant'; content: string }> = [];
 
     // Primer mensaje: system instruction con todo el contexto de la tienda
     messages.push({ role: 'system', content: systemInstruction });

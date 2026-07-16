@@ -26,12 +26,12 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
     </video>
   )}
   <div class="header-content">
-    <a href={logoHref} class="logo-link"> <!--logo con link para volver al HOME -->
+    <a href={logoHref} class="logo-link"> {/*logo con link para volver al HOME */}
       <img class="logo-header-catalog" src="/logoHeaderLanding.png" alt="Logo de ZOCO eyewear" />
     </a>
     <h1 class="header-title">{pageTitle}</h1>
   </div>
-  <!--SECCION MENÚ PARA HEADER DE PAGES OPTICAL/SUN -->
+  {/*SECCION MENÚ PARA HEADER DE PAGES OPTICAL/SUN */}
         <div class="menu-header-pages">
             <ul class="nav-links-header-pages">
             <li class="nav-home-dropdown"><a href="/">Home</a></li>
@@ -42,7 +42,7 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
             </ul>
         </div>
 
-        <!--Div para desplegabla + icono stores cuando el header queda atras en el viewport -->
+        {/*Div para desplegabla + icono stores cuando el header queda atras en el viewport */}
         <div class="div-menu-burger-pc">
             <button class="btn-menu-burger-pc" type="button" aria-label="Abrir menu" aria-expanded="false">
                 <span class="hamburger"></span>
@@ -56,7 +56,7 @@ const isVideoMedia = typeof mediaSrc === 'string' && /\.(mp4|webm|ogg)(\?.*)?$/i
             </button>
         </div>
 
-        <!--Div para menú en mobile -->
+        {/*Div para menú en mobile */}
         <div class="div-menu-burger-mobile">
             <button class="btn-menu-burger-mobile-pages" type="button" aria-label="Abrir menu" aria-expanded="false">
                 <span class="hamburger"></span>

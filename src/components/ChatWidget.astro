@@ -18,7 +18,7 @@
 // ============================================================================
 ---
 
-<!-- ============================================================================
+{/* ============================================================================
   ESTRUCTURA HTML DEL CHAT
   ----------------------------------------------------------------------------
   - .chat-widget: Contenedor principal (position: fixed, esquina inferior derecha)
@@ -28,23 +28,23 @@
     - .chat-messages: Área de scroll donde se muestran los mensajes
     - .chat-typing: Indicador animado de "escribiendo..."
     - .chat-input-area: Campo de texto + botón enviar
-============================================================================ -->
+============================================================================ */}
 
 <div class="chat-widget">
-  <!-- Botón flotante: se oculta cuando el panel está abierto -->
+  {/* Botón flotante: se oculta cuando el panel está abierto */}
   <button class="chat-toggle" id="chat-toggle" aria-label="Abrir chat">
     <img src="https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/LOGOS%20ZOCO/bot-conversacional.png" alt="Chat" />
   </button>
 
-  <!-- Panel de chat: hidden por defecto, se muestra con clase .open -->
+  {/* Panel de chat: hidden por defecto, se muestra con clase .open */}
   <div class="chat-panel" id="chat-panel">
 
-    <!-- Header del chat con avatar y botón cerrar -->
+    {/* Header del chat con avatar y botón cerrar */}
     <div class="chat-header">
       <div class="chat-header-info">
         <img class="chat-avatar" src="https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/LOGOS%20ZOCO/bot-conversacional.png" alt="ZOCO Bot" />
         <div>
-          <!-- Para cambiar el nombre del bot, edita aquí -->
+          {/* Para cambiar el nombre del bot, edita aquí */}
           <p class="chat-title">ZOCO Assistant</p>
           <p class="chat-subtitle">En línea</p>
         </div>
@@ -52,24 +52,24 @@
       <button class="chat-close" id="chat-close" aria-label="Cerrar chat">&times;</button>
     </div>
 
-    <!-- Contenedor de mensajes: se genera dinámicamente con JavaScript -->
-    <!-- Este mensaje de bienvenida se muestra al abrir el chat -->
+    {/* Contenedor de mensajes: se genera dinámicamente con JavaScript */}
+    {/* Este mensaje de bienvenida se muestra al abrir el chat */}
     <div class="chat-messages" id="chat-messages">
       <div class="chat-msg bot">
-        <p>¡Hola! Soy el asistente de ZOCO. ¿En qué puedo ayudarte? Pregúntame sobre nuestras gafas, modelos o lo que necesites.</p>
+        <p>¡Hola! Soy el asistente de ZOCO. ¿En qué puedo ayudarte?</p>
       </div>
     </div>
 
-    <!-- Indicador de "escribiendo..." con animación de puntos -->
+    {/* Indicador de "escribiendo..." con animación de puntos */}
     <div class="chat-typing" id="chat-typing">
       <span></span><span></span><span></span>
     </div>
 
-    <!-- Formulario de entrada: campo de texto + botón enviar -->
+    {/* Formulario de entrada: campo de texto + botón enviar */}
     <form class="chat-input-area" id="chat-form">
       <input type="text" id="chat-input" placeholder="Escribe tu mensaje..." autocomplete="off" />
       <button type="submit" id="chat-send" aria-label="Enviar">
-        <!-- Icono de envío (flecha) -->
+        {/* Icono de envío (flecha) */}
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="22" y1="2" x2="11" y2="13"></line>
           <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
@@ -80,7 +80,7 @@
 </div>
 
 
-<!-- ============================================================================
+{/* ============================================================================
   JAVASCRIPT DEL CHAT (client-side)
   ----------------------------------------------------------------------------
   Este script se ejecuta en el navegador (is:inline = no se procesa con bundler).
@@ -100,7 +100,7 @@
   - Mensaje de error de cuota: busca "Servicio ocupado"
   - Mensaje de error genérice: busca "ha ocurrido un error"
   - Duración de la animación de typing: no hay timeout, se oculta cuando la API responde
-============================================================================ -->
+============================================================================ */}
 <script is:inline>
 (function () {
   // --- Referencias a elementos del DOM ---
@@ -212,7 +212,7 @@
 </script>
 
 
-<!-- ============================================================================
+{/* ============================================================================
   ESTILOS CSS DEL CHAT
   ----------------------------------------------------------------------------
   PARA CAMBIAR COLORES:
@@ -225,8 +225,8 @@
   - Posición del botón: .chat-widget (bottom, right)
   - Tamaño del panel: .chat-panel (width, height)
   - En mobile: @media (max-width: 640px)
-============================================================================ -->
-<style>
+============================================================================ */}
+<style is:inline>
   /* Contenedor principal: fijo en la esquina inferior derecha */
   .chat-widget {
     position: fixed;
@@ -241,17 +241,18 @@
   .chat-toggle {
     width: 64px;
     height: 64px;
-    border-radius: 50%;
+    border-radius: 35%;
     border: none;
     cursor: pointer;
     overflow: hidden;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
     transition: transform 0.3s, opacity 0.3s;
-    background: #70c2a5;  /* Verde ZOCO */
+    background: #70c2a500;  /* Verde ZOCO */
+    backdrop-filter: blur(4px);  /* Efecto de desenfoque */
     padding: 0;
   }
   .chat-toggle:hover {
-    transform: scale(1.08);  /* Efecto hover: crece un poco */
+    transform: scale(1.10);  /* Efecto hover: crece un poco */
   }
   .chat-toggle.hidden {
     opacity: 0;
@@ -262,7 +263,8 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: 20%;
+    padding: 0.4rem;
   }
 
   /* ===================== PANEL DE CHAT ===================== */
@@ -313,9 +315,10 @@
   .chat-avatar {
     width: 36px;
     height: 36px;
-    border-radius: 50%;
+    border-radius: 30%;
+    padding: 0.1rem;
     object-fit: cover;
-    background: #fff;
+    background: #ffffff;
   }
   .chat-title {
     font-size: 1rem;
@@ -358,7 +361,6 @@
     padding: 10px 14px;
     border-radius: 14px;
     font-size: 0.9rem;
-    line-height: 1.45;
     word-wrap: break-word;  /* Que las palabras largas se corten */
   }
   .chat-msg p {
@@ -416,7 +418,7 @@
     gap: 8px;
     border-top: 1px solid #e5e5e5;
     flex-shrink: 0;  /* No se encoge */
-    background: #fff;
+    background: #ffffff;
   }
   /* Campo de texto */
   .chat-input-area input {
@@ -427,6 +429,8 @@
     font-size: 0.9rem;
     font-family: 'HkNova', sans-serif;
     outline: none;
+    background-color:#ffffff;
+    color:#70c2a5;
     transition: border-color 0.2s;
   }
   .chat-input-area input:focus {
