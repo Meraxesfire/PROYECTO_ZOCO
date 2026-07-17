@@ -7,18 +7,115 @@ import LayoutFooterLinkPages from '../layouts/layoutFooterLinkPages.astro';
 const pageTitle = 'Contacto';
 const mediaSrc = 'https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/ZOCO%20MEDIA/contact-header-media.mp4';
 
-
-
-// Para que Vercel haga ISR real en tu index.astro, el código en el servidor se configura así:
-// ESTE EXPORT ES EL TRUCO DEL ISR EN VERCEL:
-export const prerender=true;
+export const prerender = true;
 ---
 
 <LayoutFooterLinkPages title={pageTitle}>
 <HeaderPages pageTitle={pageTitle} mediaSrc={mediaSrc} />
-<br>
-<div class="contact-container">
-</div>
+
+<main class="contact-container">
+
+  <div class="contact-form-section">
+    <h2 class="titulo-1">Contacto</h2>
+    <p class="parrafo-1">Envíanos un mensaje y te contactaremos lo antes posible.</p>
+
+    <form id="contact-form" class="contact-form">
+      <label for="name">Nombre *</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Correo electrónico *</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="company">Empresa</label>
+      <input type="text" id="company" name="company" />
+
+      <label for="phone">Teléfono</label>
+      <input type="tel" id="phone" name="phone" />
+
+      <label for="message">Mensaje *</label>
+      <textarea id="message" name="message" rows="5" required></textarea>
+
+      <button type="submit">Enviar</button>
+    </form>
+
+    <div id="form-status"></div>
+  </div>
+
+  <div class="contact-info-section">
+    <h3 class="titulo-1">Información de contacto</h3>
+
+    <div class="contact-info-item">
+      <p class="parrafo-1"><strong>Teléfono</strong></p>
+      <p class="parrafo-1">664 666 991</p>
+    </div>
+
+    <div class="contact-info-item">
+      <p class="parrafo-1"><strong>Email</strong></p>
+      <p class="parrafo-1">info@zocoeyewear.com</p>
+    </div>
+
+    <div class="contact-info-item">
+      <p class="parrafo-1"><strong>Dirección</strong></p>
+      <p class="parrafo-1">C/ Arcos, 3 Local<br/>41011 Sevilla</p>
+    </div>
+
+    <div class="contact-info-item">
+      <p class="parrafo-1"><strong>Horario</strong></p>
+      <p class="parrafo-1">Lunes a Viernes<br/>10:00 - 14:00 / 17:00 - 20:00</p>
+    </div>
+  </div>
+
+</main>
 
 <FooterPages />
 </LayoutFooterLinkPages>
+
+<script is:inline>
+(function () {
+  var form = document.getElementById('contact-form');
+  var status = document.getElementById('form-status');
+  if (!form) return;
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    var submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+    status.textContent = '';
+    status.className = '';
+
+    var data = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      company: document.getElementById('company').value,
+      phone: document.getElementById('phone').value,
+      message: document.getElementById('message').value,
+    };
+
+    try {
+      var res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      var result = await res.json();
+
+      if (result.success) {
+        form.reset();
+        status.textContent = 'Mensaje enviado correctamente. ¡Gracias!';
+        status.className = 'form-success';
+      } else {
+        status.textContent = result.error || 'No se pudo enviar el mensaje. Inténtalo de nuevo.';
+        status.className = 'form-error';
+      }
+    } catch (err) {
+      status.textContent = 'No se pudo conectar con el servidor. Inténtalo más tarde.';
+      status.className = 'form-error';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar';
+    }
+  });
+})();
+</script>

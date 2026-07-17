@@ -141,10 +141,16 @@
   function addMessage(text, role) {
     const div = document.createElement('div');
     div.className = 'chat-msg ' + (role === 'user' ? 'user' : 'bot');
-    // Convertir saltos de línea a <br> para que se muestren correctamente
-    div.innerHTML = '<p>' + text.replace(/\n/g, '<br>') + '</p>';
+    const p = document.createElement('p');
+    const lines = text.split('\n');
+    lines.forEach(function (line, i) {
+      p.appendChild(document.createTextNode(line));
+      if (i < lines.length - 1) {
+        p.appendChild(document.createElement('br'));
+      }
+    });
+    div.appendChild(p);
     messages.appendChild(div);
-    // Auto-scroll al último mensaje
     messages.scrollTop = messages.scrollHeight;
   }
 

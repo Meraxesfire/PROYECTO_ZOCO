@@ -1,3 +1,13 @@
+/* ===================================================
+   RESET Y BASE
+   =================================================== */
+
+@font-face {
+  font-family: 'HkNova';
+  src: url('/font/HKNova-Medium.ttf') format('truetype');
+  font-display: swap;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -13,47 +23,454 @@ body {
   overflow-x: clip;
 }
 
+
+/* ===================================================
+   COMPONENTES COMPARTIDOS — Títulos y párrafos base
+   =================================================== */
+
+.titulo-1 {
+  font-family: 'HkNova', sans-serif;
+  font-size: clamp(1.5rem, 3.2vw, 2.2rem);
+  line-height: 1.2;
+}
+
+.parrafo-1 {
+  font-family: 'HkNova', sans-serif;
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  margin-bottom: clamp(0.75rem, 1.4vw, 1rem);
+  line-height: 1.35;
+}
+
 .titulo-seccion {
+  font-family: 'HkNova', sans-serif;
   font-size: clamp(1.8rem, 4vw, 3.5rem);
   font-weight: bold;
   margin-bottom: 1rem;
-  font-family: 'HkNova', sans-serif;
   justify-content: center;
   text-align: center;
   margin: 5rem;
 }
 
 
-/*PAGINAS DE FOOTER*/
-.titulo-1,
-.parrafo-1,
-.terminos-condiciones-container,
-.shipping-info-container,
-.faq-container,
-.privacy-policy-container,
-.cookies-policy-container {
+/* ===================================================
+   COMPONENTE COMPARTIDO — Acordeón (<details>)
+   Usado en: FAQ, Jobs, ShippingInfo, Privacy,
+             Cookies, Terms
+   =================================================== */
+
+.accordion-section {
+  margin-bottom: 1rem;
   font-family: 'HkNova', sans-serif;
 }
 
-.titulo-1 {
-  font-size: clamp(1.5rem, 3.2vw, 2.2rem);
-  line-height: 1.2;
+.accordion-section summary {
+  cursor: pointer;
+  padding: 0.5rem 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.parrafo-1 {
-  font-size: clamp(1rem, 1.8vw, 1.2rem);
-  margin-bottom: clamp(0.75rem, 1.4vw, 1rem);
-  line-height: 1.35;
+.accordion-section summary::-webkit-details-marker {
+  display: none;
 }
 
-.terminos-condiciones-container,
-.shipping-info-container,
-.faq-container,
-.privacy-policy-container,
-.cookies-policy-container {
+.accordion-section summary::before {
+  content: '\25B6';
+  font-size: 0.8em;
+  transition: transform 0.2s;
+}
+
+.accordion-section[open] summary::before {
+  content: '\25BC';
+}
+
+.accordion-content {
+  padding: 0.5rem 1rem;
+}
+
+
+/* ===================================================
+   PÁGINA: ABOUT
+   Carrusel horizontal con scroll
+   =================================================== */
+
+.about-content {
+  padding: clamp(1rem, 3vw, 2rem) clamp(1rem, 4vw, 4rem);
+  font-family: 'HkNova', sans-serif;
+  position: relative;
+}
+
+.hover-slider {
+  overflow: hidden;
+  position: relative;
+  touch-action: pan-y;
+}
+
+.track {
+  display: flex;
+  will-change: transform;
+}
+
+.contenedor-slide {
+  flex: 0 0 100%;
+  display: flex;
+  gap: clamp(1rem, 3vw, 3rem);
+  align-items: center;
+  min-height: clamp(30vh, 50vh, 60vh);
+  max-height: 100vh;
+}
+
+.carrusel-item {
+  flex: 1;
+  box-sizing: border-box;
+  padding: clamp(1rem, 3vw, 2.5rem) clamp(0.75rem, 2vw, 1.25rem);
+  text-align: center;
+  font-size: clamp(0.95rem, 1.2vw, 1.2rem);
+}
+
+.about-text {
+  font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+  line-height: 1.6;
+  color: #333;
+}
+
+.about-text h1 {
+  color: #000000;
+  font-size: clamp(2rem, 3.4vw, 3.5rem);
+}
+
+.about-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+}
+
+.about-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  max-width: none;
+  max-height: none;
+  border-radius: 0;
+}
+
+.arrow {
+  display: flex;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #333;
+  cursor: pointer;
+  z-index: 10;
+  transition: opacity 0.3s, background 0.2s;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.arrow:active {
+  background: rgba(200, 200, 200, 0.9);
+}
+
+.arrow-left {
+  left: 8px;
+}
+
+.arrow-right {
+  right: 8px;
+}
+
+.arrow-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .contenedor-slide {
+    flex-direction: column;
+    justify-content: center;
+    min-height: auto;
+    padding: 0.5rem 0;
+    gap: 0.25rem;
+  }
+
+  .carrusel-item {
+    flex: none;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .about-text {
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+  }
+
+  .about-text h1 {
+    font-size: clamp(1.2rem, 5vw, 1.6rem);
+  }
+
+  .about-image {
+    height: auto;
+    padding: 0;
+  }
+
+  .about-image img {
+    max-height: none;
+  }
+}
+
+
+/* ===================================================
+   PÁGINA: CONTACTO
+   Formulario de contacto + información
+   =================================================== */
+
+.contact-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 3rem;
+  padding: 2rem 4rem;
+  font-family: 'HkNova', sans-serif;
+}
+
+.contact-form-section {
+  flex: 1.2;
+}
+
+.contact-info-section {
+  flex: 0.8;
+}
+
+.contact-info-item {
+  margin-bottom: 1.5rem;
+}
+
+.contact-info-item p {
+  margin: 0;
+}
+
+/* ---- Formulario ---- */
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.contact-form label {
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  color: #333;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  font-family: 'HkNova', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #70c2a5;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-form button {
+  align-self: flex-start;
+  padding: 0.7rem 2rem;
+  background: #70c2a5;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: 'HkNova', sans-serif;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.contact-form button:hover {
+  background: #5aae91;
+}
+
+.contact-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ---- Mensajes de estado del formulario ---- */
+
+#form-status {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  font-family: 'HkNova', sans-serif;
+}
+
+.form-success {
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.form-error {
+  color: #c62828;
+  font-weight: bold;
+}
+
+/* ---- Responsive ---- */
+
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 2rem;
+  }
+
+  .contact-form-section,
+  .contact-info-section {
+    flex: none;
+    width: 100%;
+  }
+}
+
+
+/* ===================================================
+   PÁGINA: FAQ
+   =================================================== */
+
+.faq-container {
+  font-family: 'HkNova', sans-serif;
   font-size: clamp(0.85rem, 1.15vw, 1rem);
   margin-bottom: clamp(0.75rem, 1.4vw, 1rem);
   margin-left: clamp(1rem, 6vw, 5rem);
   margin-right: clamp(1rem, 6vw, 5rem);
   line-height: 1.5;
+}
+
+
+/* ===================================================
+   PÁGINA: JOBS
+   =================================================== */
+
+.jobs-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 2rem 4rem;
+  font-family: 'HkNova', sans-serif;
+}
+
+.jobs-text {
+  flex: 1;
+}
+
+.jobs-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.jobs-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+
+/* ===================================================
+   PÁGINA: SHIPPING INFO
+   =================================================== */
+
+.shipping-info-container {
+  font-family: 'HkNova', sans-serif;
+  font-size: clamp(0.85rem, 1.15vw, 1rem);
+  margin-bottom: clamp(0.75rem, 1.4vw, 1rem);
+  margin-left: clamp(1rem, 6vw, 5rem);
+  margin-right: clamp(1rem, 6vw, 5rem);
+  line-height: 1.5;
+}
+
+
+/* ===================================================
+   PÁGINA: PRIVACY POLICY
+   =================================================== */
+
+.privacy-policy-container {
+  font-family: 'HkNova', sans-serif;
+  font-size: clamp(0.85rem, 1.15vw, 1rem);
+  margin-bottom: clamp(0.75rem, 1.4vw, 1rem);
+  margin-left: clamp(1rem, 6vw, 5rem);
+  margin-right: clamp(1rem, 6vw, 5rem);
+  line-height: 1.5;
+}
+
+
+/* ===================================================
+   PÁGINA: COOKIES POLICY
+   =================================================== */
+
+.cookies-policy-container {
+  font-family: 'HkNova', sans-serif;
+  font-size: clamp(0.85rem, 1.15vw, 1rem);
+  margin-bottom: clamp(0.75rem, 1.4vw, 1rem);
+  margin-left: clamp(1rem, 6vw, 5rem);
+  margin-right: clamp(1rem, 6vw, 5rem);
+  line-height: 1.5;
+}
+
+
+/* ===================================================
+   PÁGINA: TERMS & CONDITIONS
+   =================================================== */
+
+.terminos-condiciones-container {
+  font-family: 'HkNova', sans-serif;
+  font-size: clamp(0.85rem, 1.15vw, 1rem);
+  margin-bottom: clamp(0.75rem, 1.4vw, 1rem);
+  margin-left: clamp(1rem, 6vw, 5rem);
+  margin-right: clamp(1rem, 6vw, 5rem);
+  line-height: 1.5;
+}
+
+
+/* ===================================================
+   PÁGINA: STORES
+   =================================================== */
+
+.stores-content {
+  padding: 2rem 4rem;
+  font-family: 'HkNova', sans-serif;
+  display: flex;
+  gap: 2rem;
+}
+
+.stores-list {
+  flex: 1;
+}
+
+.stores-location-map {
+  flex: 1;
 }
