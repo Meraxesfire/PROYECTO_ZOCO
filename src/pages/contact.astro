@@ -7,7 +7,6 @@ import LayoutFooterLinkPages from '../layouts/layoutFooterLinkPages.astro';
 const pageTitle = 'Contacto';
 const mediaSrc = 'https://nnugidpnpteujhlyxjav.supabase.co/storage/v1/object/public/ZOCO%20MEDIA/contact-header-media.mp4';
 
-export const prerender = true;
 ---
 
 <LayoutFooterLinkPages title={pageTitle}>
@@ -20,6 +19,9 @@ export const prerender = true;
     <p class="parrafo-1">Envíanos un mensaje y te contactaremos lo antes posible.</p>
 
     <form id="contact-form" class="contact-form">
+      <input type="text" name="botcheck" class="hidden" autocomplete="off" tabindex="-1" />
+      <input type="hidden" id="form-timestamp" value="" />
+
       <label for="name">Nombre *</label>
       <input type="text" id="name" name="name" required />
 
@@ -74,10 +76,23 @@ export const prerender = true;
 (function () {
   var form = document.getElementById('contact-form');
   var status = document.getElementById('form-status');
+  var timestampField = document.getElementById('form-timestamp');
   if (!form) return;
+
+  timestampField.value = Date.now();
 
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
+
+    var honeypot = form.querySelector('[name="botcheck"]').value;
+    if (honeypot) return;
+
+    var elapsed = (Date.now() - Number(timestampField.value)) / 1000;
+    if (elapsed < 3) {
+      status.textContent = 'Formulario enviado demasiado rápido.';
+      status.className = 'form-error';
+      return;
+    }
 
     var submitBtn = form.querySelector('button[type="submit"]');
     submitBtn.disabled = true;
@@ -86,15 +101,18 @@ export const prerender = true;
     status.className = '';
 
     var data = {
+      access_key: '5bcaec8a-d99b-4f9c-826c-9be2821b2022',
       name: document.getElementById('name').value,
       email: document.getElementById('email').value,
       company: document.getElementById('company').value,
       phone: document.getElementById('phone').value,
       message: document.getElementById('message').value,
+      subject: 'Contacto desde web: ' + document.getElementById('name').value,
+      from_name: 'ZOCO Eyewear - Formulario de Contacto',
     };
 
     try {
-      var res = await fetch('/api/contact', {
+      var res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
@@ -103,10 +121,11 @@ export const prerender = true;
 
       if (result.success) {
         form.reset();
+        timestampField.value = Date.now();
         status.textContent = 'Mensaje enviado correctamente. ¡Gracias!';
         status.className = 'form-success';
       } else {
-        status.textContent = result.error || 'No se pudo enviar el mensaje. Inténtalo de nuevo.';
+        status.textContent = result.message || 'No se pudo enviar el mensaje. Inténtalo de nuevo.';
         status.className = 'form-error';
       }
     } catch (err) {

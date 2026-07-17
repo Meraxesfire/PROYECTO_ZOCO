@@ -23,6 +23,16 @@ body {
   overflow-x: clip;
 }
 
+.hidden {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  height: 0;
+  width: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
 
 /* ===================================================
    COMPONENTES COMPARTIDOS — Títulos y párrafos base

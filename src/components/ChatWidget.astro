@@ -37,7 +37,7 @@
   </button>
 
   {/* Panel de chat: hidden por defecto, se muestra con clase .open */}
-  <div class="chat-panel" id="chat-panel">
+  <div class="chat-panel" id="chat-panel" hidden>
 
     {/* Header del chat con avatar y botón cerrar */}
     <div class="chat-header">
@@ -118,6 +118,7 @@
 
   // --- Abrir el panel de chat ---
   function openChat() {
+    panel.removeAttribute('hidden');  // Mostrar panel (display: block)
     panel.classList.add('open');      // Mostrar panel (transición CSS)
     toggle.classList.add('hidden');   // Ocultar botón flotante
     isOpen = true;
@@ -128,6 +129,7 @@
   function closeChat() {
     panel.classList.remove('open');   // Ocultar panel (transición CSS)
     toggle.classList.remove('hidden'); // Mostrar botón flotante
+    panel.setAttribute('hidden', ''); // Ocultar panel (display: none)
     isOpen = false;
   }
 
