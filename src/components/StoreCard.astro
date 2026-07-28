@@ -1,0 +1,81 @@
+---
+
+interface Props{
+    nombre_tienda: string;
+    ciudad_tienda: string;
+    direccion_tienda: string;
+    telefono_tienda?: string;
+    horario_tienda?: string;
+    latitud_tienda: number;
+    longitud_tienda: number;
+    store_id: number;
+}
+
+const {
+    nombre_tienda,
+    ciudad_tienda,
+    direccion_tienda,
+    telefono_tienda,
+    horario_tienda,
+    latitud_tienda,
+    longitud_tienda,
+    store_id
+} =Astro.props;
+
+---
+
+<article
+ class="store-card"
+ data-store-id={store_id}
+ data-latitude={latitud_tienda}
+ data-longitude={longitud_tienda}> 
+ <!--Añado estas datas (lat long e id) dentro de article porque el script de Google Maps en stores.astro 
+ necesitará leer estas coordenadas al hacer click en la card para centrar el mapa. 
+ Acceder a dataset del elemento es la forma más directa. -->
+
+    <h3>{nombre_tienda}</h3>
+    <div class="store-card-body">
+        <div class="primer-bloque-store-card">
+            <p><strong>Ciudad:</strong> {ciudad_tienda}</p>
+            <p><strong>Dirección:</strong> {direccion_tienda}</p>
+        </div>
+        <div class="segundo-bloque-store-card">
+           {telefono_tienda && <p><strong>Teléfono:</strong> {telefono_tienda}</p>}
+           {horario_tienda && <p><strong>Horario:</strong> {horario_tienda}</p>}
+        </div>
+    </div>
+</article>
+
+<style>
+
+    .store-card {
+        padding: 1rem;
+        box-shadow: 5px 5px 16px rgba(0, 0, 0, 0.1);
+        max-width: 20vw;
+        max-height: auto;
+        background-color: #fbfbfb;
+        transition: all 1s ease;
+        cursor: pointer;
+    }
+
+    .store-card:hover {
+        box-shadow: 5px 5px 16px rgb(0, 0, 0);
+        transition: all 1s ease;
+    }
+
+    .store-card h3 {
+        font-size: clamp(1rem, 2vw, 1.5rem);
+        margin-bottom: 0.5rem;
+    }
+
+    .store-card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .segundo-bloque-store-card  {
+        border-top: 1px solid #919191;
+        padding-top: 0.5rem;
+    }
+</style>

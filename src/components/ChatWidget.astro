@@ -6,7 +6,7 @@
 // CÓMO FUNCIONA:
 //   1. Muestra un botón flotante en la esquina inferior derecha
 //   2. Al hacer click, se abre un panel de chat con historial de conversación
-//   3. Los mensajes se envían a /api/chat (endpoint de Gemini)
+//   3. Los mensajes se envían a /api/chat (endpoint de Groq AI) y se recibe la respuesta de la IA
 //   4. La IA responde con información sobre ZOCO (productos, envíos, etc.)
 //
 // PARA MODIFICAR:
@@ -253,14 +253,12 @@
     border: none;
     cursor: pointer;
     overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
     transition: transform 0.3s, opacity 0.3s;
-    background: #70c2a500;  /* Verde ZOCO */
-    backdrop-filter: blur(4px);  /* Efecto de desenfoque */
+    background: transparent;  /* Verde ZOCO */
     padding: 0;
   }
   .chat-toggle:hover {
-    transform: scale(1.10);  /* Efecto hover: crece un poco */
+    transform: scale(1.35);  /* Efecto hover: crece un poco */
   }
   .chat-toggle.hidden {
     opacity: 0;

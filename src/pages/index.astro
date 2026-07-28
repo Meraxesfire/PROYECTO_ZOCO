@@ -206,8 +206,8 @@ if (newArrivalsCarrouselError) console.error('newArrivalsCarrousel query failed:
 	<script is:inline>
 	(function(){
 	  // Elementos principales del bloque con efecto scroll
-	  const pinSection = document.getElementById('pinSection');
-	  const pinInner   = document.getElementById('pinInner');
+	  const pinSection = document.getElementById('pinSection'); // Seccion que se fija al hacer scroll
+	  const pinInner   = document.getElementById('pinInner'); // Contenedor interno que contiene el texto y las palabras destacadas
 	  const aboutText  = document.getElementById('aboutText');
 	  if(!pinSection || !pinInner || !aboutText) return;
 

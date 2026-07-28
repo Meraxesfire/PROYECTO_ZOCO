@@ -1,6 +1,7 @@
 ---
 import HeaderPages from '../components/HeaderPages.astro';
 import FooterPages from '../components/FooterPages.astro';
+import StoreCard from '../components/StoreCard.astro';
 import '../styles/global.css';
 
 import { supabase } from '../lib/supabase';
@@ -37,7 +38,28 @@ if(tiendasError) { //control de errores en caso de que la query falle, para que 
 
     <main class="stores-content">
       <div class="stores-list">
+        <h1 class="titulo-tabla-stores">Nuestras Tiendas</h1>
+        <h2 class="subtitulo-tabla-stores">Encuentra tu proveedor ZOCO más cercano</h2>
+        <input type="text" id="searchInput" placeholder="Buscar tienda por nombre o ciudad..." onkeyup="filterStores()"> 
+        <!--Función de filtro de búsqueda de tiendas en stores.js -->
+        <!-- Tabla de tiendas, se crea componente StoresTable -->
 
+        <div class="stores-cards-container">
+        <!--StoreCard de ejemplo -->
+        <StoreCard  
+
+          store_id={1}
+          nombre_tienda="Óptica Central"
+          ciudad_tienda="Madrid"
+          direccion_tienda="Calle Mayor, 10"
+          telefono_tienda="91 123 45 67"
+          horario_tienda="Lunes a Viernes: 10:00 - 20:00"
+          latitud_tienda={40.416775}
+          longitud_tienda={-3.703790}       
+        
+        />
+
+        </div> 
 
       </div>
       <div class="stores-location-map" id="map" style="width: 50%; height: auto;"></div >
