@@ -1,5 +1,6 @@
 ---
 import HeaderPages from '../components/HeaderPages.astro';
+import SeoHead from '../components/SeoHead.astro';
 import '../styles/global.css';
 import CatalogBody from '../components/CatalogBody.astro';
 import { supabase } from '../lib/supabase';
@@ -7,12 +8,18 @@ import { supabase } from '../lib/supabase';
 interface Props {
      title:string;
      pageTitle:string;
+     description:string;
+     image?:string;
+     type?:string;
     catalogType?: 'OPTICAL' | 'SUN'; //esto decide que tipo de catalogo estamos viendo si OPTICAL o SUN, y es opcional, si no se pasa el prop, se mostrará el catalogo por defecto que es OPTICAL
     mediaSrc?: string; //ruta de la imagen de cabecera para HeaderPages
 }
 
 const title = Astro.props.title; //este titulo se pasa desde la pagina que llama al layout, y se mostrará en el title del head de la pagina.el titulo de la pestaña
 const pageTitle = Astro.props.pageTitle;
+const description = Astro.props.description;
+const image = Astro.props.image;
+const type = Astro.props.type;
 const catalogType = Astro.props.catalogType || 'OPTICAL'; //si no se pasa el prop catalogType, se mostrará el catalogo por defecto que es OPTICAL
 const mediaSrc = Astro.props.mediaSrc; //ruta de la imagen de cabecera  
 
@@ -32,12 +39,14 @@ const { data, error } = await supabase
 
 ---
 
-<html>
+<html lang="es">
     <head>
         <title>ZOCO eyewear | {title}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta charset="UTF-8" />
         <link rel="icon" type="image/png" href="/favicon.png" />
+
+        <SeoHead title={`ZOCO eyewear | ${title}`} description={description} image={image} type={type} />
 
         <!-- Cookiebot script for cookie consent management -->
         <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" 
