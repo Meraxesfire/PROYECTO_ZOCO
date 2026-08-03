@@ -2,4 +2,3 @@
 import { supabase } from '../lib/supabase';
 
 //función get tiendas de clientes con los que trabajamos (tiendas/opticas)
-

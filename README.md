@@ -1,46 +1,61 @@
-# Astro Starter Kit: Basics
+# ZOCO Eyewear
 
-```sh
-npm create astro@latest -- --template basics
+Sitio web de ZOCO®, tienda de gafas y óptica de **ISPAL EYEWEAR SL** (Sevilla).
+Producción: https://www.zocoeyewear.com
+
+## Stack
+
+- **Astro 7** (server output) + **Vercel** (ISR 5 min, excluye `/api/*`)
+- **Supabase** (Postgres): tablas `gafas` y `tiendas`
+- **GROQ** (`llama-3.3-70b-versatile`): chatbot en `/api/chat`
+- **Vitest**: tests unitarios y de render
+- **GitHub Actions**: CI
+
+## Requisitos
+
+- Node >= 22.12
+- Variables en `.env`:
+  - `PUBLIC_SUPABASE_URL`
+  - `PUBLIC_SUPABASE_ANON_KEY`
+  - `GROQ_API_KEY` (solo servidor, sin prefijo `PUBLIC_`)
+
+## Comandos
+
+| Comando | Acción |
+|---|---|
+| `npm install` | instala dependencias |
+| `npm run dev` | dev server en `localhost:4321` |
+| `npm run build` | build de producción a `./dist/` |
+| `npm run preview` | previsualizar el build |
+| `npm run check` | astro check (tipos) |
+| `npm run test` | vitest |
+| `npm run astro ...` | CLI de Astro |
+
+## Desarrollo guiado por specs (SDD)
+
+- Cada funcionalidad se especifica en `specs/` (formato en `specs/README.md`).
+- Cada Criterio de Aceptación (CA) debe estar cubierto por un test en `src/**/*.test.js`.
+- El CI corre los tests en cada PR: CI rojo = no se mergea.
+
+## Ramas y producción
+
+- `main` es producción (despliega en Vercel) y está protegido por un ruleset de GitHub.
+- **No se commitea ni se pushea directo a `main`.** Todo cambio va por rama corta + PR (CI verde + aprobación).
+
+## CI
+
+`.github/workflows/ci.yml` ejecuta en cada PR y push a `main`: `npm run check` → `npm run test` → `npm run build`.
+
+## Estructura
+
+```
+src/
+├── components/   # Componentes Astro (SeoHead, GafaCard, ChatWidget, headers/footers…)
+├── layouts/      # Layouts (Landing, Catalog, FooterPages…)
+├── lib/          # Lógica pura + cliente Supabase
+├── pages/        # Rutas (.astro + /api/chat.ts)
+├── services/     # Acceso a datos (gafas.js, stores.js)
+└── styles/       # CSS global + por página
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Detalles en `arch.md`.
