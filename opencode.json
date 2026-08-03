@@ -9,6 +9,12 @@
       "src/layouts/**": "ask",
       "astro.config.mjs": "ask",
       ".env": "deny"
+    },
+    "bash": {
+      "git *": "ask",
+      "git push origin main*": "deny",
+      "git push --force*": "deny",
+      "git push -f*": "deny"
     }
   }
 }
