@@ -39,8 +39,9 @@ Producción: https://www.zocoeyewear.com
 
 ## Ramas y producción
 
-- `main` es producción (despliega en Vercel) y está protegido por un ruleset de GitHub.
-- **No se commitea ni se pushea directo a `main`.** Todo cambio va por rama corta + PR (CI verde + aprobación).
+- `main` es producción (despliega en Vercel) y está protegido por una **branch protection rule**: PR obligatorio + CI verde (`ci`), sin push directo ni force-push.
+- **No se commitea ni se pushea directo a `main`.** Todo cambio va por rama corta + PR (CI verde) → merge.
+- Guía práctica paso a paso: `docs/git-workflow.md`.
 
 ## CI
 
